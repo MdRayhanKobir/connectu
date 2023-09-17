@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 14, 2023 at 02:44 PM
+-- Generation Time: Sep 17, 2023 at 03:13 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `minstack`
+-- Database: `connectu`
 --
 
 -- --------------------------------------------------------
@@ -74,7 +74,8 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `read_status`, `cli
 (4, 32, 'New member registered', 0, '/admin/manage/users/detail/32', '2023-03-22 04:09:55', '2023-03-22 04:09:55'),
 (5, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-03-22 04:09:57', '2023-03-22 04:09:57'),
 (6, 32, 'Deposit request from testuser1', 0, '/admin/manage/deposits/details/64', '2023-05-27 02:51:35', '2023-05-27 02:51:35'),
-(7, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-05-27 02:51:35', '2023-05-27 02:51:35');
+(7, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-05-27 02:51:35', '2023-05-27 02:51:35'),
+(8, 33, 'New member registered', 0, '/admin/manage/users/detail/33', '2023-09-16 23:24:11', '2023-09-16 23:24:11');
 
 -- --------------------------------------------------------
 
@@ -97,6 +98,36 @@ CREATE TABLE `admin_password_resets` (
 
 INSERT INTO `admin_password_resets` (`id`, `email`, `token`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'admin@example.com', '427158', 0, '2023-09-14 04:37:08', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ads`
+--
+
+CREATE TABLE `ads` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(191) DEFAULT NULL,
+  `amount` decimal(18,8) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `max_show` int(11) NOT NULL,
+  `showed` int(11) DEFAULT NULL,
+  `ads_type` int(11) DEFAULT NULL COMMENT '1=>link|2=>image|3=>script 4=youtube',
+  `ads_body` longtext DEFAULT NULL,
+  `remain` int(11) NOT NULL COMMENT 'max_show-showed',
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ads`
+--
+
+INSERT INTO `ads` (`id`, `user_id`, `title`, `amount`, `duration`, `max_show`, `showed`, `ads_type`, `ads_body`, `remain`, `status`, `created_at`, `updated_at`) VALUES
+(38, 33, 'Test', '5.00000000', 10, 100, NULL, 1, 'https://wstacks.com/', 100, 1, '2023-09-17 05:08:17', '2023-09-17 05:08:17'),
+(39, 33, 'Test3', '5.00000000', 10, 100, NULL, 1, 'https://wstacks.com/', 100, 1, '2023-09-17 05:08:30', '2023-09-17 05:45:02');
 
 -- --------------------------------------------------------
 
@@ -447,7 +478,11 @@ CREATE TABLE `notification_logs` (
 --
 
 INSERT INTO `notification_logs` (`id`, `user_id`, `sender`, `sent_from`, `sent_to`, `subject`, `message`, `notification_type`, `created_at`, `updated_at`) VALUES
-(1, 0, 'smtp', 'info@example.com', 'riasadrion@gmail.com', 'SMTP Configuration Success', '<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n  <!--[if !mso]><!-->\r\n  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n  <!--<![endif]-->\r\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n  <title></title>\r\n  <style type=\"text/css\">\r\n.ReadMsgBody { width: 100%; background-color: #ffffff; }\r\n.ExternalClass { width: 100%; background-color: #ffffff; }\r\n.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }\r\nhtml { width: 100%; }\r\nbody { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; margin: 0; padding: 0; }\r\ntable { border-spacing: 0; table-layout: fixed; margin: 0 auto;border-collapse: collapse; }\r\ntable table table { table-layout: auto; }\r\n.yshortcuts a { border-bottom: none !important; }\r\nimg:hover { opacity: 0.9 !important; }\r\na { color: #0087ff; text-decoration: none; }\r\n.textbutton a { font-family: \'open sans\', arial, sans-serif !important;}\r\n.btn-link a { color:#FFFFFF !important;}\r\n\r\n@media only screen and (max-width: 480px) {\r\nbody { width: auto !important; }\r\n*[class=\"table-inner\"] { width: 90% !important; text-align: center !important; }\r\n*[class=\"table-full\"] { width: 100% !important; text-align: center !important; }\r\n/* image */\r\nimg[class=\"img1\"] { width: 100% !important; height: auto !important; }\r\n}\r\n</style>\r\n\r\n\r\n\r\n  <table bgcolor=\"#414a51\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n    <tbody><tr>\r\n      <td height=\"50\"></td>\r\n    </tr>\r\n    <tr>\r\n      <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\">\r\n        <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\r\n          <tbody><tr>\r\n            <td align=\"center\" width=\"600\">\r\n              <!--header-->\r\n              <table class=\"table-inner\" width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n                <tbody><tr>\r\n                  <td bgcolor=\"#0087ff\" style=\"border-top-left-radius:6px; border-top-right-radius:6px;text-align:center;vertical-align:top;font-size:0;\" align=\"center\">\r\n                    <table width=\"90%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n                      <tbody><tr>\r\n                        <td height=\"20\"></td>\r\n                      </tr>\r\n                      <tr>\r\n                        <td align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#FFFFFF; font-size:16px; font-weight: bold;\">System Mail</td>\r\n                      </tr>\r\n                      <tr>\r\n                        <td height=\"20\"></td>\r\n                      </tr>\r\n                    </tbody></table>\r\n                  </td>\r\n                </tr>\r\n              </tbody></table>\r\n              <!--end header-->\r\n              <table class=\"table-inner\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                <tbody><tr>\r\n                  <td bgcolor=\"#FFFFFF\" align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\">\r\n                    <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                      <tbody><tr>\r\n                        <td height=\"35\"></td>\r\n                      </tr>\r\n                      <!--logo-->\r\n                      <tr>\r\n                        <td align=\"center\" style=\"vertical-align:top;font-size:0;\">\r\n                          <a href=\"#\">\r\n                            <img style=\"display:block; line-height:0px; font-size:0px; border:0px;\" src=\"https://i.imgur.com/K2fIRda.png\" alt=\"img\">\r\n                          </a>\r\n                        </td>\r\n                      </tr>\r\n                      <!--end logo-->\r\n                      <tr>\r\n                        <td height=\"40\"></td>\r\n                      </tr>\r\n                      <!--headline-->\r\n                      <tr>\r\n                        <td align=\"center\" style=\"font-family: \'Open Sans\', Arial, sans-serif; font-size: 22px;color:#414a51;font-weight: bold;\">Hello riasadrion (riasadrion@gmail.com)</td>\r\n                      </tr>\r\n                      <!--end headline-->\r\n                      <tr>\r\n                        <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\">\r\n                          <table width=\"40\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n                            <tbody><tr>\r\n                              <td height=\"20\" style=\" border-bottom:3px solid #0087ff;\"></td>\r\n                            </tr>\r\n                          </tbody></table>\r\n                        </td>\r\n                      </tr>\r\n                      <tr>\r\n                        <td height=\"20\"></td>\r\n                      </tr>\r\n                      <!--content-->\r\n                      <tr>\r\n                        <td align=\"left\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#7f8c8d; font-size:16px; line-height: 28px;\">Your email notification setting is configured successfully for MinStack</td>\r\n                      </tr>\r\n                      <!--end content-->\r\n                      <tr>\r\n                        <td height=\"40\"></td>\r\n                      </tr>\r\n              \r\n                    </tbody></table>\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <td height=\"45\" align=\"center\" bgcolor=\"#f4f4f4\" style=\"border-bottom-left-radius:6px;border-bottom-right-radius:6px;\">\r\n                    <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                      <tbody><tr>\r\n                        <td height=\"10\"></td>\r\n                      </tr>\r\n                      <!--preference-->\r\n                      <tr>\r\n                        <td class=\"preference-link\" align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#95a5a6; font-size:14px;\">\r\n                          © 2022&nbsp;<a href=\"#\">MinStack</a>&nbsp;. All Rights Reserved. \r\n                        </td>\r\n                      </tr>\r\n                      <!--end preference-->\r\n                      <tr>\r\n                        <td height=\"10\"></td>\r\n                      </tr>\r\n                    </tbody></table>\r\n                  </td>\r\n                </tr>\r\n              </tbody></table>\r\n            </td>\r\n          </tr>\r\n        </tbody></table>\r\n      </td>\r\n    </tr>\r\n    <tr>\r\n      <td height=\"60\"></td>\r\n    </tr>\r\n  </tbody></table>', 'email', '2023-01-21 07:41:43', '2023-01-21 07:41:43');
+(1, 0, 'smtp', 'info@example.com', 'riasadrion@gmail.com', 'SMTP Configuration Success', '<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n  <!--[if !mso]><!-->\r\n  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n  <!--<![endif]-->\r\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n  <title></title>\r\n  <style type=\"text/css\">\r\n.ReadMsgBody { width: 100%; background-color: #ffffff; }\r\n.ExternalClass { width: 100%; background-color: #ffffff; }\r\n.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }\r\nhtml { width: 100%; }\r\nbody { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; margin: 0; padding: 0; }\r\ntable { border-spacing: 0; table-layout: fixed; margin: 0 auto;border-collapse: collapse; }\r\ntable table table { table-layout: auto; }\r\n.yshortcuts a { border-bottom: none !important; }\r\nimg:hover { opacity: 0.9 !important; }\r\na { color: #0087ff; text-decoration: none; }\r\n.textbutton a { font-family: \'open sans\', arial, sans-serif !important;}\r\n.btn-link a { color:#FFFFFF !important;}\r\n\r\n@media only screen and (max-width: 480px) {\r\nbody { width: auto !important; }\r\n*[class=\"table-inner\"] { width: 90% !important; text-align: center !important; }\r\n*[class=\"table-full\"] { width: 100% !important; text-align: center !important; }\r\n/* image */\r\nimg[class=\"img1\"] { width: 100% !important; height: auto !important; }\r\n}\r\n</style>\r\n\r\n\r\n\r\n  <table bgcolor=\"#414a51\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n    <tbody><tr>\r\n      <td height=\"50\"></td>\r\n    </tr>\r\n    <tr>\r\n      <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\">\r\n        <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\r\n          <tbody><tr>\r\n            <td align=\"center\" width=\"600\">\r\n              <!--header-->\r\n              <table class=\"table-inner\" width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n                <tbody><tr>\r\n                  <td bgcolor=\"#0087ff\" style=\"border-top-left-radius:6px; border-top-right-radius:6px;text-align:center;vertical-align:top;font-size:0;\" align=\"center\">\r\n                    <table width=\"90%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n                      <tbody><tr>\r\n                        <td height=\"20\"></td>\r\n                      </tr>\r\n                      <tr>\r\n                        <td align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#FFFFFF; font-size:16px; font-weight: bold;\">System Mail</td>\r\n                      </tr>\r\n                      <tr>\r\n                        <td height=\"20\"></td>\r\n                      </tr>\r\n                    </tbody></table>\r\n                  </td>\r\n                </tr>\r\n              </tbody></table>\r\n              <!--end header-->\r\n              <table class=\"table-inner\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                <tbody><tr>\r\n                  <td bgcolor=\"#FFFFFF\" align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\">\r\n                    <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                      <tbody><tr>\r\n                        <td height=\"35\"></td>\r\n                      </tr>\r\n                      <!--logo-->\r\n                      <tr>\r\n                        <td align=\"center\" style=\"vertical-align:top;font-size:0;\">\r\n                          <a href=\"#\">\r\n                            <img style=\"display:block; line-height:0px; font-size:0px; border:0px;\" src=\"https://i.imgur.com/K2fIRda.png\" alt=\"img\">\r\n                          </a>\r\n                        </td>\r\n                      </tr>\r\n                      <!--end logo-->\r\n                      <tr>\r\n                        <td height=\"40\"></td>\r\n                      </tr>\r\n                      <!--headline-->\r\n                      <tr>\r\n                        <td align=\"center\" style=\"font-family: \'Open Sans\', Arial, sans-serif; font-size: 22px;color:#414a51;font-weight: bold;\">Hello riasadrion (riasadrion@gmail.com)</td>\r\n                      </tr>\r\n                      <!--end headline-->\r\n                      <tr>\r\n                        <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\">\r\n                          <table width=\"40\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n                            <tbody><tr>\r\n                              <td height=\"20\" style=\" border-bottom:3px solid #0087ff;\"></td>\r\n                            </tr>\r\n                          </tbody></table>\r\n                        </td>\r\n                      </tr>\r\n                      <tr>\r\n                        <td height=\"20\"></td>\r\n                      </tr>\r\n                      <!--content-->\r\n                      <tr>\r\n                        <td align=\"left\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#7f8c8d; font-size:16px; line-height: 28px;\">Your email notification setting is configured successfully for MinStack</td>\r\n                      </tr>\r\n                      <!--end content-->\r\n                      <tr>\r\n                        <td height=\"40\"></td>\r\n                      </tr>\r\n              \r\n                    </tbody></table>\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <td height=\"45\" align=\"center\" bgcolor=\"#f4f4f4\" style=\"border-bottom-left-radius:6px;border-bottom-right-radius:6px;\">\r\n                    <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                      <tbody><tr>\r\n                        <td height=\"10\"></td>\r\n                      </tr>\r\n                      <!--preference-->\r\n                      <tr>\r\n                        <td class=\"preference-link\" align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#95a5a6; font-size:14px;\">\r\n                          © 2022&nbsp;<a href=\"#\">MinStack</a>&nbsp;. All Rights Reserved. \r\n                        </td>\r\n                      </tr>\r\n                      <!--end preference-->\r\n                      <tr>\r\n                        <td height=\"10\"></td>\r\n                      </tr>\r\n                    </tbody></table>\r\n                  </td>\r\n                </tr>\r\n              </tbody></table>\r\n            </td>\r\n          </tr>\r\n        </tbody></table>\r\n      </td>\r\n    </tr>\r\n    <tr>\r\n      <td height=\"60\"></td>\r\n    </tr>\r\n  </tbody></table>', 'email', '2023-01-21 07:41:43', '2023-01-21 07:41:43'),
+(2, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;406871</span></font></div></div></p>', 'email', '2023-09-16 23:24:14', '2023-09-16 23:24:14'),
+(3, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;702068</span></font></div></div></p>', 'email', '2023-09-16 23:26:49', '2023-09-16 23:26:49'),
+(4, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;496358</span></font></div></div></p>', 'email', '2023-09-16 23:29:27', '2023-09-16 23:29:27'),
+(5, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;410633</span></font></div></div></p>', 'email', '2023-09-16 23:35:57', '2023-09-16 23:35:57');
 
 -- --------------------------------------------------------
 
@@ -572,6 +607,81 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (59, 'App\\Models\\User', 8, 'auth_token', '21b0d071e22f45a7520c36b825b4f2582037004ee019e67707a4c6cabcbc9375', '[\"*\"]', '2022-04-05 05:13:26', '2022-03-22 10:48:33', '2022-04-05 05:13:26'),
 (60, 'App\\Models\\User', 31, 'auth_token', '29647be4a8b5510c717c50b8279d168717ebcc25b3d0155fcc840cd315527112', '[\"*\"]', NULL, '2022-03-22 11:22:57', '2022-03-22 11:22:57'),
 (61, 'App\\Models\\User', 8, 'auth_token', '9b103d59a6f148c7153e4c411fac11bf46e8ebeb886835c967a3f3896476da29', '[\"*\"]', '2022-04-16 06:29:21', '2022-03-29 08:05:49', '2022-04-16 06:29:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `plans`
+--
+
+CREATE TABLE `plans` (
+  `id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `price` decimal(28,8) NOT NULL,
+  `content` text DEFAULT NULL,
+  `type` int(11) NOT NULL COMMENT '0= month, 1= year',
+  `month` varchar(40) DEFAULT NULL,
+  `year` varchar(40) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `plans`
+--
+
+INSERT INTO `plans` (`id`, `name`, `price`, `content`, `type`, `month`, `year`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Premium', '125.00000000', '[\"Unlimited updates\",\"Custom designs & features\",\"Custom permissions\",\"Optimize hashtags\",\"Custom instructors\"]', 0, NULL, '366', 1, '2023-03-26 08:04:55', '2023-03-30 01:59:20'),
+(2, 'Essentials', '89.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom instructors\",\"Optimize hashtags\",\"Custom instructors\"]', 1, '31', NULL, 1, '2023-03-26 08:07:20', '2023-04-17 01:31:56'),
+(3, 'Standard', '35.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom designs & features\",\"Custom hashtags\",\"Custom instructors\"]', 1, '31', NULL, 1, '2023-03-26 08:08:24', '2023-09-16 03:11:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ptcs`
+--
+
+CREATE TABLE `ptcs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) DEFAULT NULL,
+  `amount` decimal(18,8) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `max_show` int(11) NOT NULL,
+  `showed` int(11) NOT NULL,
+  `ads_type` int(11) DEFAULT NULL COMMENT '1=>link|2=>image|3=>script',
+  `ads_body` longtext DEFAULT NULL,
+  `remain` int(11) NOT NULL COMMENT 'max_show-showed',
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ptcs`
+--
+
+INSERT INTO `ptcs` (`id`, `title`, `amount`, `duration`, `max_show`, `showed`, `ads_type`, `ads_body`, `remain`, `status`, `created_at`, `updated_at`) VALUES
+(18, 'Toggole Blog 3', '0.50000000', 3, 30, 6, 1, 'https://toggl.com/blog/35-best-useless-websites-internet', 24, 1, '2022-11-07 03:15:19', '2022-11-16 08:54:28'),
+(19, 'Toggole Blog2', '0.50000000', 3, 300, 6, 1, 'https://toggl.com/blog/35-best-useless-websites-internet', 294, 1, '2022-11-07 03:16:02', '2022-11-16 08:54:17'),
+(20, 'Radio Garden2', '0.50000000', 3, 200, 9, 1, 'https://radio.garden/visit/barishal/egSDmbZ3', 191, 1, '2022-11-07 03:16:35', '2022-11-16 09:08:52'),
+(21, 'Web8', '0.30000000', 3, 20, 6, 1, 'https://www.whatsmyip.org/random-website-machine/', 14, 1, '2022-11-07 03:17:23', '2022-11-16 08:53:22'),
+(22, 'Web7', '0.50000000', 3, 60, 5, 1, 'https://www.whatsmyip.org/random-website-machine/', 55, 1, '2022-11-07 03:18:23', '2022-11-16 08:53:01'),
+(23, 'Web6', '0.50000000', 3, 100, 11, 1, 'https://www.whatsmyip.org/random-website-machine/', 89, 1, '2022-11-07 03:19:04', '2022-11-17 08:34:09'),
+(24, 'Radio Garden', '0.50000000', 3, 40, 5, 1, 'https://radio.garden/visit/barishal/egSDmbZ3', 35, 1, '2022-11-07 03:19:37', '2022-11-16 08:49:53'),
+(25, 'Loream', '0.50000000', 3, 50, 7, 1, 'https://www.lipsum.com/', 43, 1, '2022-11-07 03:20:18', '2022-11-16 07:40:26'),
+(26, 'ESPN', '0.50000000', 3, 20, 6, 1, 'https://www.espncricinfo.com/', 14, 1, '2022-11-07 03:20:51', '2022-11-16 03:42:27'),
+(27, 'ICC3', '0.50000000', 3, 30, 5, 1, 'https://www.icc-cricket.com/homepage', 25, 1, '2022-11-07 03:21:20', '2022-11-16 03:43:39'),
+(28, 'ICC2', '0.50000000', 3, 50, 5, 1, 'https://www.icc-cricket.com/homepage', 45, 1, '2022-11-07 03:22:00', '2022-11-16 07:15:35'),
+(29, 'ICC', '0.50000000', 3, 50, 6, 1, 'https://www.icc-cricket.com/homepage', 44, 1, '2022-11-07 03:23:03', '2023-06-20 07:34:16'),
+(30, 'Honda', '0.50000000', 3, 300, 0, 1, 'https://www.honda.com.bd/', 300, 1, '2022-11-14 04:19:38', '2022-11-16 07:24:46'),
+(31, 'Geo user', '0.50000000', 3, 200, 0, 1, 'https://radio.garden/visit/barishal/egSDmbZ3', 200, 1, '2022-11-14 04:20:08', '2022-11-16 08:48:16'),
+(32, 'Auto Draw', '0.50000000', 2, 100, 1, 1, 'https://www.autodraw.com/', 99, 1, '2022-11-14 04:20:30', '2022-11-20 04:17:08'),
+(33, 'Toggle Blog', '0.50000000', 3, 300, 0, 1, 'https://toggl.com/blog/35-best-useless-websites-internet', 300, 1, '2022-11-14 04:20:54', '2022-11-16 08:43:44'),
+(34, 'Web5', '0.50000000', 3, 50, 0, 1, 'https://www.icc-cricket.com/homepage', 50, 1, '2022-11-14 04:21:22', '2022-11-16 08:42:45'),
+(35, 'Web2', '0.50000000', 3, 40, 0, 1, 'https://www.espncricinfo.com/', 40, 1, '2022-11-14 04:22:01', '2022-11-16 08:55:55'),
+(36, 'Web4', '0.50000000', 3, 40, 0, 1, 'https://www.random-website.com/', 40, 1, '2022-11-14 04:22:41', '2022-11-16 08:39:14'),
+(37, 'Web1', '0.50000000', 3, 200, 1, 1, 'https://www.icc-cricket.com/homepage', 199, 1, '2022-11-14 04:23:08', '2022-11-16 07:50:14');
 
 -- --------------------------------------------------------
 
@@ -944,7 +1054,8 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `countr
 (29, 'Anthony ', 'J.', 'michbarry', 'fyjify@amimail.com', 'KN', '18695946542145', 0, '200.00000000', '$2y$10$5iSye35hvir6jdd1nMx5/elcysmkvfrTFCfK0MLV5nb9QsA2Q7ury', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Saint Kitts and Nevis\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, NULL, NULL, '2022-03-21 02:41:54', '2022-09-20 10:01:31'),
 (30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2022-03-22 07:53:20', '2022-03-22 08:09:45'),
 (31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '285472', '2022-09-29 17:45:24', 0, 1, NULL, NULL, NULL, '2022-03-22 11:22:57', '2023-01-05 09:32:49'),
-(32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', NULL, '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-03-22 04:09:55', '2023-03-22 04:10:43');
+(32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', NULL, '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-03-22 04:09:55', '2023-03-22 04:10:43'),
+(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '0.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-09-16 23:24:11', '2023-09-17 00:51:04');
 
 -- --------------------------------------------------------
 
@@ -972,7 +1083,12 @@ CREATE TABLE `user_logins` (
 --
 
 INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `country_code`, `longitude`, `latitude`, `browser`, `os`, `created_at`, `updated_at`) VALUES
-(1, 32, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-03-22 04:09:56', '2023-03-22 04:09:56');
+(1, 32, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-03-22 04:09:56', '2023-03-22 04:09:56'),
+(2, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-16 23:24:11', '2023-09-16 23:24:11'),
+(3, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-16 23:47:53', '2023-09-16 23:47:53'),
+(4, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 00:50:23', '2023-09-17 00:50:23'),
+(5, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 00:50:42', '2023-09-17 00:50:42'),
+(6, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 02:44:55', '2023-09-17 02:44:55');
 
 -- --------------------------------------------------------
 
@@ -1062,6 +1178,12 @@ ALTER TABLE `admin_password_resets`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ads`
+--
+ALTER TABLE `ads`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `deposits`
 --
 ALTER TABLE `deposits`
@@ -1136,6 +1258,18 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `plans`
+--
+ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ptcs`
+--
+ALTER TABLE `ptcs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `subscribers`
 --
 ALTER TABLE `subscribers`
@@ -1204,13 +1338,19 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
 --
 ALTER TABLE `admin_password_resets`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `ads`
+--
+ALTER TABLE `ads`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `deposits`
@@ -1264,7 +1404,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `notification_logs`
 --
 ALTER TABLE `notification_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1283,6 +1423,18 @@ ALTER TABLE `pages`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- AUTO_INCREMENT for table `plans`
+--
+ALTER TABLE `plans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `ptcs`
+--
+ALTER TABLE `ptcs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
@@ -1318,13 +1470,13 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`

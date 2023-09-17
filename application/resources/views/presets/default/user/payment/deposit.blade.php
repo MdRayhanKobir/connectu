@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <form action="{{route('user.deposit.insert')}}" method="post">
                 @csrf
                 <input type="hidden" name="method_code">
@@ -13,8 +13,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="form-label">@lang('Select Gateway')</label>
-                            <select class="form-control form--control" name="gateway" required>
+                            <label class="form--label">@lang('Select Gateway')</label>
+                            <select class="form--control form--control" name="gateway" required>
                                 <option value="">@lang('Select One')</option>
                                 @foreach($gatewayCurrency as $data)
                                 <option value="{{$data->method_code}}" @selected(old('gateway')==$data->method_code)
@@ -23,9 +23,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">@lang('Amount')</label>
+                            <label class="form--label">@lang('Amount')</label>
                             <div class="input-group">
-                                <input type="number" step="any" name="amount" class="form-control form--control"
+                                <input type="number" step="any" name="amount" class="form--control"
                                     value="{{ old('amount') }}" autocomplete="off" required>
                                 <span class="input-group-text">{{ $general->cur_text }}</span>
                             </div>
@@ -58,7 +58,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <button type="submit" class="btn btn--base w-100 mt-3">@lang('Save')</button>
+                        <button type="submit" class="btn btn--base pill w-100 mt-3">@lang('Save')</button>
                     </div>
                 </div>
             </form>

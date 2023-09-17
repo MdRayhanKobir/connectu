@@ -14,13 +14,15 @@ use Illuminate\Support\Facades\Cookie;
 class SiteController extends Controller
 {
     public function index(){
-        $reference = @$_GET['reference'];
-        if ($reference) {
-            session()->put('reference', $reference);
-        }
-        $pageTitle = 'Home';
-        $sections = Page::where('tempname',$this->activeTemplate)->where('slug','/')->first();
-        return view($this->activeTemplate . 'home', compact('pageTitle','sections'));
+        // $reference = @$_GET['reference'];
+        // if ($reference) {
+        //     session()->put('reference', $reference);
+        // }
+        // $pageTitle = 'Home';
+        // $sections = Page::where('tempname',$this->activeTemplate)->where('slug','/')->first();
+        // return view($this->activeTemplate . 'home', compact('pageTitle','sections'));
+        $pageTitle = "Login";
+        return view($this->activeTemplate . 'user.auth.login', compact('pageTitle'));
     }
 
     public function pages($slug)

@@ -67,19 +67,12 @@ class RegisterController extends Controller
         if ($general->agree) {
             $agree = 'required';
         }
-        $countryData = (array)json_decode(file_get_contents(resource_path('views/includes/country.json')));
-        $countryCodes = implode(',', array_keys($countryData));
-        $mobileCodes = implode(',',array_column($countryData, 'dial_code'));
-        $countries = implode(',',array_column($countryData, 'country'));
+
         $validate = Validator::make($data, [
             'email' => 'required|string|email|unique:users',
-            'mobile' => 'required|regex:/^([0-9]*)$/',
             'password' => ['required','confirmed',$passwordValidation],
             'username' => 'required|unique:users|min:6',
             'captcha' => 'sometimes|required',
-            'mobile_code' => 'required|in:'.$mobileCodes,
-            'country_code' => 'required|in:'.$countryCodes,
-            'country' => 'required|in:'.$countries,
             'agree' => $agree
         ]);
         return $validate;
@@ -141,19 +134,12 @@ class RegisterController extends Controller
         $user->password = Hash::make($data['password']);
         $user->username = trim($data['username']);
         $user->ref_by = $referUser ? $referUser->id : 0;
-        $user->country_code = $data['country_code'];
-        $user->mobile = $data['mobile_code'].$data['mobile'];
-        $user->address = [
-            'address' => '',
-            'state' => '',
-            'zip' => '',
-            'country' => isset($data['country']) ? $data['country'] : null,
-            'city' => ''
-        ];
+        
         $user->status = 1;
         $user->kv = $general->kv ? 0 : 1;
         $user->ev = $general->ev ? 0 : 1;
         $user->sv = $general->sv ? 0 : 1;
+        $user->reg_step = 1;
         $user->ts = 0;
         $user->tv = 1;
         $user->save();

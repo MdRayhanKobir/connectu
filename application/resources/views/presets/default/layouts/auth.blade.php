@@ -10,11 +10,6 @@
     <link href="{{ asset('assets/common/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/common/css/all.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/common/css/line-awesome.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/slick.css')}}">
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/emojionearea.min.css')}}">
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/animate.min.css')}}">
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/odometer.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/main.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/custom.css')}}">
     @stack('style-lib')
@@ -23,33 +18,13 @@
 </head>
 <body>
     @include($activeTemplate.'components.loader')
-    <div class="body-wrapper">
-        <div class="container">
-            <div class="all-site-wrapper">
-                @include($activeTemplate.'components.left_sidenav')
-                <div class="timeline-wrapper-parent-container">
-                    <div class="timeline-wrapper-container">
-                        @include($activeTemplate.'components.header')
-                        @yield('content')
-                    </div>
-                </div>
-                @include($activeTemplate.'components.right_sidenav')
-            </div>
-        </div>
-    </div>
+     @yield('content')
     @include($activeTemplate.'components.cookie')
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then  Bootstrap JS -->
 <script src="{{asset('assets/common/js/jquery-3.7.0.min.js')}}"></script>
   <script src="{{asset('assets/common/js/bootstrap.bundle.min.js')}}"></script>
-
   <script src="{{asset($activeTemplateTrue.'js/bootstrap.min.js')}}"></script>
-  <script src="{{asset($activeTemplateTrue.'js/slick.min.js')}}"></script>
-  <script src="{{asset($activeTemplateTrue.'js/jquery.magnific-popup.min.js')}}"></script>
-  <script src="{{asset($activeTemplateTrue.'js/jquery.appear.min.js')}}"></script>
-  <script src="{{asset($activeTemplateTrue.'js/odometer.min.js')}}"></script>
-  <script src="{{asset($activeTemplateTrue.'js/viewport.jquery.js')}}"></script>
-  <script src="{{asset($activeTemplateTrue.'js/emojionearea.js')}}"></script>
   <script src="{{asset($activeTemplateTrue.'js/main.js')}}"></script>
 
 @stack('script-lib')
@@ -60,7 +35,7 @@
 
 @include('includes.notify')
 
-
+{{--
 <script>
     (function ($) {
         "use strict";
@@ -101,7 +76,7 @@
         });
 
     })(jQuery);
-</script>
+</script> --}}
 
 </body>
 </html>

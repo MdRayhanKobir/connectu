@@ -58,6 +58,10 @@ trait FileInfo
             'path'      =>'assets/admin/images/profile',
             'size'      =>'400x400',
         ];
+
+        $data['adsImage'] = [
+            'path'      =>'assets/admin/images/adsImage',
+        ];
         return $data;
 	}
 

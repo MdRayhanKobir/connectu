@@ -1,8 +1,8 @@
-@extends($activeTemplate .'layouts.frontend')
+@extends($activeTemplate .'layouts.auth')
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-center">
-        <div class="verification-code-wrapper">
+    <div class="d-flex justify-content-center vh-100 align-items-center">
+        <div class="verification-code-wrapper account-form">
             <div class="verification-area">
                 <h5 class="pb-3 text-center border-bottom">@lang('Verify Mobile Number')</h5>
                 <form action="{{route('user.verify.mobile')}}" method="POST" class="submit-form">

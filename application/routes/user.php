@@ -55,8 +55,10 @@ Route::middleware('auth')->name('user.')->group(function () {
                 //Report
                 Route::any('deposit/history', 'depositHistory')->name('deposit.history');
                 Route::get('transactions','transactions')->name('transactions');
-
                 Route::get('attachment-download/{fil_hash}','attachmentDownload')->name('attachment.download');
+
+                Route::get('plans','fetchPlans')->name('fetch.plans');
+
             });
 
             //Profile setting
@@ -64,8 +66,23 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('profile/setting', 'profile')->name('profile.setting');
                 Route::post('profile/setting', 'submitProfile');
                 Route::get('change-password', 'changePassword')->name('change.password');
-                Route::post('change-password', 'submitPassword');
+                Route::post('change-password/submit', 'submitPassword')->name('change.password.submit');
+
             });
+
+
+            //Product
+            Route::controller('AdController')->name('ad.')->prefix('ads')->group(function () {
+
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('product/store', 'store')->name('store');
+                Route::get('edit/{id}', 'edit')->name('edit');
+                Route::post('update/{id}', 'update')->name('update');
+                Route::get('delete', 'delete')->name('delete');
+                Route::get('details/{id}', 'details')->name('details');
+            });
+
 
 
             // Withdraw

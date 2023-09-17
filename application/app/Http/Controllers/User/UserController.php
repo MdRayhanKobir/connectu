@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Lib\FormProcessor;
-use App\Lib\GoogleAuthenticator;
 use App\Models\Form;
+use App\Models\Plan;
+use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Lib\GoogleAuthenticator;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -187,6 +188,12 @@ class UserController extends Controller
         $notify[] = ['success','Registration process completed successfully'];
         return to_route('user.home')->withNotify($notify);
 
+    }
+
+    public function fetchPlans(){
+        $pageTitle = 'Plans';
+        $plans = Plan::where('status',1)->latest()->paginate(getPaginate());
+        return view($this->activeTemplate.'user.plans',compact('pageTitle','plans'));
     }
 
 }

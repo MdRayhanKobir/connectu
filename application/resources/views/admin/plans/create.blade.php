@@ -8,7 +8,7 @@
                 <form action="{{route('admin.plan.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="name" class="font-weight-bold">@lang('Name')</label>
                                 <input type="text" name="name" id="name" value="{{old('name')}}"
@@ -17,7 +17,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="price" class="font-weight-bold">@lang('Price')</label>
                                 <input step="any" type="number" name="price" id="price" value="{{old('price')}}"
@@ -26,7 +26,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="type" class="font-weight-bold">@lang('Validity')</label>
                                 <select name="type" id="type" class="form-control" required="">
@@ -36,16 +36,34 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="daily_view_limit" class="font-weight-bold">@lang('Daily Ad View Limit')</label>
+                                <input type="number" name="daily_view_limit" id="daily_view_limit" value="{{old('daily_view_limit')}}"
+                                    class="form-control " placeholder="@lang('Daily Ad View Limit')"
+                                     required>
+                            </div>
+                        </div>
 
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="create_ad_limit" class="font-weight-bold">@lang('Create Ad Limit')</label>
+                                    <input type="number" name="create_ad_limit" id="create_ad_limit" value="{{old('create_ad_limit')}}"
+                                        class="form-control " placeholder="@lang('Create Ad Limit')"
+                                         required>
+                                </div>
+                            </div>
+
+                            <div class="col-7">
                                 <div class="form-group">
                                     <label for="name" class="font-weight-bold">@lang('Content')</label>
                                     <input type="text" name="contents[]" id="content" value="{{ old('contents.0') }}"
                                                     class="form-control" placeholder="@lang('Content')">
                                 </div>
                             </div>
-                            <div class="col-3 d-flex align-items-center mt-3">
+
+                            <div class="col-2 d-flex align-items-center mt-3">
                                 <button type="button" class="btn btn--white btn--primary addPlanContent"><i
                                     class="fa fa-plus"></i>
                                 </button>
@@ -87,13 +105,13 @@
 
             $("#planContent").append(`
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-10">
                             <div class="form-group">
                                         <input type="text" name="contents[]" id="content" value="{{ old('contents.0') }}"
                                             class="form-control" placeholder="@lang('Content')">
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <button type="button" class="btn text--white btn--danger planContentDelete"><i class="la la-times ms-0"></i></button>
                         </div>
                     </div>

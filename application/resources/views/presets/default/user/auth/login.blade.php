@@ -39,8 +39,9 @@
                                             required>
                                             <div class="password-show-hide fas fa-lock" id="#your-password"></div>
                                         </div>
-                                        <x-captcha></x-captcha>
                                     </div>
+                                    <x-captcha></x-captcha>
+
                                     <div class="col-sm-12">
                                         <div class="d-flex flex-wrap justify-content-between">
                                             <div class="form--check">

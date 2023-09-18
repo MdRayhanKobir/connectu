@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2023 at 03:13 PM
+-- Generation Time: Sep 18, 2023 at 02:55 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -75,7 +75,15 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `read_status`, `cli
 (5, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-03-22 04:09:57', '2023-03-22 04:09:57'),
 (6, 32, 'Deposit request from testuser1', 0, '/admin/manage/deposits/details/64', '2023-05-27 02:51:35', '2023-05-27 02:51:35'),
 (7, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-05-27 02:51:35', '2023-05-27 02:51:35'),
-(8, 33, 'New member registered', 0, '/admin/manage/users/detail/33', '2023-09-16 23:24:11', '2023-09-16 23:24:11');
+(8, 33, 'New member registered', 0, '/admin/manage/users/detail/33', '2023-09-16 23:24:11', '2023-09-16 23:24:11'),
+(9, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/66', '2023-09-17 23:10:49', '2023-09-17 23:10:49'),
+(10, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/67', '2023-09-18 00:06:28', '2023-09-18 00:06:28'),
+(11, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/68', '2023-09-18 00:14:48', '2023-09-18 00:14:48'),
+(12, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/69', '2023-09-18 02:51:05', '2023-09-18 02:51:05'),
+(13, 34, 'New member registered', 0, '/admin/manage/users/detail/34', '2023-09-18 05:34:10', '2023-09-18 05:34:10'),
+(14, 34, 'Deposit request from demouser1', 0, '/admin/manage/deposits/details/70', '2023-09-18 05:35:11', '2023-09-18 05:35:11'),
+(15, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/71', '2023-09-18 05:42:18', '2023-09-18 05:42:18'),
+(16, 33, 'New withdraw request from demouser', 0, '/admin/manage/withdrawals/details/5', '2023-09-18 06:49:25', '2023-09-18 06:49:25');
 
 -- --------------------------------------------------------
 
@@ -126,8 +134,33 @@ CREATE TABLE `ads` (
 --
 
 INSERT INTO `ads` (`id`, `user_id`, `title`, `amount`, `duration`, `max_show`, `showed`, `ads_type`, `ads_body`, `remain`, `status`, `created_at`, `updated_at`) VALUES
-(38, 33, 'Test', '5.00000000', 10, 100, NULL, 1, 'https://wstacks.com/', 100, 1, '2023-09-17 05:08:17', '2023-09-17 05:08:17'),
-(39, 33, 'Test3', '5.00000000', 10, 100, NULL, 1, 'https://wstacks.com/', 100, 1, '2023-09-17 05:08:30', '2023-09-17 05:45:02');
+(40, 34, 'Ads-1', '1.00000000', 2, 50, NULL, 1, 'https://wstacks.com/', 49, 1, '2023-09-18 05:37:03', '2023-09-18 05:42:43'),
+(41, 34, 'Ads-2', '1.00000000', 3, 40, NULL, 4, 'https://www.bbc.com/', 40, 1, '2023-09-18 05:37:54', '2023-09-18 05:37:54'),
+(42, 34, 'Ads-3', '1.00000000', 2, 20, NULL, 1, 'https://www.icc-cricket.com/homepage', 19, 1, '2023-09-18 05:39:03', '2023-09-18 06:11:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ad_views`
+--
+
+CREATE TABLE `ad_views` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ad_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `view_date` varchar(40) NOT NULL,
+  `amount` decimal(28,8) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ad_views`
+--
+
+INSERT INTO `ad_views` (`id`, `ad_id`, `user_id`, `view_date`, `amount`, `created_at`, `updated_at`) VALUES
+(118, 40, 33, '2023-09-18', '1.00000000', '2023-09-18 05:42:43', '2023-09-18 05:42:43'),
+(119, 42, 33, '2023-09-18', '1.00000000', '2023-09-18 06:11:56', '2023-09-18 06:11:56');
 
 -- --------------------------------------------------------
 
@@ -157,6 +190,7 @@ CREATE TABLE `commission_logs` (
 CREATE TABLE `deposits` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `plan_id` int(11) DEFAULT NULL,
   `method_code` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
   `method_currency` varchar(40) DEFAULT NULL,
@@ -179,34 +213,9 @@ CREATE TABLE `deposits` (
 -- Dumping data for table `deposits`
 --
 
-INSERT INTO `deposits` (`id`, `user_id`, `method_code`, `amount`, `method_currency`, `charge`, `rate`, `final_amo`, `detail`, `btc_amo`, `btc_wallet`, `trx`, `try`, `status`, `from_api`, `admin_feedback`, `created_at`, `updated_at`) VALUES
-(1, 8, 103, '20.00000000', 'USD', '2.00000000', '1.00000000', '102.00000000', NULL, '0', '', 'XN7REMJGE4C4', 0, 1, 0, NULL, '2022-01-05 12:12:50', '2022-03-30 12:12:50'),
-(2, 8, 1001, '10.00000000', 'USD', '5.10000000', '1.00000000', '15.10000000', '[{\"name\":\"Transaction Number\",\"type\":\"text\",\"value\":\"asdfasdf\"},{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2022\\/03\\/30\\/62446a3b559711648650811.jpg\"}]', '0', '', 'R3G56TCAUJMM', 0, 1, 0, 'sdfgsdfgsd', '2022-05-04 13:03:24', '2022-03-30 13:04:13'),
-(3, 8, 1000, '100.00000000', 'USD', '0.58000000', '1.00000000', '100.58000000', '[{\"name\":\"Send From Number\",\"type\":\"text\",\"value\":\"sdfg\"},{\"name\":\"Transaction Number\",\"type\":\"text\",\"value\":\"asdfasdf\"},{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2022\\/03\\/30\\/62446a83a6cdb1648650883.jpg\"}]', '0', '', 'QR37YU2V2MAA', 0, 1, 0, NULL, '2022-03-30 13:04:37', '2022-03-30 13:04:43'),
-(4, 8, 1001, '10.00000000', 'USD', '5.10000000', '1.00000000', '15.10000000', '[{\"name\":\"Transaction Number\",\"type\":\"text\",\"value\":\"asdfasdf\"},{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2022\\/04\\/02\\/6247e7d13a7001648879569.pdf\"}]', '0', '', 'NHFHX4TO5ETR', 0, 1, 0, NULL, '2022-04-02 04:35:26', '2022-04-02 04:36:09'),
-(5, 8, 1001, '10.00000000', 'USD', '5.10000000', '1.00000000', '15.10000000', '[{\"name\":\"Transaction Number\",\"type\":\"text\",\"value\":\"asdfasdf\"},{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2022\\/04\\/02\\/6247e7fa216ab1648879610.pdf\"}]', '0', '', '6RQ5DFRGCDVH', 0, 1, 0, NULL, '2022-04-02 04:36:23', '2022-04-02 04:36:50'),
-(6, 8, 1001, '10.00000000', 'USD', '5.10000000', '1.00000000', '15.10000000', '[{\"name\":\"Transaction Number\",\"type\":\"text\",\"value\":\"asdfasdf\"},{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2022\\/04\\/02\\/6247e8dc05b9a1648879836.PDF\"}]', '0', '', 'WD65AUAU418T', 0, 1, 0, NULL, '2022-04-02 04:37:08', '2022-04-02 04:40:36'),
-(7, 8, 1001, '10.00000000', 'USD', '5.10000000', '1.00000000', '15.10000000', NULL, '0', '', 'QFQ1J7GJ4AX2', 0, 1, 0, NULL, '2022-06-09 04:40:54', '2022-04-02 04:40:54'),
-(8, 8, 501, '1.00000000', 'BTC', '11.01000000', '1.00000000', '12.01000000', NULL, '0', '', 'OEW63JWSU8Q7', 0, 0, 0, NULL, '2022-04-04 06:58:01', '2022-04-04 06:58:01'),
-(9, 8, 501, '1.00000000', 'BTC', '11.01000000', '1.00000000', '12.01000000', NULL, '0', '', 'CWQAFRUY2CYN', 0, 0, 0, NULL, '2022-04-04 06:58:46', '2022-04-04 06:58:46'),
-(10, 8, 506, '10.00000000', 'USD', '2.00000000', '10.00000000', '120.00000000', NULL, '0', '', '8HFWBM1HKGXZ', 0, 0, 0, NULL, '2022-04-04 07:00:22', '2022-04-04 07:00:22'),
-(11, 8, 506, '10.00000000', 'USD', '2.00000000', '10.00000000', '120.00000000', NULL, '0', '', 'KBWTC2PFT3Y4', 0, 0, 0, NULL, '2022-04-04 07:00:49', '2022-04-04 07:00:49'),
-(12, 8, 1001, '10.00000000', 'USD', '5.10000000', '1.00000000', '15.10000000', '[{\"name\":\"Transaction Number\",\"type\":\"text\",\"value\":\"66\"},{\"name\":\"Screenshot\",\"type\":\"file\",\"value\":\"2022\\/04\\/11\\/6253b35a2066f1649652570.jpg\"},{\"name\":\"asdf\",\"type\":\"file\",\"value\":\"2022\\/04\\/11\\/6253b35a48fe31649652570.png\"}]', '0', '', 'F75X3ZFZJJXM', 0, 2, 0, NULL, '2022-04-11 03:16:59', '2022-04-11 03:19:30'),
-(13, 8, 108, '100.00000000', 'USD', '1.00000000', '1.00000000', '101.00000000', NULL, '0', '', '1M4GTD3568MO', 0, 0, 0, NULL, '2022-05-08 10:25:41', '2022-05-08 10:25:41'),
-(52, 60, 1000, '10000.00000000', 'TK', '510.00000000', '100.00000000', '1051000.00000000', '[]', '0', '', '2K4E2V4T49YB', 0, 1, 0, NULL, '2022-11-09 03:11:15', '2022-11-09 03:12:13'),
-(53, 62, 1000, '10000.00000000', 'TK', '510.00000000', '100.00000000', '1051000.00000000', '[]', '0', '', 'P5X4QSWBKT48', 0, 1, 0, NULL, '2022-11-09 03:36:14', '2022-11-09 03:36:45'),
-(54, 63, 1000, '10000.00000000', 'TK', '510.00000000', '100.00000000', '1051000.00000000', '[]', '0', '', 'DDN2MOS9ECB3', 0, 1, 0, NULL, '2022-11-09 03:55:36', '2022-11-09 03:55:53'),
-(55, 60, 1000, '500.00000000', 'TK', '35.00000000', '100.00000000', '53500.00000000', '[]', '0', '', 'CCRSGBFT6N2K', 0, 1, 0, NULL, '2022-11-09 04:39:26', '2022-11-09 04:39:39'),
-(56, 60, 1000, '500.00000000', 'TK', '35.00000000', '100.00000000', '53500.00000000', '[]', '0', '', 'DKSDCBGY8RVF', 0, 1, 0, NULL, '2022-11-09 08:37:31', '2022-11-09 11:12:32'),
-(57, 60, 1000, '500.00000000', 'TK', '35.00000000', '100.00000000', '53500.00000000', NULL, '0', '', 'CEW5EHBF47JB', 0, 0, 0, NULL, '2022-11-09 08:43:04', '2022-11-09 08:43:04'),
-(58, 64, 1000, '10000.00000000', 'TK', '510.00000000', '100.00000000', '1051000.00000000', '[]', '0', '', 'WF6PH46P55JB', 0, 1, 0, NULL, '2022-11-09 10:39:59', '2022-11-09 10:40:28'),
-(59, 65, 1000, '10000.00000000', 'TK', '510.00000000', '100.00000000', '1051000.00000000', '[]', '0', '', 'TZ6FE3TO2EE2', 0, 1, 0, NULL, '2022-11-09 11:12:04', '2022-11-09 11:13:15'),
-(60, 66, 1000, '50000.00000000', 'TK', '2510.00000000', '100.00000000', '5251000.00000000', '[]', '0', '', 'H5U92ODF7BQP', 0, 1, 0, NULL, '2022-11-14 04:34:08', '2022-11-14 04:34:27'),
-(61, 60, 114, '5000.00000000', 'USD', '260.00000000', '100.00000000', '526000.00000000', NULL, '0', 'cs_test_a1kTQYYmEI7ImJRadDutBu64CCdtAULEnvTu18PdlvGu4c59bVwjAQOzcP', 'DUANPRNU9VQP', 0, 0, 0, NULL, '2022-11-14 05:40:40', '2022-11-14 05:40:43'),
-(62, 60, 1000, '500.00000000', 'TK', '35.00000000', '100.00000000', '53500.00000000', '[]', '0', '', '314RWBNG3C4U', 0, 2, 0, NULL, '2022-11-14 10:28:25', '2022-11-14 10:28:27'),
-(63, 60, 101, '500.00000000', 'USD', '35.00000000', '80.00000000', '42800.00000000', NULL, '0', '', '88OMNT4KYEB3', 0, 0, 0, NULL, '2022-11-14 10:29:03', '2022-11-14 10:29:03'),
-(64, 32, 1002, '100.00000000', 'BDT', '0.00000000', '107.00000000', '10700.00000000', '[{\"name\":\"Transaction ID\",\"type\":\"text\",\"value\":\"2534523452345\"}]', '0', '', '27MPFMEBEG2U', 0, 2, 0, NULL, '2023-05-27 02:51:18', '2023-05-27 02:51:35'),
-(65, 32, 101, '20.00000000', 'USD', '0.00000000', '1.00000000', '20.00000000', NULL, '0', '', 'NEVXEPRGTTJA', 0, 0, 0, NULL, '2023-08-09 04:07:48', '2023-08-09 04:07:48');
+INSERT INTO `deposits` (`id`, `user_id`, `plan_id`, `method_code`, `amount`, `method_currency`, `charge`, `rate`, `final_amo`, `detail`, `btc_amo`, `btc_wallet`, `trx`, `try`, `status`, `from_api`, `admin_feedback`, `created_at`, `updated_at`) VALUES
+(70, 34, 3, 1000, '35.00000000', 'USD', '0.00000000', '1.00000000', '35.00000000', '[{\"name\":\"Mobile No\",\"type\":\"text\",\"value\":\"01727038318\"}]', '0', '', 'YH2TG2EFZXVM', 0, 1, 0, NULL, '2023-09-18 05:34:59', '2023-09-18 05:35:54'),
+(71, 33, 3, 1000, '35.00000000', 'USD', '0.00000000', '1.00000000', '35.00000000', '[{\"name\":\"Mobile No\",\"type\":\"text\",\"value\":\"01727038318\"}]', '0', '', 'W24XVMM8MZC9', 0, 1, 0, NULL, '2023-09-18 05:42:11', '2023-09-18 05:42:26');
 
 -- --------------------------------------------------------
 
@@ -235,7 +244,7 @@ CREATE TABLE `extensions` (
 
 INSERT INTO `extensions` (`id`, `act`, `name`, `description`, `image`, `script`, `shortcode`, `support`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'tawk-chat', 'Live Chat(Tawk.to)', 'Key location is shown bellow', 'chat-png.png', '<script>\n                        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n                        (function(){\n                        var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n                        s1.async=true;\n                        s1.src=\"https://embed.tawk.to/{{app_key}}\";\n                        s1.charset=\"UTF-8\";\n                        s1.setAttribute(\"crossorigin\",\"*\");\n                        s0.parentNode.insertBefore(s1,s0);\n                        })();\n                    </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"55\"}}', 'twak.png', 0, NULL, '2019-10-18 23:16:05', '2023-03-22 06:04:56'),
-(2, 'google-recaptcha2', 'Google Recaptcha 2', 'Key location is shown bellow', 'recaptcha2.png', '\n<script src=\"https://www.google.com/recaptcha/api.js\"></script>\n<div class=\"g-recaptcha\" data-sitekey=\"{{site_key}}\" data-callback=\"verifyCaptcha\"></div>\n<div id=\"g-recaptcha-error\"></div>', '{\"site_key\":{\"title\":\"Site Key\",\"value\":\"6LdPC88fAAAAADQlUf_DV6Hrvgm-pZuLJFSLDOWV\"},\"secret_key\":{\"title\":\"Secret Key\",\"value\":\"6LdPC88fAAAAAG5SVaRYDnV2NpCrptLg2XLYKRKB\"}}', 'recaptcha.png', 0, NULL, '2019-10-18 23:16:05', '2022-05-08 04:01:36'),
+(2, 'google-recaptcha2', 'Google Recaptcha 2', 'Key location is shown bellow', 'recaptcha2.png', '\n<script src=\"https://www.google.com/recaptcha/api.js\"></script>\n<div class=\"g-recaptcha\" data-sitekey=\"{{site_key}}\" data-callback=\"verifyCaptcha\"></div>\n<div id=\"g-recaptcha-error\"></div>', '{\"site_key\":{\"title\":\"Site Key\",\"value\":\"6LdPC88fAAAAADQlUf_DV6Hrvgm-pZuLJFSLDOWV\"},\"secret_key\":{\"title\":\"Secret Key\",\"value\":\"6LdPC88fAAAAAG5SVaRYDnV2NpCrptLg2XLYKRKB\"}}', 'recaptcha.png', 1, NULL, '2019-10-18 23:16:05', '2023-09-18 03:19:54'),
 (7, 'google-analytics', 'Google Analytics', 'Key location is shown bellow', 'google_analytics.png', '<script async src=\"https://www.googletagmanager.com/gtag/js?id={{app_key}}\"></script>\r\n                <script>\r\n                  window.dataLayer = window.dataLayer || [];\r\n                  function gtag(){dataLayer.push(arguments);}\r\n                  gtag(\"js\", new Date());\r\n                \r\n                  gtag(\"config\", \"{{app_key}}\");\r\n                </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"----\"}}', 'ganalytics.png', 0, NULL, '2019-10-18 23:16:05', '2023-09-14 05:24:33');
 
 -- --------------------------------------------------------
@@ -274,7 +283,8 @@ INSERT INTO `forms` (`id`, `act`, `form_data`, `created_at`, `updated_at`) VALUE
 (17, 'manual_deposit', '[]', '2022-03-30 09:21:19', '2022-03-30 09:21:19'),
 (18, 'manual_deposit', '{\"asdfasddf\":{\"name\":\"asdfasddf\",\"label\":\"asdfasddf\",\"is_required\":\"required\",\"extensions\":\"\",\"options\":[],\"type\":\"text\"}}', '2022-09-28 04:50:55', '2022-09-28 04:50:55'),
 (19, 'manual_deposit', '{\"sadf\":{\"name\":\"sadf\",\"label\":\"sadf\",\"is_required\":\"required\",\"extensions\":null,\"options\":[],\"type\":\"textarea\"}}', '2022-09-28 05:13:04', '2022-09-28 05:13:59'),
-(20, 'manual_deposit', '{\"transaction_id\":{\"name\":\"Transaction ID\",\"label\":\"transaction_id\",\"is_required\":\"required\",\"extensions\":\"\",\"options\":[],\"type\":\"text\"}}', '2023-05-27 02:50:43', '2023-05-27 02:50:43');
+(20, 'manual_deposit', '{\"transaction_id\":{\"name\":\"Transaction ID\",\"label\":\"transaction_id\",\"is_required\":\"required\",\"extensions\":\"\",\"options\":[],\"type\":\"text\"}}', '2023-05-27 02:50:43', '2023-05-27 02:50:43'),
+(21, 'manual_deposit', '{\"mobile_no\":{\"name\":\"Mobile No\",\"label\":\"mobile_no\",\"is_required\":\"required\",\"extensions\":\"\",\"options\":[],\"type\":\"text\"}}', '2023-09-17 23:08:20', '2023-09-17 23:08:20');
 
 -- --------------------------------------------------------
 
@@ -353,7 +363,8 @@ INSERT INTO `gateways` (`id`, `form_id`, `code`, `name`, `alias`, `status`, `gat
 (9, 0, 503, 'CoinPayments', 'Coinpayments', 1, '{\"public_key\":{\"title\":\"Public Key\",\"global\":true,\"value\":\"---------------\"},\"private_key\":{\"title\":\"Private Key\",\"global\":true,\"value\":\"------------\"},\"merchant_id\":{\"title\":\"Merchant ID\",\"global\":true,\"value\":\"----------------\"}}', '{\"BTC\":\"Bitcoin\",\"BTC.LN\":\"Bitcoin (Lightning Network)\",\"LTC\":\"Litecoin\",\"CPS\":\"CPS Coin\",\"VLX\":\"Velas\",\"APL\":\"Apollo\",\"AYA\":\"Aryacoin\",\"BAD\":\"Badcoin\",\"BCD\":\"Bitcoin Diamond\",\"BCH\":\"Bitcoin Cash\",\"BCN\":\"Bytecoin\",\"BEAM\":\"BEAM\",\"BITB\":\"Bean Cash\",\"BLK\":\"BlackCoin\",\"BSV\":\"Bitcoin SV\",\"BTAD\":\"Bitcoin Adult\",\"BTG\":\"Bitcoin Gold\",\"BTT\":\"BitTorrent\",\"CLOAK\":\"CloakCoin\",\"CLUB\":\"ClubCoin\",\"CRW\":\"Crown\",\"CRYP\":\"CrypticCoin\",\"CRYT\":\"CryTrExCoin\",\"CURE\":\"CureCoin\",\"DASH\":\"DASH\",\"DCR\":\"Decred\",\"DEV\":\"DeviantCoin\",\"DGB\":\"DigiByte\",\"DOGE\":\"Dogecoin\",\"EBST\":\"eBoost\",\"EOS\":\"EOS\",\"ETC\":\"Ether Classic\",\"ETH\":\"Ethereum\",\"ETN\":\"Electroneum\",\"EUNO\":\"EUNO\",\"EXP\":\"EXP\",\"Expanse\":\"Expanse\",\"FLASH\":\"FLASH\",\"GAME\":\"GameCredits\",\"GLC\":\"Goldcoin\",\"GRS\":\"Groestlcoin\",\"KMD\":\"Komodo\",\"LOKI\":\"LOKI\",\"LSK\":\"LSK\",\"MAID\":\"MaidSafeCoin\",\"MUE\":\"MonetaryUnit\",\"NAV\":\"NAV Coin\",\"NEO\":\"NEO\",\"NMC\":\"Namecoin\",\"NVST\":\"NVO Token\",\"NXT\":\"NXT\",\"OMNI\":\"OMNI\",\"PINK\":\"PinkCoin\",\"PIVX\":\"PIVX\",\"POT\":\"PotCoin\",\"PPC\":\"Peercoin\",\"PROC\":\"ProCurrency\",\"PURA\":\"PURA\",\"QTUM\":\"QTUM\",\"RES\":\"Resistance\",\"RVN\":\"Ravencoin\",\"RVR\":\"RevolutionVR\",\"SBD\":\"Steem Dollars\",\"SMART\":\"SmartCash\",\"SOXAX\":\"SOXAX\",\"STEEM\":\"STEEM\",\"STRAT\":\"STRAT\",\"SYS\":\"Syscoin\",\"TPAY\":\"TokenPay\",\"TRIGGERS\":\"Triggers\",\"TRX\":\" TRON\",\"UBQ\":\"Ubiq\",\"UNIT\":\"UniversalCurrency\",\"USDT\":\"Tether USD (Omni Layer)\",\"USDT.BEP20\":\"Tether USD (BSC Chain)\",\"USDT.ERC20\":\"Tether USD (ERC20)\",\"USDT.TRC20\":\"Tether USD (Tron/TRC20)\",\"VTC\":\"Vertcoin\",\"WAVES\":\"Waves\",\"XCP\":\"Counterparty\",\"XEM\":\"NEM\",\"XMR\":\"Monero\",\"XSN\":\"Stakenet\",\"XSR\":\"SucreCoin\",\"XVG\":\"VERGE\",\"XZC\":\"ZCoin\",\"ZEC\":\"ZCash\",\"ZEN\":\"Horizen\"}', 1, NULL, NULL, '2019-09-14 13:14:22', '2022-10-29 07:29:51'),
 (10, 0, 506, 'Coinbase Commerce', 'CoinbaseCommerce', 1, '{\"api_key\":{\"title\":\"API Key\",\"global\":true,\"value\":\"---------\"},\"secret\":{\"title\":\"Webhook Shared Secret\",\"global\":true,\"value\":\"----------------\"}}', '{\"USD\":\"USD\",\"EUR\":\"EUR\",\"JPY\":\"JPY\",\"GBP\":\"GBP\",\"AUD\":\"AUD\",\"CAD\":\"CAD\",\"CHF\":\"CHF\",\"CNY\":\"CNY\",\"SEK\":\"SEK\",\"NZD\":\"NZD\",\"MXN\":\"MXN\",\"SGD\":\"SGD\",\"HKD\":\"HKD\",\"NOK\":\"NOK\",\"KRW\":\"KRW\",\"TRY\":\"TRY\",\"RUB\":\"RUB\",\"INR\":\"INR\",\"BRL\":\"BRL\",\"ZAR\":\"ZAR\",\"AED\":\"AED\",\"AFN\":\"AFN\",\"ALL\":\"ALL\",\"AMD\":\"AMD\",\"ANG\":\"ANG\",\"AOA\":\"AOA\",\"ARS\":\"ARS\",\"AWG\":\"AWG\",\"AZN\":\"AZN\",\"BAM\":\"BAM\",\"BBD\":\"BBD\",\"BDT\":\"BDT\",\"BGN\":\"BGN\",\"BHD\":\"BHD\",\"BIF\":\"BIF\",\"BMD\":\"BMD\",\"BND\":\"BND\",\"BOB\":\"BOB\",\"BSD\":\"BSD\",\"BTN\":\"BTN\",\"BWP\":\"BWP\",\"BYN\":\"BYN\",\"BZD\":\"BZD\",\"CDF\":\"CDF\",\"CLF\":\"CLF\",\"CLP\":\"CLP\",\"COP\":\"COP\",\"CRC\":\"CRC\",\"CUC\":\"CUC\",\"CUP\":\"CUP\",\"CVE\":\"CVE\",\"CZK\":\"CZK\",\"DJF\":\"DJF\",\"DKK\":\"DKK\",\"DOP\":\"DOP\",\"DZD\":\"DZD\",\"EGP\":\"EGP\",\"ERN\":\"ERN\",\"ETB\":\"ETB\",\"FJD\":\"FJD\",\"FKP\":\"FKP\",\"GEL\":\"GEL\",\"GGP\":\"GGP\",\"GHS\":\"GHS\",\"GIP\":\"GIP\",\"GMD\":\"GMD\",\"GNF\":\"GNF\",\"GTQ\":\"GTQ\",\"GYD\":\"GYD\",\"HNL\":\"HNL\",\"HRK\":\"HRK\",\"HTG\":\"HTG\",\"HUF\":\"HUF\",\"IDR\":\"IDR\",\"ILS\":\"ILS\",\"IMP\":\"IMP\",\"IQD\":\"IQD\",\"IRR\":\"IRR\",\"ISK\":\"ISK\",\"JEP\":\"JEP\",\"JMD\":\"JMD\",\"JOD\":\"JOD\",\"KES\":\"KES\",\"KGS\":\"KGS\",\"KHR\":\"KHR\",\"KMF\":\"KMF\",\"KPW\":\"KPW\",\"KWD\":\"KWD\",\"KYD\":\"KYD\",\"KZT\":\"KZT\",\"LAK\":\"LAK\",\"LBP\":\"LBP\",\"LKR\":\"LKR\",\"LRD\":\"LRD\",\"LSL\":\"LSL\",\"LYD\":\"LYD\",\"MAD\":\"MAD\",\"MDL\":\"MDL\",\"MGA\":\"MGA\",\"MKD\":\"MKD\",\"MMK\":\"MMK\",\"MNT\":\"MNT\",\"MOP\":\"MOP\",\"MRO\":\"MRO\",\"MUR\":\"MUR\",\"MVR\":\"MVR\",\"MWK\":\"MWK\",\"MYR\":\"MYR\",\"MZN\":\"MZN\",\"NAD\":\"NAD\",\"NGN\":\"NGN\",\"NIO\":\"NIO\",\"NPR\":\"NPR\",\"OMR\":\"OMR\",\"PAB\":\"PAB\",\"PEN\":\"PEN\",\"PGK\":\"PGK\",\"PHP\":\"PHP\",\"PKR\":\"PKR\",\"PLN\":\"PLN\",\"PYG\":\"PYG\",\"QAR\":\"QAR\",\"RON\":\"RON\",\"RSD\":\"RSD\",\"RWF\":\"RWF\",\"SAR\":\"SAR\",\"SBD\":\"SBD\",\"SCR\":\"SCR\",\"SDG\":\"SDG\",\"SHP\":\"SHP\",\"SLL\":\"SLL\",\"SOS\":\"SOS\",\"SRD\":\"SRD\",\"SSP\":\"SSP\",\"STD\":\"STD\",\"SVC\":\"SVC\",\"SYP\":\"SYP\",\"SZL\":\"SZL\",\"THB\":\"THB\",\"TJS\":\"TJS\",\"TMT\":\"TMT\",\"TND\":\"TND\",\"TOP\":\"TOP\",\"TTD\":\"TTD\",\"TWD\":\"TWD\",\"TZS\":\"TZS\",\"UAH\":\"UAH\",\"UGX\":\"UGX\",\"UYU\":\"UYU\",\"UZS\":\"UZS\",\"VEF\":\"VEF\",\"VND\":\"VND\",\"VUV\":\"VUV\",\"WST\":\"WST\",\"XAF\":\"XAF\",\"XAG\":\"XAG\",\"XAU\":\"XAU\",\"XCD\":\"XCD\",\"XDR\":\"XDR\",\"XOF\":\"XOF\",\"XPD\":\"XPD\",\"XPF\":\"XPF\",\"XPT\":\"XPT\",\"YER\":\"YER\",\"ZMW\":\"ZMW\",\"ZWL\":\"ZWL\"}\r\n\r\n', 0, '{\"endpoint\":{\"title\": \"Webhook Endpoint\",\"value\":\"ipn.CoinbaseCommerce\"}}', NULL, '2019-09-14 13:14:22', '2022-10-29 07:29:48'),
 (11, 0, 113, 'Paypal Express', 'PaypalSdk', 1, '{\"clientId\":{\"title\":\"Paypal Client ID\",\"global\":true,\"value\":\"------------\"},\"clientSecret\":{\"title\":\"Client Secret\",\"global\":true,\"value\":\"-----------\"}}', '{\"AUD\":\"AUD\",\"BRL\":\"BRL\",\"CAD\":\"CAD\",\"CZK\":\"CZK\",\"DKK\":\"DKK\",\"EUR\":\"EUR\",\"HKD\":\"HKD\",\"HUF\":\"HUF\",\"INR\":\"INR\",\"ILS\":\"ILS\",\"JPY\":\"JPY\",\"MYR\":\"MYR\",\"MXN\":\"MXN\",\"TWD\":\"TWD\",\"NZD\":\"NZD\",\"NOK\":\"NOK\",\"PHP\":\"PHP\",\"PLN\":\"PLN\",\"GBP\":\"GBP\",\"RUB\":\"RUB\",\"SGD\":\"SGD\",\"SEK\":\"SEK\",\"CHF\":\"CHF\",\"THB\":\"THB\",\"USD\":\"$\"}', 0, NULL, NULL, '2019-09-14 13:14:22', '2021-05-20 23:01:08'),
-(12, 0, 114, 'Stripe Checkout', 'StripeV3', 1, '{\"secret_key\":{\"title\":\"Secret Key\",\"global\":true,\"value\":\"sk_test_51M8Ks2CL65BWuH7eCBcWsLP2yPfWaLtfJVxG3zfii7cCWJE1izM4jkhucmBSm6izmVtSGZyp0JDYYCVmx9E4WmQY004gfnctzD\"},\"publishable_key\":{\"title\":\"PUBLISHABLE KEY\",\"global\":true,\"value\":\"pk_test_51M8Ks2CL65BWuH7eju6khGxJMpeeFuw2Rwrjr8UYCz6ZnQ3PiFxb1gVu1i1dBto9MQrnjkBimHkFJgNcqsrJHTak0010kCY41h\"},\"end_point\":{\"title\":\"End Point Secret\",\"global\":true,\"value\":\"abcd\"}}', '{\"USD\":\"USD\",\"AUD\":\"AUD\",\"BRL\":\"BRL\",\"CAD\":\"CAD\",\"CHF\":\"CHF\",\"DKK\":\"DKK\",\"EUR\":\"EUR\",\"GBP\":\"GBP\",\"HKD\":\"HKD\",\"INR\":\"INR\",\"JPY\":\"JPY\",\"MXN\":\"MXN\",\"MYR\":\"MYR\",\"NOK\":\"NOK\",\"NZD\":\"NZD\",\"PLN\":\"PLN\",\"SEK\":\"SEK\",\"SGD\":\"SGD\"}', 0, '{\"webhook\":{\"title\": \"Webhook Endpoint\",\"value\":\"ipn.StripeV3\"}}', NULL, '2019-09-14 13:14:22', '2022-12-18 08:28:03');
+(12, 0, 114, 'Stripe Checkout', 'StripeV3', 1, '{\"secret_key\":{\"title\":\"Secret Key\",\"global\":true,\"value\":\"sk_test_51M8Ks2CL65BWuH7eCBcWsLP2yPfWaLtfJVxG3zfii7cCWJE1izM4jkhucmBSm6izmVtSGZyp0JDYYCVmx9E4WmQY004gfnctzD\"},\"publishable_key\":{\"title\":\"PUBLISHABLE KEY\",\"global\":true,\"value\":\"pk_test_51M8Ks2CL65BWuH7eju6khGxJMpeeFuw2Rwrjr8UYCz6ZnQ3PiFxb1gVu1i1dBto9MQrnjkBimHkFJgNcqsrJHTak0010kCY41h\"},\"end_point\":{\"title\":\"End Point Secret\",\"global\":true,\"value\":\"abcd\"}}', '{\"USD\":\"USD\",\"AUD\":\"AUD\",\"BRL\":\"BRL\",\"CAD\":\"CAD\",\"CHF\":\"CHF\",\"DKK\":\"DKK\",\"EUR\":\"EUR\",\"GBP\":\"GBP\",\"HKD\":\"HKD\",\"INR\":\"INR\",\"JPY\":\"JPY\",\"MXN\":\"MXN\",\"MYR\":\"MYR\",\"NOK\":\"NOK\",\"NZD\":\"NZD\",\"PLN\":\"PLN\",\"SEK\":\"SEK\",\"SGD\":\"SGD\"}', 0, '{\"webhook\":{\"title\": \"Webhook Endpoint\",\"value\":\"ipn.StripeV3\"}}', NULL, '2019-09-14 13:14:22', '2022-12-18 08:28:03'),
+(49, 21, 1000, 'Manual', 'manual', 1, '[]', '[]', 0, NULL, '<p>Please provide your number</p>', '2023-09-17 23:08:20', '2023-09-17 23:09:18');
 
 -- --------------------------------------------------------
 
@@ -384,7 +395,8 @@ CREATE TABLE `gateway_currencies` (
 --
 
 INSERT INTO `gateway_currencies` (`id`, `name`, `currency`, `symbol`, `method_code`, `gateway_alias`, `min_amount`, `max_amount`, `percent_charge`, `fixed_charge`, `rate`, `image`, `gateway_parameter`, `created_at`, `updated_at`) VALUES
-(3, 'Paypal - USD', 'USD', '$', 101, 'Paypal', '10.00000000', '1000.00000000', '0.00', '0.00000000', '1.00000000', NULL, '{\"paypal_email\":\"sb-58ira22618401@business.example.com\"}', '2023-05-27 02:54:30', '2023-05-27 02:54:30');
+(3, 'Paypal - USD', 'USD', '$', 101, 'Paypal', '10.00000000', '1000.00000000', '0.00', '0.00000000', '1.00000000', NULL, '{\"paypal_email\":\"sb-58ira22618401@business.example.com\"}', '2023-05-27 02:54:30', '2023-05-27 02:54:30'),
+(4, 'Manual', 'USD', '', 1000, 'manual', '1.00000000', '10000.00000000', '0.00', '0.00000000', '1.00000000', NULL, NULL, '2023-09-17 23:08:20', '2023-09-17 23:08:20');
 
 -- --------------------------------------------------------
 
@@ -482,7 +494,20 @@ INSERT INTO `notification_logs` (`id`, `user_id`, `sender`, `sent_from`, `sent_t
 (2, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;406871</span></font></div></div></p>', 'email', '2023-09-16 23:24:14', '2023-09-16 23:24:14'),
 (3, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;702068</span></font></div></div></p>', 'email', '2023-09-16 23:26:49', '2023-09-16 23:26:49'),
 (4, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;496358</span></font></div></div></p>', 'email', '2023-09-16 23:29:27', '2023-09-16 23:29:27'),
-(5, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;410633</span></font></div></div></p>', 'email', '2023-09-16 23:35:57', '2023-09-16 23:35:57');
+(5, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Please verify your email address', '<p>Hi @demouser (demouser),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;410633</span></font></div></div></p>', 'email', '2023-09-16 23:35:57', '2023-09-16 23:35:57'),
+(6, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Deposit Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div>Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">500.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>submitted successfully<span style=\"font-weight: bolder;\">&nbsp;.<br></span></div><div><span style=\"font-weight: bolder;\"><br></span></div><div><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div><br></div><div>Amount : 500.00 USD</div><div>Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div><br></div><div>Conversion Rate : 1 USD = 1.00 USD</div><div>Payable : 500.00 USD<br></div><div>Pay via :&nbsp; Manual</div><div><br></div><div>Transaction Number : ZTNXXWRGKPQY</div><div><br></div><div><br style=\"font-family: Montserrat, sans-serif;\"></div></p>', 'email', '2023-09-17 23:10:51', '2023-09-17 23:10:51'),
+(7, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Your Deposit is Approved', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">500.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>is Approved .<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 500.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Received : 500.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Paid via :&nbsp; Manual</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : ZTNXXWRGKPQY</div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\"><span style=\"font-weight: bolder;\"><br></span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">500.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div></p>', 'email', '2023-09-17 23:32:04', '2023-09-17 23:32:04'),
+(8, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Deposit Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div>Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>submitted successfully<span style=\"font-weight: bolder;\">&nbsp;.<br></span></div><div><span style=\"font-weight: bolder;\"><br></span></div><div><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div><br></div><div>Amount : 35.00 USD</div><div>Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div><br></div><div>Conversion Rate : 1 USD = 1.00 USD</div><div>Payable : 35.00 USD<br></div><div>Pay via :&nbsp; Manual</div><div><br></div><div>Transaction Number : 1V2THAZW1K63</div><div><br></div><div><br style=\"font-family: Montserrat, sans-serif;\"></div></p>', 'email', '2023-09-18 00:06:30', '2023-09-18 00:06:30'),
+(9, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Deposit Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div>Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>submitted successfully<span style=\"font-weight: bolder;\">&nbsp;.<br></span></div><div><span style=\"font-weight: bolder;\"><br></span></div><div><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div><br></div><div>Amount : 35.00 USD</div><div>Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div><br></div><div>Conversion Rate : 1 USD = 1.00 USD</div><div>Payable : 35.00 USD<br></div><div>Pay via :&nbsp; Manual</div><div><br></div><div>Transaction Number : ZMJAMXAPTXCG</div><div><br></div><div><br style=\"font-family: Montserrat, sans-serif;\"></div></p>', 'email', '2023-09-18 00:14:50', '2023-09-18 00:14:50'),
+(10, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Your Deposit is Approved', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>is Approved .<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 35.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Received : 35.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Paid via :&nbsp; Manual</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : ZMJAMXAPTXCG</div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\"><span style=\"font-weight: bolder;\"><br></span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">500.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div></p>', 'email', '2023-09-18 00:14:59', '2023-09-18 00:14:59'),
+(11, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Deposit Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div>Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>submitted successfully<span style=\"font-weight: bolder;\">&nbsp;.<br></span></div><div><span style=\"font-weight: bolder;\"><br></span></div><div><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div><br></div><div>Amount : 35.00 USD</div><div>Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div><br></div><div>Conversion Rate : 1 USD = 1.00 USD</div><div>Payable : 35.00 USD<br></div><div>Pay via :&nbsp; Manual</div><div><br></div><div>Transaction Number : 1F3KR856EGBQ</div><div><br></div><div><br style=\"font-family: Montserrat, sans-serif;\"></div></p>', 'email', '2023-09-18 02:51:07', '2023-09-18 02:51:07'),
+(12, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Your Deposit is Approved', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>is Approved .<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 35.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Received : 35.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Paid via :&nbsp; Manual</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : 1F3KR856EGBQ</div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\"><span style=\"font-weight: bolder;\"><br></span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">500.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div></p>', 'email', '2023-09-18 02:51:18', '2023-09-18 02:51:18'),
+(13, 34, 'php', 'notify@wstacks.com', 'demouser1@gmail.com', 'Please verify your email address', '<p>Hi @demouser1 (demouser1),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;257703</span></font></div></div></p>', 'email', '2023-09-18 05:34:13', '2023-09-18 05:34:13'),
+(14, 34, 'php', 'notify@wstacks.com', 'demouser1@gmail.com', 'Deposit Request Submitted Successfully', '<p>Hi @demouser1 (demouser1),&nbsp;</p><p><div>Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>submitted successfully<span style=\"font-weight: bolder;\">&nbsp;.<br></span></div><div><span style=\"font-weight: bolder;\"><br></span></div><div><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div><br></div><div>Amount : 35.00 USD</div><div>Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div><br></div><div>Conversion Rate : 1 USD = 1.00 USD</div><div>Payable : 35.00 USD<br></div><div>Pay via :&nbsp; Manual</div><div><br></div><div>Transaction Number : YH2TG2EFZXVM</div><div><br></div><div><br style=\"font-family: Montserrat, sans-serif;\"></div></p>', 'email', '2023-09-18 05:35:13', '2023-09-18 05:35:13'),
+(15, 34, 'php', 'notify@wstacks.com', 'demouser1@gmail.com', 'Your Deposit is Approved', '<p>Hi @demouser1 (demouser1),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>is Approved .<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 35.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Received : 35.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Paid via :&nbsp; Manual</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : YH2TG2EFZXVM</div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\"><span style=\"font-weight: bolder;\"><br></span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">0.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div></p>', 'email', '2023-09-18 05:35:56', '2023-09-18 05:35:56'),
+(16, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Deposit Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div>Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>submitted successfully<span style=\"font-weight: bolder;\">&nbsp;.<br></span></div><div><span style=\"font-weight: bolder;\"><br></span></div><div><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div><br></div><div>Amount : 35.00 USD</div><div>Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div><br></div><div>Conversion Rate : 1 USD = 1.00 USD</div><div>Payable : 35.00 USD<br></div><div>Pay via :&nbsp; Manual</div><div><br></div><div>Transaction Number : W24XVMM8MZC9</div><div><br></div><div><br style=\"font-family: Montserrat, sans-serif;\"></div></p>', 'email', '2023-09-18 05:42:20', '2023-09-18 05:42:20'),
+(17, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Your Deposit is Approved', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>is Approved .<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 35.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Received : 35.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Paid via :&nbsp; Manual</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : W24XVMM8MZC9</div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\"><span style=\"font-weight: bolder;\"><br></span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">0.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div></p>', 'email', '2023-09-18 05:42:28', '2023-09-18 05:42:28'),
+(18, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Withdraw Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your withdraw request of&nbsp;<span style=\"font-weight: bolder;\">1.00 USD</span>&nbsp; via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Mobile Banking&nbsp;</span>has been submitted Successfully.<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your withdraw:<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">You will get: 1.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Via :&nbsp; Mobile Banking</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : 3YF268KY9K9F</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">1.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br><br><br></div></p>', 'email', '2023-09-18 06:49:27', '2023-09-18 06:49:27');
 
 -- --------------------------------------------------------
 
@@ -619,6 +644,8 @@ CREATE TABLE `plans` (
   `name` varchar(40) NOT NULL,
   `price` decimal(28,8) NOT NULL,
   `content` text DEFAULT NULL,
+  `create_ad_limit` int(11) NOT NULL,
+  `daily_view_limit` int(11) NOT NULL,
   `type` int(11) NOT NULL COMMENT '0= month, 1= year',
   `month` varchar(40) DEFAULT NULL,
   `year` varchar(40) DEFAULT NULL,
@@ -631,57 +658,10 @@ CREATE TABLE `plans` (
 -- Dumping data for table `plans`
 --
 
-INSERT INTO `plans` (`id`, `name`, `price`, `content`, `type`, `month`, `year`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Premium', '125.00000000', '[\"Unlimited updates\",\"Custom designs & features\",\"Custom permissions\",\"Optimize hashtags\",\"Custom instructors\"]', 0, NULL, '366', 1, '2023-03-26 08:04:55', '2023-03-30 01:59:20'),
-(2, 'Essentials', '89.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom instructors\",\"Optimize hashtags\",\"Custom instructors\"]', 1, '31', NULL, 1, '2023-03-26 08:07:20', '2023-04-17 01:31:56'),
-(3, 'Standard', '35.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom designs & features\",\"Custom hashtags\",\"Custom instructors\"]', 1, '31', NULL, 1, '2023-03-26 08:08:24', '2023-09-16 03:11:04');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ptcs`
---
-
-CREATE TABLE `ptcs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(191) DEFAULT NULL,
-  `amount` decimal(18,8) NOT NULL,
-  `duration` int(11) NOT NULL,
-  `max_show` int(11) NOT NULL,
-  `showed` int(11) NOT NULL,
-  `ads_type` int(11) DEFAULT NULL COMMENT '1=>link|2=>image|3=>script',
-  `ads_body` longtext DEFAULT NULL,
-  `remain` int(11) NOT NULL COMMENT 'max_show-showed',
-  `status` int(11) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `ptcs`
---
-
-INSERT INTO `ptcs` (`id`, `title`, `amount`, `duration`, `max_show`, `showed`, `ads_type`, `ads_body`, `remain`, `status`, `created_at`, `updated_at`) VALUES
-(18, 'Toggole Blog 3', '0.50000000', 3, 30, 6, 1, 'https://toggl.com/blog/35-best-useless-websites-internet', 24, 1, '2022-11-07 03:15:19', '2022-11-16 08:54:28'),
-(19, 'Toggole Blog2', '0.50000000', 3, 300, 6, 1, 'https://toggl.com/blog/35-best-useless-websites-internet', 294, 1, '2022-11-07 03:16:02', '2022-11-16 08:54:17'),
-(20, 'Radio Garden2', '0.50000000', 3, 200, 9, 1, 'https://radio.garden/visit/barishal/egSDmbZ3', 191, 1, '2022-11-07 03:16:35', '2022-11-16 09:08:52'),
-(21, 'Web8', '0.30000000', 3, 20, 6, 1, 'https://www.whatsmyip.org/random-website-machine/', 14, 1, '2022-11-07 03:17:23', '2022-11-16 08:53:22'),
-(22, 'Web7', '0.50000000', 3, 60, 5, 1, 'https://www.whatsmyip.org/random-website-machine/', 55, 1, '2022-11-07 03:18:23', '2022-11-16 08:53:01'),
-(23, 'Web6', '0.50000000', 3, 100, 11, 1, 'https://www.whatsmyip.org/random-website-machine/', 89, 1, '2022-11-07 03:19:04', '2022-11-17 08:34:09'),
-(24, 'Radio Garden', '0.50000000', 3, 40, 5, 1, 'https://radio.garden/visit/barishal/egSDmbZ3', 35, 1, '2022-11-07 03:19:37', '2022-11-16 08:49:53'),
-(25, 'Loream', '0.50000000', 3, 50, 7, 1, 'https://www.lipsum.com/', 43, 1, '2022-11-07 03:20:18', '2022-11-16 07:40:26'),
-(26, 'ESPN', '0.50000000', 3, 20, 6, 1, 'https://www.espncricinfo.com/', 14, 1, '2022-11-07 03:20:51', '2022-11-16 03:42:27'),
-(27, 'ICC3', '0.50000000', 3, 30, 5, 1, 'https://www.icc-cricket.com/homepage', 25, 1, '2022-11-07 03:21:20', '2022-11-16 03:43:39'),
-(28, 'ICC2', '0.50000000', 3, 50, 5, 1, 'https://www.icc-cricket.com/homepage', 45, 1, '2022-11-07 03:22:00', '2022-11-16 07:15:35'),
-(29, 'ICC', '0.50000000', 3, 50, 6, 1, 'https://www.icc-cricket.com/homepage', 44, 1, '2022-11-07 03:23:03', '2023-06-20 07:34:16'),
-(30, 'Honda', '0.50000000', 3, 300, 0, 1, 'https://www.honda.com.bd/', 300, 1, '2022-11-14 04:19:38', '2022-11-16 07:24:46'),
-(31, 'Geo user', '0.50000000', 3, 200, 0, 1, 'https://radio.garden/visit/barishal/egSDmbZ3', 200, 1, '2022-11-14 04:20:08', '2022-11-16 08:48:16'),
-(32, 'Auto Draw', '0.50000000', 2, 100, 1, 1, 'https://www.autodraw.com/', 99, 1, '2022-11-14 04:20:30', '2022-11-20 04:17:08'),
-(33, 'Toggle Blog', '0.50000000', 3, 300, 0, 1, 'https://toggl.com/blog/35-best-useless-websites-internet', 300, 1, '2022-11-14 04:20:54', '2022-11-16 08:43:44'),
-(34, 'Web5', '0.50000000', 3, 50, 0, 1, 'https://www.icc-cricket.com/homepage', 50, 1, '2022-11-14 04:21:22', '2022-11-16 08:42:45'),
-(35, 'Web2', '0.50000000', 3, 40, 0, 1, 'https://www.espncricinfo.com/', 40, 1, '2022-11-14 04:22:01', '2022-11-16 08:55:55'),
-(36, 'Web4', '0.50000000', 3, 40, 0, 1, 'https://www.random-website.com/', 40, 1, '2022-11-14 04:22:41', '2022-11-16 08:39:14'),
-(37, 'Web1', '0.50000000', 3, 200, 1, 1, 'https://www.icc-cricket.com/homepage', 199, 1, '2022-11-14 04:23:08', '2022-11-16 07:50:14');
+INSERT INTO `plans` (`id`, `name`, `price`, `content`, `create_ad_limit`, `daily_view_limit`, `type`, `month`, `year`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Premium', '125.00000000', '[\"Unlimited updates\",\"Custom designs & features\",\"Custom permissions\",\"Optimize hashtags\",\"Custom instructors\"]', 150, 50, 0, NULL, '366', 1, '2023-03-26 08:04:55', '2023-09-18 02:43:02'),
+(2, 'Essentials', '89.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom instructors\",\"Optimize hashtags\",\"Custom instructors\"]', 100, 30, 1, '31', NULL, 1, '2023-03-26 08:07:20', '2023-09-18 02:42:54'),
+(3, 'Standard', '35.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom designs & features\",\"Custom hashtags\",\"Custom instructors\"]', 50, 10, 1, '31', NULL, 1, '2023-03-26 08:08:24', '2023-09-18 02:42:39');
 
 -- --------------------------------------------------------
 
@@ -695,6 +675,33 @@ CREATE TABLE `subscribers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscriptions`
+--
+
+CREATE TABLE `subscriptions` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `plan_id` int(11) NOT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  `create_ad_limit` int(11) NOT NULL,
+  `daily_view_limit` int(11) NOT NULL,
+  `starts_at` timestamp NULL DEFAULT NULL,
+  `ends_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subscriptions`
+--
+
+INSERT INTO `subscriptions` (`id`, `user_id`, `plan_id`, `amount`, `create_ad_limit`, `daily_view_limit`, `starts_at`, `ends_at`, `created_at`, `updated_at`) VALUES
+(7, 34, 3, '35', 50, 10, '2023-09-18 05:35:54', '2023-10-19 05:35:54', '2023-09-18 05:35:54', '2023-09-18 05:35:54'),
+(8, 33, 3, '35', 50, 10, '2023-09-18 05:42:26', '2023-10-19 05:42:26', '2023-09-18 05:42:26', '2023-09-18 05:42:26');
 
 -- --------------------------------------------------------
 
@@ -986,14 +993,11 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `user_id`, `amount`, `charge`, `post_balance`, `trx_type`, `trx`, `details`, `remark`, `created_at`, `updated_at`) VALUES
-(1, 29, '100.00000000', '2.00000000', '100.00000000', '+', 'AHROWMD1MXO6', 'Deposit Via Stripe Hosted - USD', 'deposit', NULL, NULL),
-(2, 29, '100.00000000', '2.00000000', '200.00000000', '+', 'T29P6QSQTQU2', 'Deposit Via Stripe Hosted - USD', 'deposit', '2022-03-21 04:05:04', '2022-03-21 04:05:04'),
-(3, 8, '19.54700000', '0.00000000', '14787.55755565', '+', 'DG7V5FHHV24Z', 'Qui enim nisi eos ra', 'balance_add', '2022-03-21 07:07:49', '2022-03-21 07:07:49'),
-(4, 8, '10.00000000', '1.10000000', '14777.55755565', '-', 'H3SQMS7PW6FV', '8.90 USD Withdraw Via Cheyenne Justice', 'withdraw', '2022-03-24 04:47:11', '2022-03-24 04:47:11'),
-(6, 8, '10.00000000', '0.00000000', '14817.55755565', '+', 'MM3HNXB4PMO6', '256', 'balance_add', '2022-03-30 10:02:06', '2022-03-30 10:02:06'),
-(7, 8, '100.00000000', '3.00000000', '14717.55755565', '-', '63QSRS186WNB', '97.00 USD Withdraw Via Bank Transfer', 'withdraw', '2022-04-03 04:23:38', '2022-04-03 04:23:38'),
-(8, 8, '100.00000000', '0.00000000', '14817.55755565', '+', '63QSRS186WNB', '100.00 USD Refunded from withdrawal rejection', 'withdraw_reject', '2022-04-03 04:25:53', '2022-04-03 04:25:53'),
-(9, 8, '100.00000000', '3.00000000', '14717.55755565', '-', '9JO7WE2YMWJY', '97.00 USD Withdraw Via Bank Transfer', 'withdraw', '2022-04-04 05:37:37', '2022-04-04 05:37:37');
+(15, 34, '35.00000000', '0.00000000', '0.00000000', '+', 'YH2TG2EFZXVM', 'Deposit Via Manual', 'deposit', '2023-09-18 05:35:54', '2023-09-18 05:35:54'),
+(16, 33, '35.00000000', '0.00000000', '0.00000000', '+', 'W24XVMM8MZC9', 'Deposit Via Manual', 'deposit', '2023-09-18 05:42:26', '2023-09-18 05:42:26'),
+(17, 33, '1.00000000', '0.00000000', '1.00000000', '+', 'DSVOXJ8ZKPMM', 'Earn amount from ads', 'Ads earn', '2023-09-18 05:42:43', '2023-09-18 05:42:43'),
+(18, 33, '1.00000000', '0.00000000', '2.00000000', '+', 'HCGFYJE1EHTO', 'Earn amount from ads', 'Ads earn', '2023-09-18 06:11:56', '2023-09-18 06:11:56'),
+(19, 33, '1.00000000', '0.00010000', '1.00000000', '-', '3YF268KY9K9F', '1.00 USD Withdraw Via Mobile Banking', 'withdraw', '2023-09-18 06:49:25', '2023-09-18 06:49:25');
 
 -- --------------------------------------------------------
 
@@ -1055,7 +1059,8 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `countr
 (30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2022-03-22 07:53:20', '2022-03-22 08:09:45'),
 (31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '285472', '2022-09-29 17:45:24', 0, 1, NULL, NULL, NULL, '2022-03-22 11:22:57', '2023-01-05 09:32:49'),
 (32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', NULL, '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-03-22 04:09:55', '2023-03-22 04:10:43'),
-(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '0.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-09-16 23:24:11', '2023-09-17 00:51:04');
+(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, 'xzC3fJ3kkD21a83ooemMPpqfjlzbX9ML6hYmivBX6wa00jYleSCwNYSDjeIV', '2023-09-16 23:24:11', '2023-09-18 06:49:25'),
+(34, NULL, NULL, 'demouser1', 'demouser1@gmail.com', NULL, NULL, 0, '0.00000000', '$2y$10$pdSA9PzlndnntMAd.994z.YDQFVGC441F9nimrdw4T5Wx/wo5HR02', NULL, NULL, 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-09-18 05:34:10', '2023-09-18 05:34:30');
 
 -- --------------------------------------------------------
 
@@ -1088,7 +1093,11 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 (3, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-16 23:47:53', '2023-09-16 23:47:53'),
 (4, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 00:50:23', '2023-09-17 00:50:23'),
 (5, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 00:50:42', '2023-09-17 00:50:42'),
-(6, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 02:44:55', '2023-09-17 02:44:55');
+(6, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 02:44:55', '2023-09-17 02:44:55'),
+(7, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 22:37:01', '2023-09-17 22:37:01'),
+(8, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-18 02:48:14', '2023-09-18 02:48:14'),
+(9, 34, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-18 05:34:10', '2023-09-18 05:34:10'),
+(10, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-18 05:40:08', '2023-09-18 05:40:08');
 
 -- --------------------------------------------------------
 
@@ -1122,7 +1131,8 @@ INSERT INTO `withdrawals` (`id`, `method_id`, `user_id`, `amount`, `currency`, `
 (1, 1, 8, '100.00000000', 'USD', '1.00000000', '3.00000000', '63QSRS186WNB', '97.00000000', '97.00000000', '[{\"name\":\"Bank Name\",\"type\":\"text\",\"value\":\"Hilary Irwin\"},{\"name\":\"Account Name\",\"type\":\"text\",\"value\":\"Mira Bishop\"},{\"name\":\"Account Number\",\"type\":\"text\",\"value\":\"384\"}]', 1, 'ffffff', '2022-03-01 04:23:33', '2022-04-03 04:25:53'),
 (2, 1, 8, '10.00000000', 'USD', '1.00000000', '1.20000000', 'QNVJZSWATSH2', '8.80000000', '8.80000000', NULL, 1, NULL, '2022-04-03 06:38:22', '2022-04-03 06:38:22'),
 (3, 1, 8, '100.00000000', 'USD', '1.00000000', '3.00000000', '9JO7WE2YMWJY', '97.00000000', '97.00000000', '[{\"name\":\"Bank Name\",\"type\":\"text\",\"value\":\"Yardley Castaneda\"},{\"name\":\"Account Name\",\"type\":\"text\",\"value\":\"Chelsea Collins\"},{\"name\":\"Account Number\",\"type\":\"text\",\"value\":\"969\"}]', 1, NULL, '2022-04-04 05:37:32', '2022-04-04 05:37:37'),
-(4, 1, 8, '10.00000000', 'USD', '1.00000000', '1.20000000', 'B5B3RT3VN1XH', '8.80000000', '8.80000000', NULL, 0, NULL, '2022-04-05 05:13:26', '2022-04-05 05:13:26');
+(4, 1, 8, '10.00000000', 'USD', '1.00000000', '1.20000000', 'B5B3RT3VN1XH', '8.80000000', '8.80000000', NULL, 0, NULL, '2022-04-05 05:13:26', '2022-04-05 05:13:26'),
+(5, 2, 33, '1.00000000', 'USD', '1.00000000', '0.00010000', '3YF268KY9K9F', '0.99990000', '0.99990000', '[{\"name\":\"Mobile Number\",\"type\":\"text\",\"value\":\"01727038318\"}]', 2, NULL, '2023-09-18 06:47:45', '2023-09-18 06:49:25');
 
 -- --------------------------------------------------------
 
@@ -1181,6 +1191,12 @@ ALTER TABLE `admin_password_resets`
 -- Indexes for table `ads`
 --
 ALTER TABLE `ads`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ad_views`
+--
+ALTER TABLE `ad_views`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1264,15 +1280,15 @@ ALTER TABLE `plans`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ptcs`
---
-ALTER TABLE `ptcs`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `subscribers`
 --
 ALTER TABLE `subscribers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1338,7 +1354,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1350,13 +1366,19 @@ ALTER TABLE `admin_password_resets`
 -- AUTO_INCREMENT for table `ads`
 --
 ALTER TABLE `ads`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT for table `ad_views`
+--
+ALTER TABLE `ad_views`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `deposits`
 --
 ALTER TABLE `deposits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `extensions`
@@ -1368,7 +1390,7 @@ ALTER TABLE `extensions`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `frontends`
@@ -1380,13 +1402,13 @@ ALTER TABLE `frontends`
 -- AUTO_INCREMENT for table `gateways`
 --
 ALTER TABLE `gateways`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `gateway_currencies`
 --
 ALTER TABLE `gateway_currencies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `general_settings`
@@ -1404,7 +1426,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `notification_logs`
 --
 ALTER TABLE `notification_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1431,16 +1453,16 @@ ALTER TABLE `plans`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `ptcs`
---
-ALTER TABLE `ptcs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
-
---
 -- AUTO_INCREMENT for table `subscribers`
 --
 ALTER TABLE `subscribers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `support_attachments`
@@ -1464,25 +1486,25 @@ ALTER TABLE `support_tickets`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`
 --
 ALTER TABLE `withdrawals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `withdraw_methods`

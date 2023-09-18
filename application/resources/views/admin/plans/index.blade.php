@@ -12,6 +12,8 @@
                                 <th>@lang('Name')</th>
                                 <th>@lang('Price')</th>
                                 <th>@lang('Validity')</th>
+                                <th>@lang('Daily Ad View Limit')</th>
+                                <th>@lang('Create Ad Limit')</th>
                                 <th>@lang('Time')</th>
                                 <th>@lang('Status')</th>
                                 <th>@lang('Action')</th>
@@ -20,11 +22,14 @@
                         <tbody>
                             @forelse($plans as $plan)
                             <tr>
-                                <td>{{ $plan->name }}</td>
+                                <td>{{__($plan->name) }}</td>
                                 <td>{{ showAmount($plan->price) }}</td>
                                 <td>
                                     {{ $plan->type == 1 ? __('Monthly') : __('Yearly') }}
                                 </td>
+                                <td>{{ (__($plan->daily_view_limit)) }}</td>
+                                <td>{{ (__($plan->create_ad_limit)) }}</td>
+
                                 <td>{{ showDateTime($plan->created_at) }}</td>
 
                                 <td>

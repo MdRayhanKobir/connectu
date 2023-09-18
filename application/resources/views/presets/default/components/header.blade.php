@@ -7,16 +7,18 @@
 
                     <div class="menu-wrapper">
                         <ul class="main-menu">
-                            <li><a class='active' href="index.html">Home</a></li>
+                            <li><a class='active' href="index.html">{{__($pageTitle)}}</a></li>
                         </ul>
                     </div>
 
                     <div class="header-menu-wrapper align-items-center d-flex">
                         <div class="logo-wrapper">
-                            <a href="index.html" class="normal-logo" id="normal-logo"> <img
-                                    src="assets/images/logo/logo.png" alt=""></a>
-                            <a href="index.html" class="dark-logo hidden" id="dark-logo"> <img
-                                    src="assets/images/logo/dark-logo.png" alt=""></a>
+                            <a href="{{ route('home') }}" class="normal-logo"> <img
+                                src="{{ getImage(getFilePath('logoIcon') . '/logo.png', '?' . time()) }}"
+                                alt="{{ config('app.name') }}"></a>
+                        <a href="{{ route('home') }}" class="dark-logo hidden"> <img
+                                src="{{ getImage(getFilePath('logoIcon') . '/logo_white.png', '?' . time()) }}"
+                                alt="{{ config('app.name') }}"></a>
                         </div>
                     </div>
 

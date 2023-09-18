@@ -49,13 +49,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
+                    {{-- <div class="form-group col-md-12">
                         <label class="form--label">@lang('Status') </label>
                         <label class="switch m-0">
                             <input type="checkbox" class="toggle-switch" name="status">
                             <span class="slider round"></span>
                         </label>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group col-md-4">
                         <label for="ads_type" class="form--label">@lang('Advertisement Type')</label>

@@ -76,7 +76,14 @@ $user = auth()->user();
                     <span class="text">@lang('Pricing')</span>
                 </a>
             </li>
-            <li class="left-sidebar-menu__item">
+
+            <li class="left-sidebar-menu__item {{ Route::is('user.ad.fetch') ? 'active' : '' }}">
+                <a href="{{route('user.ad.fetch')}}" class="left-sidebar-menu__link">
+                    <span class="icon"><i class="fas fa-ad"></i></span>
+                    <span class="text"> @lang('All Advertises')</span>
+                </a>
+            </li>
+            <li class="left-sidebar-menu__item {{ Route::is('user.ad.index') ? 'active' : '' }}">
                 <a href="{{route('user.ad.index')}}" class="left-sidebar-menu__link">
                     <span class="icon"><i class="fas fa-ad"></i></span>
                     <span class="text"> @lang('Advertiser Panel')</span>

@@ -1,17 +1,18 @@
 <?php
 
-use App\Lib\GoogleAuthenticator;
-use App\Models\Extension;
-use App\Models\Frontend;
-use App\Models\GeneralSetting;
 use Carbon\Carbon;
 use App\Lib\Captcha;
+use App\Notify\Notify;
 use App\Lib\ClientInfo;
 use App\Lib\CurlRequest;
 use App\Lib\FileManager;
-use App\Notify\Notify;
-use Illuminate\Support\Facades\Cache;
+use App\Models\Frontend;
+use App\Models\Extension;
 use Illuminate\Support\Str;
+use App\Models\Subscription;
+use App\Models\GeneralSetting;
+use App\Lib\GoogleAuthenticator;
+use Illuminate\Support\Facades\Cache;
 
 
 function slug($string)
@@ -438,4 +439,27 @@ function gs()
         Cache::put('GeneralSetting', $general);
     }
     return $general;
+}
+
+
+function isSubscribe($userId)
+{
+    $subscription = Subscription::where('user_id', $userId)
+        ->orderBy('id', 'desc')
+        ->first();
+
+    if ($subscription && $subscription->ends_at >= now()) {
+        // Active
+        return $subscription;
+
+    } else if ($subscription) {
+        // Expired
+        $subscription->delete();
+        return false;
+    } else {
+        // No subscription
+        return null;
+    }
+
+
 }

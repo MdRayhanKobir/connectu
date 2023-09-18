@@ -1,90 +1,74 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
-<div class="py-5">
-    <div class="container">
-        <div class="row justify-content-center mt-2">
-            <div class="col-lg-12 ">
-                <form action="">
-                    <div class="mb-3 d-flex justify-content-end w-50">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control" value="{{ request()->search }}"
-                                placeholder="@lang('Search by transactions')">
-                            <button class="input-group-text bg-primary text-white">
-                                <i class="las la-search"></i>
-                            </button>
+<div class="timeline-mt-60">
+    <div class="hot-topic-wrapper account-settings">
+        <div class="hot-topic-item heading">
+            <h6 class="title">{{__($pageTitle)}}</h6>
+        </div>
+
+        <div class="hot-topic-item">
+            <div class="transactions-table">
+                <div class="order-wrap">
+                    <div class="row justify-content-end">
+                        <div class="col-md-6 mb-3 text-end">
+                            <form action="">
+                                <div class="search-box w-100">
+                                    <input type="text" name="search" class="form--control" value="{{ request()->search }}"
+                                    placeholder="@lang('Search by transactions')">
+                                    <button type="submit" class="search-box__button deposit-search "><i class="fas fa-search"></i></button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </form>
-                <div class="card custom--card">
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table custom--table">
-                                <thead>
-                                    <tr>
-                                        <th>@lang('Gateway')</th>
-                                        <th class="text-center">@lang('Initiated')</th>
-                                        <th class="text-center">@lang('Amount')</th>
-                                        <th class="text-center">@lang('Conversion')</th>
-                                        <th class="text-center">@lang('Status')</th>
-                                        <th>@lang('Action')</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    <table class="table table--responsive--lg">
+                        <thead>
+                            <tr>
+                                <th>@lang('Gateway')</th>
+                                <th class="text-center">@lang('Initiated')</th>
+                                <th class="text-center">@lang('Amount')</th>
+                                <th class="text-center">@lang('Status')</th>
+                                <th>@lang('Action')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                    @forelse($withdraws as $withdraw)
-                                    <tr>
-                                        <td>
-                                            <span class="fw-bold"><span class="text-primary"> {{
-                                                    __(@$withdraw->method->name) }}</span></span>
-                                        </td>
-                                        <td class="text-center">
-                                            {{ showDateTime($withdraw->created_at) }} <br> {{
-                                            diffForHumans($withdraw->created_at) }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ __($general->cur_sym) }}{{ showAmount($withdraw->amount ) }} - <span
-                                                class="text-danger" title="@lang('charge')">{{
-                                                showAmount($withdraw->charge)}} </span>
-                                            <br>
-                                            <strong title="@lang('Amount after charge')">
-                                                {{ showAmount($withdraw->amount-$withdraw->charge) }} {{
-                                                __($general->cur_text) }}
-                                            </strong>
+                            @forelse($withdraws as $withdraw)
+                            <tr>
+                                <td>
+                                     {{__(@$withdraw->method->name) }}
+                                </td>
+                                <td class="text-center">
+                                    {{ showDateTime($withdraw->created_at) }}
+                                </td>
+                                <td class="text-center">
+                                    {{ __($general->cur_sym) }}{{ showAmount($withdraw->amount ) }}
 
-                                        </td>
-                                        <td class="text-center">
-                                            1 {{ __($general->cur_text) }} = {{ showAmount($withdraw->rate) }} {{
-                                            __($withdraw->currency) }}
-                                            <br>
-                                            <strong>{{ showAmount($withdraw->final_amount) }} {{ __($withdraw->currency)
-                                                }}</strong>
-                                        </td>
-                                        <td class="text-center">
-                                            @php echo $withdraw->statusBadge @endphp
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn--base detailBtn"
-                                                data-user_data="{{ json_encode($withdraw->withdraw_information) }}" @if
-                                                ($withdraw->status == 3)
-                                                data-admin_feedback="{{ $withdraw->admin_feedback }}"
-                                                @endif
-                                                >
-                                                <i class="la la-desktop"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                </td>
+
+                                <td class="text-center">
+                                    @php echo $withdraw->statusBadge @endphp
+                                </td>
+                                <td>
+                                    <button class="btn btn--sm btn--base detailBtn"
+                                        data-user_data="{{ json_encode($withdraw->withdraw_information) }}"
+                                        @if($withdraw->status == 3)
+                                        data-admin_feedback="{{ $withdraw->admin_feedback }}"
+                                        @endif >
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+
                     @if($withdraws->hasPages())
-                    <div class="card-footer text-end">
-                        {{$withdraws->links()}}
+                    <div class="text-end">
+                        {{ $withdraws->links() }}
                     </div>
                     @endif
                 </div>
@@ -101,7 +85,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">@lang('Details')</h5>
-                <span type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span type="button" class="close btn btn--base btn--sm btn--danger pill" data-bs-dismiss="modal" aria-label="Close">
                     <i class="las la-times"></i>
                 </span>
             </div>
@@ -112,7 +96,7 @@
                 <div class="feedback"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark btn-sm" data-bs-dismiss="modal">@lang('Close')</button>
+                <button type="button" class="btn btn--base btn--sm pill" data-bs-dismiss="modal">@lang('Close')</button>
             </div>
         </div>
     </div>

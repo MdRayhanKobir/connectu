@@ -8,14 +8,16 @@
                         <div class="pricing-plan-item">
                             <div class="price-shape-2"></div>
                             <div class="pricing-plan-item__top">
-                                <h3 class="title">{{ __($item->name) }}</h3>
+                                <h3 class="title">{{__($item->name) }}</h3>
                             </div>
                             <div class="pricing-plan-item__price">
-                                <h3 class="title">{{ __($general->cur_sym) }}
+                                <h3 class="title">{{__($general->cur_sym) }}
                                     {{ showAmount($item->price) }}<span>{{ $item->type == 1 ? '/m' : '/y' }}</span> </h3>
                             </div>
                             <div class="pricing-plan-item__list">
                                 <ul>
+                                    <li> <i class="fas fa-check-circle"></i> @lang('Daily Ad View'): {{__($item->daily_view_limit) }}</li>
+                                    <li> <i class="fas fa-check-circle"></i> @lang('Create Ad'): {{__($item->create_ad_limit) }}</li>
                                     @if (@$item->content)
                                         @foreach (json_decode(@$item->content) as $value)
                                             <li> <i class="fas fa-check-circle"></i>{{ $value }}</li>
@@ -24,7 +26,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-plan-item__bottom">
-                                <a class="btn btn--base" href="#l">
+                                <a class="btn btn--base" href="{{route('user.payment',$item->id)}}">
                                     @lang('Get Started') <i class="fas fa-solid fa-arrow-right"></i>
                                 </a>
                             </div>

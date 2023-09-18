@@ -6,15 +6,21 @@
             <h6 class="title">{{__($pageTitle)}}</h6>
         </div>
         <div class="hot-topic-item">
-            <form action="{{route('user.withdraw.money')}}" method="post">
+            <form action="{{route('user.deposit.insert')}}" method="post">
                 @csrf
                 <div class="row gy-3">
+                    <input type="hidden" name="method_code">
+                    <input type="hidden" name="currency">
+                    <input type="hidden" name="plan_id" value="{{$plan->id}}">
+
                     <div class="form-group col-md-12">
-                        <label class="form--label">@lang('Method')</label>
-                        <select class="form--control" name="method_code" required>
-                            <option value="">@lang('Select Gateway')</option>
-                            @foreach($withdrawMethod as $data)
-                            <option value="{{ $data->id }}" data-resource="{{$data}}"> {{__($data->name)}}</option>
+                        <label class="form--label">@lang('Select Gateway')</label>
+                        <select class="form--control form--control" name="gateway" required>
+                            <option value="">@lang('Select One')</option>
+                            <option value="balance">@lang('Account Balance') {{ $general->cur_sym }}{{showAmount(auth()->user()->balance) }}</option>
+                            @foreach($gatewayCurrency as $data)
+                            <option value="{{$data->method_code}}" @selected(old('gateway')==$data->method_code)
+                                data-gateway="{{ $data }}">{{$data->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -22,13 +28,12 @@
                         <label class="form--label">@lang('Amount')</label>
                         <div class="input-text d-flex">
                             <div class="input-group">
-                                <input type="number" step="any" name="amount" value="{{ old('amount') }}"
-                                    class="form--control" required>
+                                <input type="number" step="any" name="amount" class="form--control"
+                                    value="{{ $plan->price }}" autocomplete="off" required>
                             </div>
                             <span class="input-group-text">{{ $general->cur_text }}</span>
                         </div>
                     </div>
-
                     <div class="preview-details d-none">
                         <span>@lang('Limit')</span>
                         <span><span class="min fw-bold">0</span> {{__($general->cur_text)}} - <span
@@ -38,11 +43,9 @@
                         <span>@lang('Payable')</span> <span><span class="payable fw-bold"> 0</span>
                             {{__($general->cur_text)}} </span>
                     </div>
-
                     <div class="col-md-12">
                         <button type="submit" class="btn btn--base pill w-100 mt-3">@lang('Submit')</button>
                     </div>
-                    
                 </div>
             </form>
         </div>
@@ -54,18 +57,24 @@
 <script>
     (function ($) {
         "use strict";
-        $('select[name=method_code]').change(function () {
-            if (!$('select[name=method_code]').val()) {
+        $('select[name=gateway]').change(function () {
+            if (!$('select[name=gateway]').val()) {
                 $('.preview-details').addClass('d-none');
                 return false;
             }
-            var resource = $('select[name=method_code] option:selected').data('resource');
+            var resource = $('select[name=gateway] option:selected').data('gateway');
             var fixed_charge = parseFloat(resource.fixed_charge);
             var percent_charge = parseFloat(resource.percent_charge);
             var rate = parseFloat(resource.rate)
-            var toFixedDigit = 2;
-            $('.min').text(parseFloat(resource.min_limit).toFixed(2));
-            $('.max').text(parseFloat(resource.max_limit).toFixed(2));
+            if (resource.method.crypto == 1) {
+                var toFixedDigit = 8;
+                $('.crypto_currency').removeClass('d-none');
+            } else {
+                var toFixedDigit = 2;
+                $('.crypto_currency').addClass('d-none');
+            }
+            $('.min').text(parseFloat(resource.min_amount).toFixed(2));
+            $('.max').text(parseFloat(resource.max_amount).toFixed(2));
             var amount = parseFloat($('input[name=amount]').val());
             if (!amount) {
                 amount = 0;
@@ -75,12 +84,15 @@
                 return false;
             }
             $('.preview-details').removeClass('d-none');
-
             var charge = parseFloat(fixed_charge + (amount * percent_charge / 100)).toFixed(2);
             $('.charge').text(charge);
+            var payable = parseFloat((parseFloat(amount) + parseFloat(charge))).toFixed(2);
+            $('.payable').text(payable);
+            var final_amo = (parseFloat((parseFloat(amount) + parseFloat(charge))) * rate).toFixed(toFixedDigit);
+            $('.final_amo').text(final_amo);
             if (resource.currency != '{{ $general->cur_text }}') {
-                var rateElement = `<span>@lang('Conversion Rate')</span> <span class="fw-bold">1 {{__($general->cur_text)}} = <span class="rate">${rate}</span>  <span class="base-currency">${resource.currency}</span></span>`;
-                $('.rate-element').html(rateElement);
+                var rateElement = `<span class="fw-bold">@lang('Conversion Rate')</span> <span><span  class="fw-bold">1 {{__($general->cur_text)}} = <span class="rate">${rate}</span>  <span class="base-currency">${resource.currency}</span></span></span>`;
+                $('.rate-element').html(rateElement)
                 $('.rate-element').removeClass('d-none');
                 $('.in-site-cur').removeClass('d-none');
                 $('.rate-element').addClass('d-flex');
@@ -92,18 +104,19 @@
                 $('.rate-element').removeClass('d-flex');
                 $('.in-site-cur').removeClass('d-flex');
             }
-            var receivable = parseFloat((parseFloat(amount) - parseFloat(charge))).toFixed(2);
-            $('.receivable').text(receivable);
-            var final_amo = parseFloat(parseFloat(receivable) * rate).toFixed(toFixedDigit);
-            $('.final_amo').text(final_amo);
             $('.base-currency').text(resource.currency);
             $('.method_currency').text(resource.currency);
+            $('input[name=currency]').val(resource.currency);
+            $('input[name=method_code]').val(resource.method_code);
             $('input[name=amount]').on('input');
         });
         $('input[name=amount]').on('input', function () {
-            var data = $('select[name=method_code]').change();
+            $('select[name=gateway]').change();
             $('.amount').text(parseFloat($(this).val()).toFixed(2));
         });
     })(jQuery);
 </script>
 @endpush
+
+
+

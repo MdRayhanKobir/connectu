@@ -81,6 +81,13 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::post('update/{id}', 'update')->name('update');
                 Route::get('delete', 'delete')->name('delete');
                 Route::get('details/{id}', 'details')->name('details');
+
+                Route::get('all', 'fetchAds')->name('fetch');
+                Route::get('show/{hash}', 'show')->name('show');
+                Route::post('confirm/{hash}', 'confirm')->name('confirm');
+
+                  // earning
+                 Route::get('earning', 'fetchEarn')->name('earning');
             });
 
 
@@ -97,6 +104,7 @@ Route::middleware('auth')->name('user.')->group(function () {
 
         // Payment
         Route::middleware('registration.complete')->controller('Gateway\PaymentController')->group(function(){
+            Route::get('payment/{id}', 'payment')->name('payment');
             Route::any('/deposit', 'deposit')->name('deposit');
             Route::post('deposit/insert', 'depositInsert')->name('deposit.insert');
             Route::get('deposit/confirm', 'depositConfirm')->name('deposit.confirm');

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Gateway;
 
-use App\Http\Controllers\Controller;
-use App\Lib\FormProcessor;
-use App\Models\AdminNotification;
-use App\Models\Deposit;
-use App\Models\GatewayCurrency;
-use App\Models\Transaction;
+use App\Models\Plan;
 use App\Models\User;
+use App\Models\Deposit;
+use App\Lib\FormProcessor;
+use App\Models\Transaction;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Models\GatewayCurrency;
+use App\Models\AdminNotification;
+use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
@@ -23,8 +26,93 @@ class PaymentController extends Controller
         return view($this->activeTemplate . 'user.payment.deposit', compact('gatewayCurrency', 'pageTitle'));
     }
 
+      // plan
+      public function payment($id){
+
+        $subscribe = isSubscribe(auth()->user()->id);
+            if($subscribe){
+                $plan = Plan::findOrFail($id);
+
+                if($subscribe->plan_id == $id){
+                    if($subscribe->ends_at > now()){
+                        $notify[] = ['error', 'Already Subscribed to this Plan'];
+                        return back()->withNotify($notify);
+                    }
+                }
+            }
+
+            $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
+                $gate->where('status', 1);
+            })->with('method')->orderby('method_code')->get();
+                $pageTitle = 'Payment Methods';
+
+            $plan = Plan::find($id);
+            return view($this->activeTemplate . 'user.payment.payment', compact('gatewayCurrency', 'pageTitle','plan'));
+
+
+    }
+
+
     public function depositInsert(Request $request)
     {
+
+        if($request->gateway == 'balance'){
+            $user= auth()->user();
+            $plan = Plan::findOrFail($request->plan_id);
+
+            if($user->balance < $request->amount){
+                $notify[] = ['error', 'Insufficient Balance'];
+                return back()->withNotify($notify);
+            }
+            $user->balance -= $plan->price;
+            $user->save();
+
+            $subscribe = new Subscription();
+            $subscribe->user_id = $user->id;
+            $subscribe->plan_id = $plan->id;
+            $subscribe->amount = $plan->price;
+            $subscribe->create_ad_limit = $plan->create_ad_limit;
+            $subscribe->daily_view_limit = $plan->daily_view_limit;
+            $subscribe->starts_at = Carbon::now();
+
+            if ($plan->month != null) {
+                $subscribe->ends_at = Carbon::now()->addDays($plan->month);
+            } else {
+                $subscribe->ends_at = Carbon::now()->addDays($plan->year);
+            }
+
+            $subscribe->save();
+
+
+            $trx = getTrx();
+
+            $transaction                =   new Transaction();
+            $transaction->user_id       =   $user->id;
+            $transaction->amount        =   $plan->price;
+            $transaction->post_balance  =   $user->balance;
+            $transaction->charge        =   0;
+            $transaction->trx_type      =   '-';
+            $transaction->details       =   'Subscribe  plan';
+            $transaction->trx           =   $trx;
+            $transaction->remark        =   'Subscribe_Plan';
+            $transaction->save();
+
+            $adminNotification   = new AdminNotification();
+            $adminNotification->user_id  = $user->id;
+            $adminNotification->title   = 'Plan Subscribe from '.$user->username;
+            $adminNotification->click_url = urlPath('admin.users.detail',$user->id);
+            $adminNotification->save();
+
+            notify($user, 'PLAN SUBSCRIBE', [
+                'plan_name'=>"Deafualt Plan",
+                'amount' => showAmount($plan->price),
+                'trx' => $user->trx,
+                'post_balance' => showAmount($user->balance)
+            ]);
+
+            $notify[] = ['success', 'Plan Subscribe has been successfully'];
+            return to_route('home')->withNotify($notify);
+        }
 
         $request->validate([
             'amount' => 'required|numeric|gt:0',
@@ -34,6 +122,7 @@ class PaymentController extends Controller
 
 
         $user = auth()->user();
+        $plan_id = $request->plan_id;
         $gate = GatewayCurrency::whereHas('method', function ($gate) {
             $gate->where('status', 1);
         })->where('method_code', $request->method_code)->where('currency', $request->currency)->first();
@@ -56,6 +145,7 @@ class PaymentController extends Controller
         $data->method_code = $gate->method_code;
         $data->method_currency = strtoupper($gate->currency);
         $data->amount = $request->amount;
+        $data->plan_id = $plan_id;
         $data->charge = $charge;
         $data->rate = $gate->rate;
         $data->final_amo = $final_amo;
@@ -128,8 +218,31 @@ class PaymentController extends Controller
             $deposit->save();
 
             $user = User::find($deposit->user_id);
-            $user->balance += $deposit->amount;
-            $user->save();
+            if (!isset($deposit->plan_id) ) {
+                $user->balance += $deposit->amount;
+                $user->save();
+            }
+
+            if(isset($deposit->plan_id)){
+
+                $plan = Plan::findOrFail($deposit->plan_id);
+                $subscribe = new Subscription();
+                $subscribe->user_id = $user->id;
+                $subscribe->plan_id = $plan->id;
+                $subscribe->amount = $plan->price;
+                $subscribe->create_ad_limit = $plan->create_ad_limit;
+                $subscribe->daily_view_limit = $plan->daily_view_limit;
+                $subscribe->starts_at = Carbon::now();
+
+                if ($plan->month != null) {
+                    $subscribe->ends_at = Carbon::now()->addDays($plan->month);
+                } else {
+                    $subscribe->ends_at = Carbon::now()->addDays($plan->year);
+                }
+
+                $subscribe->save();
+
+            }
 
             $transaction = new Transaction();
             $transaction->user_id = $deposit->user_id;

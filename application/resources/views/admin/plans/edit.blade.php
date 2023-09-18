@@ -12,7 +12,7 @@
                             <div class="form-group">
                                 <label for="name" class="font-weight-bold">@lang('Name')</label>
                                 <input type="text" name="name" id="name"
-                                    class="form-control " value="{{$plan->name}}"
+                                    class="form-control" value="{{$plan->name}}"
                                     required>
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label for="price" class="font-weight-bold">@lang('Price')</label>
                                 <input step="any" type="number" name="price" id="price"
-                                    class="form-control "value="{{showAmount($plan->price)}}"
+                                    class="form-control" value="{{showAmount($plan->price)}}"
                                      required>
                             </div>
                         </div>
@@ -33,6 +33,23 @@
                                    <option value="1"{{$plan->type == 1 ? 'selected' : '' }}>@lang('Monthly')</option>
                                    <option value="0" {{$plan->type == 0 ? 'selected' : '' }}>@lang('Yearly')</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="daily_view_limit" class="font-weight-bold">@lang('Daily Ad View Limit')</label>
+                                <input type="number" name="daily_view_limit" id="daily_view_limit" value="{{$plan->daily_view_limit}}"
+                                    class="form-control" placeholder="@lang('Daily Ad View Limit')"
+                                     required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="create_ad_limit" class="font-weight-bold">@lang('Create Ad Limit')</label>
+                                <input type="number" name="create_ad_limit" id="create_ad_limit" value="{{$plan->create_ad_limit}}"
+                                    class="form-control " placeholder="@lang('Create Ad Limit')"
+                                     required>
                             </div>
                         </div>
 

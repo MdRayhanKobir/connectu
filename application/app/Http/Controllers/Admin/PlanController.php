@@ -41,6 +41,8 @@ class PlanController extends Controller
         $plan->month = $request->type == 1 ? $monthly : null;
         $plan->year = $request->type == 0 ? $yearly : null;
         $plan->status = 1;
+        $plan->create_ad_limit =$request->create_ad_limit;
+        $plan->daily_view_limit =$request->daily_view_limit;
         $plan->save();
 
         $notify[] = ['success', 'Plan has been created successfully'];
@@ -89,6 +91,8 @@ class PlanController extends Controller
         $plan->status = $request->status==1 ? 1 :0;
         $plan->month = $request->type == 1 ? $monthly : null;
         $plan->year = $request->type == 0 ? $yearly : null;
+        $plan->create_ad_limit =$request->create_ad_limit;
+        $plan->daily_view_limit =$request->daily_view_limit;
         $plan->save();
 
         $notify[] = ['success', 'Plan has been updated successfully'];

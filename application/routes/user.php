@@ -71,7 +71,7 @@ Route::middleware('auth')->name('user.')->group(function () {
             });
 
 
-            //Product
+            //Ad
             Route::controller('AdController')->name('ad.')->prefix('ads')->group(function () {
 
                 Route::get('/', 'index')->name('index');
@@ -89,6 +89,20 @@ Route::middleware('auth')->name('user.')->group(function () {
                   // earning
                  Route::get('earning', 'fetchEarn')->name('earning');
             });
+
+
+             //Post
+             Route::controller('PostController')->name('post.')->prefix('posts')->group(function () {
+                Route::post('store', 'store')->name('store');
+
+                // hashtag post fetch
+
+                Route::get('hashtag/{hashtag}', 'fetchHashTagPosts')->name('fetch.hashtag');
+
+
+
+            });
+
 
 
 

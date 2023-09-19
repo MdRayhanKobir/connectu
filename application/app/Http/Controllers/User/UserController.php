@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Form;
 use App\Models\Plan;
+use App\Models\Post;
 use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class UserController extends Controller
     public function home()
     {
         $pageTitle = 'Dashboard';
-        return view($this->activeTemplate . 'user.dashboard', compact('pageTitle'));
+        $user = auth()->user();
+        $posts = Post::with(['user','postFile'])->where('status',1)->where('privacy','everyone')->latest()->inRandomOrder()->paginate(getPaginate());
+        return view($this->activeTemplate . 'user.dashboard', compact('pageTitle','user','posts'));
     }
 
     public function depositHistory(Request $request)

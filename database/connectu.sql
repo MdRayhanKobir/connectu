@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2023 at 02:55 PM
+-- Generation Time: Sep 19, 2023 at 03:21 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -243,8 +243,8 @@ CREATE TABLE `extensions` (
 --
 
 INSERT INTO `extensions` (`id`, `act`, `name`, `description`, `image`, `script`, `shortcode`, `support`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'tawk-chat', 'Live Chat(Tawk.to)', 'Key location is shown bellow', 'chat-png.png', '<script>\n                        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n                        (function(){\n                        var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n                        s1.async=true;\n                        s1.src=\"https://embed.tawk.to/{{app_key}}\";\n                        s1.charset=\"UTF-8\";\n                        s1.setAttribute(\"crossorigin\",\"*\");\n                        s0.parentNode.insertBefore(s1,s0);\n                        })();\n                    </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"55\"}}', 'twak.png', 0, NULL, '2019-10-18 23:16:05', '2023-03-22 06:04:56'),
-(2, 'google-recaptcha2', 'Google Recaptcha 2', 'Key location is shown bellow', 'recaptcha2.png', '\n<script src=\"https://www.google.com/recaptcha/api.js\"></script>\n<div class=\"g-recaptcha\" data-sitekey=\"{{site_key}}\" data-callback=\"verifyCaptcha\"></div>\n<div id=\"g-recaptcha-error\"></div>', '{\"site_key\":{\"title\":\"Site Key\",\"value\":\"6LdPC88fAAAAADQlUf_DV6Hrvgm-pZuLJFSLDOWV\"},\"secret_key\":{\"title\":\"Secret Key\",\"value\":\"6LdPC88fAAAAAG5SVaRYDnV2NpCrptLg2XLYKRKB\"}}', 'recaptcha.png', 1, NULL, '2019-10-18 23:16:05', '2023-09-18 03:19:54'),
+(1, 'tawk-chat', 'Live Chat(Tawk.to)', 'Key location is shown bellow', 'chat-png.png', '<script>\n                        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n                        (function(){\n                        var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n                        s1.async=true;\n                        s1.src=\"https://embed.tawk.to/{{app_key}}\";\n                        s1.charset=\"UTF-8\";\n                        s1.setAttribute(\"crossorigin\",\"*\");\n                        s0.parentNode.insertBefore(s1,s0);\n                        })();\n                    </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"55\"}}', 'twak.png', 1, NULL, '2019-10-18 23:16:05', '2023-09-19 05:31:25'),
+(2, 'google-recaptcha2', 'Google Recaptcha 2', 'Key location is shown bellow', 'recaptcha2.png', '\n<script src=\"https://www.google.com/recaptcha/api.js\"></script>\n<div class=\"g-recaptcha\" data-sitekey=\"{{site_key}}\" data-callback=\"verifyCaptcha\"></div>\n<div id=\"g-recaptcha-error\"></div>', '{\"site_key\":{\"title\":\"Site Key\",\"value\":\"6LdPC88fAAAAADQlUf_DV6Hrvgm-pZuLJFSLDOWV\"},\"secret_key\":{\"title\":\"Secret Key\",\"value\":\"6LdPC88fAAAAAG5SVaRYDnV2NpCrptLg2XLYKRKB\"}}', 'recaptcha.png', 0, NULL, '2019-10-18 23:16:05', '2023-09-18 22:09:41'),
 (7, 'google-analytics', 'Google Analytics', 'Key location is shown bellow', 'google_analytics.png', '<script async src=\"https://www.googletagmanager.com/gtag/js?id={{app_key}}\"></script>\r\n                <script>\r\n                  window.dataLayer = window.dataLayer || [];\r\n                  function gtag(){dataLayer.push(arguments);}\r\n                  gtag(\"js\", new Date());\r\n                \r\n                  gtag(\"config\", \"{{app_key}}\");\r\n                </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"----\"}}', 'ganalytics.png', 0, NULL, '2019-10-18 23:16:05', '2023-09-14 05:24:33');
 
 -- --------------------------------------------------------
@@ -440,6 +440,54 @@ CREATE TABLE `general_settings` (
 
 INSERT INTO `general_settings` (`id`, `site_name`, `cur_text`, `cur_sym`, `email_from`, `email_template`, `sms_body`, `sms_from`, `base_color`, `secondary_color`, `mail_config`, `sms_config`, `global_shortcodes`, `kv`, `ev`, `en`, `sv`, `sn`, `force_ssl`, `maintenance_mode`, `secure_password`, `agree`, `registration`, `active_template`, `system_info`, `created_at`, `updated_at`) VALUES
 (1, 'MinStack', 'USD', '$', 'notify@wstacks.com', '<p>Hi {{fullname}} ({{username}}),&nbsp;</p><p>{{message}}</p>', 'Hi {{fullname}} ({{username}}), \r\n{{message}}', 'Minstack', '7d5fff', '060662', '{\"name\":\"php\"}', '{\"name\":\"messageBird\",\"clickatell\":{\"api_key\":\"----------------\"},\"infobip\":{\"username\":\"------------8888888\",\"password\":\"-----------------\"},\"message_bird\":{\"api_key\":\"-------------------\"},\"nexmo\":{\"api_key\":\"----------------------\",\"api_secret\":\"----------------------\"},\"sms_broadcast\":{\"username\":\"----------------------\",\"password\":\"-----------------------------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"---------------------------\",\"from\":\"----------------------\"},\"text_magic\":{\"username\":\"-----------------------\",\"apiv2_key\":\"-------------------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\"],\"value\":[\"test_api 555\"]},\"body\":{\"name\":[\"from_number\"],\"value\":[\"5657545757\"]}}}', '{\n    \"site_name\":\"Name of your site\",\n    \"site_currency\":\"Currency of your site\",\n    \"currency_symbol\":\"Symbol of currency\"\n}', 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 'default', '[]', NULL, '2023-09-07 01:00:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hashtags`
+--
+
+CREATE TABLE `hashtags` (
+  `id` int(11) NOT NULL,
+  `post` int(11) NOT NULL DEFAULT 0 COMMENT 'how same tag uses into post',
+  `tag` varchar(255) NOT NULL COMMENT 'hashtag',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hashtags`
+--
+
+INSERT INTO `hashtags` (`id`, `post`, `tag`, `created_at`, `updated_at`) VALUES
+(4, 1, 'document', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
+(5, 2, 'commonly', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
+(6, 3, 'ipsum ', '2023-09-19 03:52:36', '2023-09-19 05:48:23'),
+(7, 1, 'momin', '2023-09-19 05:32:46', '2023-09-19 05:32:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hashtag_post`
+--
+
+CREATE TABLE `hashtag_post` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `hashtag_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hashtag_post`
+--
+
+INSERT INTO `hashtag_post` (`id`, `post_id`, `hashtag_id`) VALUES
+(2, 13, 4),
+(3, 13, 5),
+(4, 14, 6),
+(5, 18, 6),
+(6, 19, 7),
+(7, 21, 6);
 
 -- --------------------------------------------------------
 
@@ -662,6 +710,66 @@ INSERT INTO `plans` (`id`, `name`, `price`, `content`, `create_ad_limit`, `daily
 (1, 'Premium', '125.00000000', '[\"Unlimited updates\",\"Custom designs & features\",\"Custom permissions\",\"Optimize hashtags\",\"Custom instructors\"]', 150, 50, 0, NULL, '366', 1, '2023-03-26 08:04:55', '2023-09-18 02:43:02'),
 (2, 'Essentials', '89.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom instructors\",\"Optimize hashtags\",\"Custom instructors\"]', 100, 30, 1, '31', NULL, 1, '2023-03-26 08:07:20', '2023-09-18 02:42:54'),
 (3, 'Standard', '35.00000000', '[\"Unlimited updates\",\"Custom permissions\",\"Custom designs & features\",\"Custom hashtags\",\"Custom instructors\"]', 50, 10, 1, '31', NULL, 1, '2023-03-26 08:08:24', '2023-09-18 02:42:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `text` text DEFAULT NULL COMMENT 'actual message',
+  `replys_count` int(11) NOT NULL DEFAULT 0,
+  `likes_count` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `privacy` varchar(40) NOT NULL COMMENT 'everyone,only_my_follwer',
+  `edited` int(11) DEFAULT NULL COMMENT 'post edit count',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `status`, `privacy`, `edited`, `created_at`, `updated_at`) VALUES
+(13, 33, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a #document or a typeface without relying on meaningful content. Lorem #ipsum may be', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
+(14, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:36', '2023-09-19 03:52:36'),
+(15, 33, 'Bangladesh is small country', 0, 0, 1, 'everyone', NULL, '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
+(16, 33, 'Testing video', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:21:01', '2023-09-19 05:21:01'),
+(17, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:28:43', '2023-09-19 05:28:43'),
+(18, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
+(19, 33, 'Hellow #momin', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
+(20, 33, 'hellow wstacks', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:40:23', '2023-09-19 05:40:23'),
+(21, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:48:23', '2023-09-19 05:48:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_media`
+--
+
+CREATE TABLE `post_media` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `type` varchar(40) NOT NULL COMMENT 'image,file ,video',
+  `file` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_media`
+--
+
+INSERT INTO `post_media` (`id`, `post_id`, `type`, `file`, `created_at`, `updated_at`) VALUES
+(2, 13, 'image', '65096f53534801695117139.png', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
+(3, 15, 'file', '65097bd1ec3db1695120337.zip', '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
+(4, 17, 'video', '650985eb382ba1695122923.mp4', '2023-09-19 05:28:43', '2023-09-19 05:28:43'),
+(5, 18, 'video', '650985ff19ac81695122943.mp4', '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
+(6, 21, 'image', '65098a877dc7d1695124103.jpg', '2023-09-19 05:48:23', '2023-09-19 05:48:23');
 
 -- --------------------------------------------------------
 
@@ -1059,7 +1167,7 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `countr
 (30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2022-03-22 07:53:20', '2022-03-22 08:09:45'),
 (31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '285472', '2022-09-29 17:45:24', 0, 1, NULL, NULL, NULL, '2022-03-22 11:22:57', '2023-01-05 09:32:49'),
 (32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', NULL, '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-03-22 04:09:55', '2023-03-22 04:10:43'),
-(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, 'xzC3fJ3kkD21a83ooemMPpqfjlzbX9ML6hYmivBX6wa00jYleSCwNYSDjeIV', '2023-09-16 23:24:11', '2023-09-18 06:49:25'),
+(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, 'qhnO069IfnLwbyec7XdBJ2gMzUHgzKFL1vjxr7mPUINHr1yksKqfYs5MKnGE', '2023-09-16 23:24:11', '2023-09-18 06:49:25'),
 (34, NULL, NULL, 'demouser1', 'demouser1@gmail.com', NULL, NULL, 0, '0.00000000', '$2y$10$pdSA9PzlndnntMAd.994z.YDQFVGC441F9nimrdw4T5Wx/wo5HR02', NULL, NULL, 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-09-18 05:34:10', '2023-09-18 05:34:30');
 
 -- --------------------------------------------------------
@@ -1097,7 +1205,8 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 (7, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-17 22:37:01', '2023-09-17 22:37:01'),
 (8, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-18 02:48:14', '2023-09-18 02:48:14'),
 (9, 34, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-18 05:34:10', '2023-09-18 05:34:10'),
-(10, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-18 05:40:08', '2023-09-18 05:40:08');
+(10, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-18 05:40:08', '2023-09-18 05:40:08'),
+(11, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-19 05:30:23', '2023-09-19 05:30:23');
 
 -- --------------------------------------------------------
 
@@ -1242,6 +1351,18 @@ ALTER TABLE `general_settings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `hashtags`
+--
+ALTER TABLE `hashtags`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hashtag_post`
+--
+ALTER TABLE `hashtag_post`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `languages`
 --
 ALTER TABLE `languages`
@@ -1277,6 +1398,18 @@ ALTER TABLE `personal_access_tokens`
 -- Indexes for table `plans`
 --
 ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `post_media`
+--
+ALTER TABLE `post_media`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1417,6 +1550,18 @@ ALTER TABLE `general_settings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `hashtags`
+--
+ALTER TABLE `hashtags`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `hashtag_post`
+--
+ALTER TABLE `hashtag_post`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
@@ -1451,6 +1596,18 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `plans`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `post_media`
+--
+ALTER TABLE `post_media`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
@@ -1498,7 +1655,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`

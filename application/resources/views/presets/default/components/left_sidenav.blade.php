@@ -19,8 +19,8 @@ $user = auth()->user();
 
             </li>
             <li class="left-sidebar-menu__item ">
-                <a href="index.html" class="left-sidebar-menu__link active">
-                    <span class="icon"><i class="fa-solid fa-book-atlas"></i></span>
+                <a href="{{route('user.home')}}" class="left-sidebar-menu__link active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
                     <span class="text">@lang('Timeline')</span>
                 </a>
             </li>

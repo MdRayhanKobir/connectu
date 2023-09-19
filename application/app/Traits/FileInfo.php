@@ -62,6 +62,9 @@ trait FileInfo
         $data['adsImage'] = [
             'path'      =>'assets/admin/images/adsImage',
         ];
+        $data['PostMedia'] = [
+            'path'      =>'assets/images/PostMedia',
+        ];
         return $data;
 	}
 

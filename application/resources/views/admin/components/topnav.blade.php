@@ -12,7 +12,7 @@
     <div class="navbar__right">
         <ul class="navbar__action-list">
             <li>
-                <a title="@lang('Visit Site')" href="{{ route('home') }}" target="_blank" class="btn btn-sm btn--primary"><i class="fas fa-globe-americas"></i></a>
+                <a title="@lang('Visit Site')" href="{{ route('user.home') }}" target="_blank" class="btn btn-sm btn--primary"><i class="fas fa-globe-americas"></i></a>
             </li>
             <li class="dropdown">
                 <button type="button" class="primary--layer" data-bs-toggle="dropdown" data-display="static"

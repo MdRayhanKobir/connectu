@@ -1,4 +1,4 @@
-@extends($activeTemplate.'layouts.frontend')
+{{-- @extends($activeTemplate.'layouts.frontend')
 @section('content')
 <section>
   <!-- Middle container area start -->
@@ -10,12 +10,12 @@
             <div class="timeline-top-post-wrap timeline-mt-60">
                 <div class="timeline-top-post-wrap__header-post">
                     <div class="timeline-top-post-wrap__thumb">
-                        <img src="assets/images/avatar/obaydul.png" alt="">
+                        <img src="{{ getImage(getFilePath('userProfile').'/'.@$user->image,getFileSize('userProfile')) }}" alt="@lang('User Image')">
                     </div>
                     <div class="timeline-top-post-wrap__textinput">
                         <!-- " -->
                         <textarea class="timeline-post-area"
-                            placeholder="What is Happening ?!"></textarea>
+                            placeholder="@lang('What\'s on your mind?')"></textarea>
                     </div>
                 </div>
 
@@ -640,4 +640,4 @@
         max-width: 220px;
     }
 </style>
-@endpush
+@endpush --}}

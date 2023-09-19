@@ -271,7 +271,7 @@ $('.sidebar-user-wrap__content-show-auth-info').hover(
             $this.append(sidebarUserHover);
             setTimeout(function() {
                 sidebarUserHover.show();
-            }, 1000); // Show after 1 second
+            }, 100); // Show after 1 second
         }
     },
     function() {
@@ -282,7 +282,7 @@ $('.sidebar-user-wrap__content-show-auth-info').hover(
             sidebarUserHover.hide(0, function() {
                 $(this).remove();
             });
-        }, 1000);
+        }, 100);
     }
 );
 

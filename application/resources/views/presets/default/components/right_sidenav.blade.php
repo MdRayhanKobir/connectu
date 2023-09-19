@@ -1,3 +1,7 @@
+ @php
+    $hashtags = App\Models\Hashtag::latest()->inRandomOrder()->take(12)->get();
+    $users = App\Models\User::active()->latest()->limit(5)->get();
+ @endphp
  <!-- Right Sidebar area end -->
  <div class="right-sidebar-parent-wrapper">
     <div class="right-sidebar-wrapper">
@@ -10,8 +14,8 @@
                 </div>
             </form>
         </div>
-        <!-- User start  -->
-        <div class="right-sidebar-body">
+          <!-- User start  -->
+          <div class="right-sidebar-body">
             <h4 class="title">WHO TO FOLLOW</h4>
             <div class="sidebar-inner-wrap border-botm">
                 <div class="sidebar-user-wrap">
@@ -112,62 +116,20 @@
                 </div>
             </div>
         </div>
-        <!-- User End  -->
 
         <!-- Tags start  -->
         <div class="right-sidebar-body border-botm">
-            <h4 class="title">HOT TOPICS FOR YOU</h4>
+            <h4 class="title">@lang('HOT TOPIC\'S FOR YOU')</h4>
             <div class="sidebar-inner-wrap">
                 <div class="sidebar-tags">
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> MTC</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> Windows</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i>
-                            themestok</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> TSK</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i>
-                            technology</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> LTC</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> wstacks</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> Game</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> Calor</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i> distagre
-                        </a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i>
-                            technology</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i>
-                            technology</a>
-                    </div>
-                    <div class="sidebar-tags__item">
-                        <a href="single-hot-topic.html"><i class="fa-solid fa-hashtag"></i>
-                            technology</a>
-                    </div>
-
+                    @foreach($hashtags as $tag)
+                        <div class="sidebar-tags__item">
+                            <a href="{{route('user.post.fetch.hashtag',$tag->tag)}}"><i class="fas fa-hashtag"></i>{{__($tag->tag)}}</a>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="sidebar-inner-wrap__bottom">
-                    <h6><a href="hot-topics.html">Show More</a></h6>
+                    <h6><a href="hot-topics.html">@lang('Show More')</a></h6>
                 </div>
             </div>
         </div>

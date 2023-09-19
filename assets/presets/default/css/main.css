@@ -8900,9 +8900,11 @@ ul.list.d-flex.message-send__history {
     }
 }
 
-.upload-item .upload-wrap .upload-input {
+/* .upload-item .upload-wrap .upload-input {
+    opacity: 0;
+    visibility: hidden;
     display: none;
-}
+} */
 
 /* ========= Poll Modal css =========*/
 .poll-wrapper .poll-item {

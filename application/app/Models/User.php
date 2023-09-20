@@ -71,9 +71,9 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    function isFollowing(User $user)
+    public function isFollowing(User $user)
     {
-        return $this->following()->where('following_id', $user->id)->exists();
+        return $this->following->contains($user);
     }
 
     

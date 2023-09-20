@@ -57,8 +57,8 @@
                                     </h5>
                                 </div>
                                 <div class="followers">
-                                    <a href="" >170 @lang('Following')</a>
-                                    <a href="">000 @lang('followers')</a>
+                                    <a href="" >{{__($user->following_count)}} @lang('Following')</a>
+                                    <a href="">{{__($user->followers_count)}} @lang('followers')</a>
                                 </div>
                                 <div class="bottom">
                                     <a href="{{ route('user.follow', $user->id) }}" class="btn btn--base btn--sm pill w-100">@lang('Follow')</a>

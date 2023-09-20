@@ -61,7 +61,7 @@ Route::middleware('auth')->name('user.')->group(function () {
 
                 // follow unfollow
                 Route::get('follow/{userToFollow}','follow')->name('follow');
-                Route::get('unfollow/{userToUnfollow}','follow')->name('unfollow');
+                Route::get('unfollow/{userToUnfollow}','unfollow')->name('unfollow');
 
                 Route::get('suggested/','userSuggested')->name('suggested');
 

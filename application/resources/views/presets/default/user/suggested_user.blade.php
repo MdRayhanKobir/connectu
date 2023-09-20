@@ -37,13 +37,13 @@
                 </div>
                 <div class="follow-wrapper">
                     @if (auth()->user()->isFollowing($user))
-                        <button class="btn btn--base btn--sm pill btn--rev">
+                        <a  href="{{ route('user.unfollow', $user->id) }}" class="btn btn--base btn--sm pill btn--rev">
                             @lang('Unfollow')
-                        </button>
+                        </a>
                     @else
-                        <button class="btn btn--base btn--sm pill btn--rev">
+                        <a href="{{ route('user.follow', $user->id) }}" class="btn btn--base btn--sm pill btn--rev">
                             @lang('Follow')
-                        </button>
+                        </a>
                     @endif
                 </div>
             </div>

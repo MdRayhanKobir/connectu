@@ -258,33 +258,33 @@ $('.editpost-modal-popup-textarea').on('input', function() {
 /*========================= Right Sidebar hover menu show hide ==============*/
 
 // Hide sidebar-user-hover on page load
-$('.sidebar-user-hover').hide();
+// $('.sidebar-user-hover').hide();
 
-// Append sidebar-user-hover on hover with a delay
-$('.sidebar-user-wrap__content-show-auth-info').hover(
-    function() {
-        var $this = $(this);
-        // Check if sidebar-user-hover is not already appended
-        if ($this.find('.sidebar-user-hover').length === 0) {
-            // Clone and append the sidebar-user-hover element
-            var sidebarUserHover = $('.sidebar-user-hover').clone();
-            $this.append(sidebarUserHover);
-            setTimeout(function() {
-                sidebarUserHover.show();
-            }, 100); // Show after 1 second
-        }
-    },
-    function() {
-        var $this = $(this);
-        var sidebarUserHover = $this.find('.sidebar-user-hover');
-        // Delay hiding the sidebar-user-hover element by 2 seconds
-        setTimeout(function() {
-            sidebarUserHover.hide(0, function() {
-                $(this).remove();
-            });
-        }, 100);
-    }
-);
+// // Append sidebar-user-hover on hover with a delay
+// $('.sidebar-user-wrap__content-show-auth-info').hover(
+//     function() {
+//         var $this = $(this);
+//         // Check if sidebar-user-hover is not already appended
+//         if ($this.find('.sidebar-user-hover').length === 0) {
+//             // Clone and append the sidebar-user-hover element
+//             var sidebarUserHover = $('.sidebar-user-hover').clone();
+//             $this.append(sidebarUserHover);
+//             setTimeout(function() {
+//                 sidebarUserHover.show();
+//             }, 100); // Show after 1 second
+//         }
+//     },
+//     function() {
+//         var $this = $(this);
+//         var sidebarUserHover = $this.find('.sidebar-user-hover');
+//         // Delay hiding the sidebar-user-hover element by 2 seconds
+//         setTimeout(function() {
+//             sidebarUserHover.hide(0, function() {
+//                 $(this).remove();
+//             });
+//         }, 100);
+//     }
+// );
 
 
 /*========================= Wallet payment methood chen and un check ==============*/

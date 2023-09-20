@@ -59,6 +59,13 @@ Route::middleware('auth')->name('user.')->group(function () {
 
                 Route::get('plans','fetchPlans')->name('fetch.plans');
 
+                // follow unfollow
+                Route::get('follow/{userToFollow}','follow')->name('follow');
+                Route::get('unfollow/{userToUnfollow}','follow')->name('unfollow');
+
+                Route::get('suggested/','userSuggested')->name('suggested');
+
+
             });
 
             //Profile setting

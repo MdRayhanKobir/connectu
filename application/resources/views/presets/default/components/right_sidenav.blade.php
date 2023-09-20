@@ -1,6 +1,12 @@
  @php
     $hashtags = App\Models\Hashtag::latest()->inRandomOrder()->take(12)->get();
-    $users = App\Models\User::active()->latest()->limit(5)->get();
+    $users = App\Models\User::active()
+        ->whereNotIn('id', auth()->user()->following()->pluck('following_id'))
+        ->where('id', '!=', auth()->user()->id)
+        ->latest()
+        ->limit(5)
+        ->get();
+
  @endphp
  <!-- Right Sidebar area end -->
  <div class="right-sidebar-parent-wrapper">
@@ -16,106 +22,60 @@
         </div>
           <!-- User start  -->
           <div class="right-sidebar-body">
-            <h4 class="title">WHO TO FOLLOW</h4>
+            <h4 class="title">@lang('WHO TO FOLLOW')</h4>
             <div class="sidebar-inner-wrap border-botm">
                 <div class="sidebar-user-wrap">
-                    <div class="sidebar-user-wrap__item">
-                        <div class="sidebar-user-wrap__thumb">
-                            <a href="">
-                                <img src="assets/images/avatar/obaydul.png" alt="">
-                            </a>
-                        </div>
-                        <div class="sidebar-user-wrap__content">
-                            <h5 class="sidebar-user-wrap__content-show-auth-info"> <a
-                                    href="single-user.html">Md. Obaydulla<i
-                                        class="fa-solid fa-circle-check"></i></a></h5>
-                            <p> <span> 6.5M</span> followers</p>
-                        </div>
+                   @foreach($users as $user)
+                   <div class="sidebar-user-wrap__item">
+                    <div class="sidebar-user-wrap__thumb">
+                        <a href="">
+                            <img src="{{ getImage(getFilePath('userProfile') . '/' . @$user->image, getFileSize('userProfile')) }}" alt="@lang('user profile')">
+                        </a>
+                    </div>
+                    <div class="sidebar-user-wrap__content">
+                        <h5 class="sidebar-user-wrap__content-show-auth-info"> <a
+                                href="single-user.html">{{__($user->fullname)}}<i
+                                    class="fa-solid fa-circle-check"></i></a></h5>
+                        <p> <span> 6.5M</span>@lang('followers')</p>
+                    </div>
 
-                        <!-- ======== Right Sidebar Hover Markup start ======== -->
-                        <div class="sidebar-user-hover">
-                            <div class="sidebar-user-hover__thumb-wrap">
-                                <img class="cover-photo" src="assets/images/avatar/cover.png" alt="">
-                                <div class="sidebar-user-wrap__thumb">
-                                    <img src="assets/images/avatar/obaydul.png" alt="">
-                                </div>
-                            </div>
-                            <div class="sidebar-user-hover__content">
-                                <div class="sidebar-user-wrap__content">
-                                    <div class="top">
-                                        <h5> <a href="">
-                                                Obaydul vai<i class="fa-solid fa-circle-check"></i></a>
-                                            <span>@obaydul17</span>
-                                        </h5>
-                                    </div>
-                                    <div class="followers">
-                                        <a href="">170 Following</a>
-                                        <a href="">378 followers</a>
-                                    </div>
-                                    <div class="bottom">
-                                        <button class="btn btn--base btn--sm pill w-100">Follow</button>
-                                    </div>
-                                </div>
+                    <!-- ======== Right Sidebar Hover Markup start ======== -->
+                    <div class="sidebar-user-hover">
+                        <div class="sidebar-user-hover__thumb-wrap">
+                            <img class="cover-photo" src="assets/images/avatar/cover.png" alt="">
+                            <div class="sidebar-user-wrap__thumb">
+                                <img src="{{ getImage(getFilePath('userProfile') . '/' . @$user->image, getFileSize('userProfile')) }}"  alt="@lang('user profile')">
                             </div>
                         </div>
-                        <!-- ======== Right Sidebar Hover Markup end ======== -->
+                        <div class="sidebar-user-hover__content">
+                            <div class="sidebar-user-wrap__content">
+                                <div class="top">
+                                    <h5> <a href="">
+                                           {{__($user->fullname)}}<i class="fa-solid fa-circle-check"></i>
+                                        </a>
+                                        <span>@ {{__($user->username)}}</span>
+                                    </h5>
+                                </div>
+                                <div class="followers">
+                                    <a href="" >170 @lang('Following')</a>
+                                    <a href="">000 @lang('followers')</a>
+                                </div>
+                                <div class="bottom">
+                                    <a href="{{ route('user.follow', $user->id) }}" class="btn btn--base btn--sm pill w-100">@lang('Follow')</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ======== Right Sidebar Hover Markup end ======== -->
 
-                    </div>
-                    <div class="sidebar-user-wrap__item">
-                        <div class="sidebar-user-wrap__thumb">
-                            <a href="">
-                                <img src="assets/images/avatar/ryhan.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="sidebar-user-wrap__content">
-                            <h5 class="sidebar-user-wrap__content-show-auth-info"> <a
-                                    href="single-user.html">Md. Rayhan Kobir</a></h5>
-                            <p> <span> 7.5M</span> followers</p>
-                        </div>
-                    </div>
-                    <div class="sidebar-user-wrap__item">
-                        <div class="sidebar-user-wrap__thumb">
-                            <a href="">
-                                <img src="assets/images/avatar/rajibvai.png" alt="">
-                            </a>
-                        </div>
-                        <div class="sidebar-user-wrap__content">
-                            <h5 class="sidebar-user-wrap__content-show-auth-info"> <a
-                                    href="single-user.html">Rajib Raju</a></h5>
-                            <p> <span> 6.5M</span> followers</p>
-                        </div>
-                    </div>
-                    <div class="sidebar-user-wrap__item">
-                        <div class="sidebar-user-wrap__thumb">
-                            <a href="">
-                                <img src="assets/images/avatar/mahmudul.png" alt="">
-                            </a>
-                        </div>
-                        <div class="sidebar-user-wrap__content">
-                            <h5 class="sidebar-user-wrap__content-show-auth-info"> <a
-                                    href="single-user.html">Md Mahmudul Islam</a></h5>
-                            <p> <span> 6.5M</span> followers</p>
-                        </div>
-                    </div>
-                    <div class="sidebar-user-wrap__item">
-                        <div class="sidebar-user-wrap__thumb">
-                            <a href="">
-                                <img src="assets/images/avatar/rifat.png" alt="">
-                            </a>
-                        </div>
-                        <div class="sidebar-user-wrap__content">
-                            <h5 class="sidebar-user-wrap__content-show-auth-info"> <a
-                                    href="single-user.html">Rifatul Haque Khan<i
-                                        class="fa-solid fa-circle-check"></i></a></h5>
-                            <p> <span> 6.5M</span> followers</p>
-                        </div>
-                    </div>
+                </div>
+                   @endforeach
                 </div>
                 <div class="sidebar-inner-wrap__bottom">
-                    <h6><a href="all-user.html">Show More</a></h6>
+                    <h6><a href="{{route('user.suggested')}}">@lang('Show More')</a></h6>
                 </div>
             </div>
-        </div>
+          </div>
 
         <!-- Tags start  -->
         <div class="right-sidebar-body border-botm">
@@ -170,3 +130,38 @@
     </div>
 </div>
 <!-- Right Sidebar area end -->
+
+
+
+@push('script')
+<script>
+
+$(document).ready(function() {
+    $(this).find('.sidebar-user-hover').hide();
+
+    $('.sidebar-user-wrap__item').hover(function() {
+
+        console.log($(this));
+
+        var fullname = $(this).find('.user-fullname').text();
+        var username = $(this).find('.user-username').text();
+        var following = $(this).find('.user-following').text();
+        var followers = $(this).find('.user-followers').text();
+        var profileImageSrc = $(this).find('img').attr('src');
+
+
+        $('.sidebar-user-hover__content .user-fullname').text(fullname);
+        $('.sidebar-user-hover__content .user-username').text(username);
+        $('.sidebar-user-hover__content .user-following').text(following);
+        $('.sidebar-user-hover__content .user-followers').text(followers);
+        $('.sidebar-user-hover__content .user-profile-image').attr('src', profileImageSrc);
+        $(this).find('.sidebar-user-hover').toggle();
+
+    }, function() {
+
+        $(this).find('.sidebar-user-hover').hide();
+    });
+});
+
+</script>
+@endpush

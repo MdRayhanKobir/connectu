@@ -56,6 +56,22 @@ class User extends Authenticatable
         );
     }
 
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'following_id', 'follower_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'following_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+
     // SCOPES
     public function scopeActive()
     {

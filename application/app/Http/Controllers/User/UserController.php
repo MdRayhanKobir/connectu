@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\Form;
 use App\Models\Plan;
 use App\Models\Post;
+use App\Models\User;
 use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -197,6 +198,36 @@ class UserController extends Controller
         $pageTitle = 'Plans';
         $plans = Plan::where('status',1)->latest()->paginate(getPaginate());
         return view($this->activeTemplate.'user.plans',compact('pageTitle','plans'));
+    }
+
+
+    // follow and unfollow
+    public function follow(User $userToFollow)
+    {
+        auth()->user()->following()->attach($userToFollow);
+
+        $userToFollow->followers_count++;
+        $userToFollow->save();
+
+        $notify[] = ['success','You are now following ' . $userToFollow->name];
+        return redirect()->back()->withNotify($notify);
+    }
+
+    public function unfollow(User $userToUnfollow)
+    {
+        auth()->user()->following()->detach($userToUnfollow);
+
+        $userToUnfollow->followers_count--;
+        $userToUnfollow->save();
+
+        $notify[] = ['success','You have unfollowed ' . $userToUnfollow->name];
+        return redirect()->back()->withNotify($notify);
+    }
+
+    public function userSuggested(){
+        $pageTitle = 'Recommendations';
+        $users = User::active()->where('id','!=',auth()->user()->id)->with(['posts'])->latest()->paginate(getPaginate());
+        return view($this->activeTemplate.'user.suggested_user',compact('pageTitle','users'));
     }
 
 }

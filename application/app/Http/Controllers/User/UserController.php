@@ -18,7 +18,19 @@ class UserController extends Controller
     {
         $pageTitle = 'Dashboard';
         $user = auth()->user();
-        $posts = Post::with(['user','postFile'])->where('status',1)->where('privacy','everyone')->latest()->inRandomOrder()->paginate(getPaginate());
+        $posts = Post::with(['user', 'postFile'])
+            ->where('status', 1)
+            ->where('privacy', 'everyone')
+            ->whereIn('user_id', function ($query) {
+                $query->select('following_id')
+                    ->from('user_follows')
+                    ->where('follower_id', auth()->user()->id);
+            })
+            ->latest()
+            ->inRandomOrder()
+            ->paginate(getPaginate());
+
+    
         return view($this->activeTemplate . 'user.dashboard', compact('pageTitle','user','posts'));
     }
 

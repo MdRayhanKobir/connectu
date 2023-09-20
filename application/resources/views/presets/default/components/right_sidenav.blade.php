@@ -36,7 +36,7 @@
                         <h5 class="sidebar-user-wrap__content-show-auth-info"> <a
                                 href="single-user.html">{{__($user->fullname)}}<i
                                     class="fa-solid fa-circle-check"></i></a></h5>
-                        <p> <span> 6.5M</span>@lang('followers')</p>
+                        <p> <span> {{__($user->followers_count)}}</span>@lang('followers')</p>
                     </div>
 
                     <!-- ======== Right Sidebar Hover Markup start ======== -->

@@ -13,7 +13,6 @@ class PostController extends Controller
 {
     public function store(Request $request){
 
-        // dd($request->video);
         $request->validate([
             'image' => ['nullable','image','max:2048', new FileTypeValidate(['jpg', 'jpeg', 'png','gif'])],
             'video' => ['nullable','file','max:100000', new FileTypeValidate(['mp4', 'avi','mov'])],
@@ -85,6 +84,11 @@ class PostController extends Controller
         ->with(['user', 'postFile'])
         ->where('status', 1)
         ->where('privacy', 'everyone')
+        ->whereIn('user_id', function ($query) {
+            $query->select('following_id')
+                ->from('user_follows')
+                ->where('follower_id', auth()->user()->id);
+        })
         ->latest()
         ->paginate(getPaginate());
         return view($this->activeTemplate . 'user.dashboard', compact('pageTitle','user','posts'));

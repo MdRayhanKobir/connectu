@@ -226,7 +226,12 @@ class UserController extends Controller
 
     public function userSuggested(){
         $pageTitle = 'Recommendations';
-        $users = User::active()->where('id','!=',auth()->user()->id)->with(['posts'])->latest()->paginate(getPaginate());
+
+        $users = User::active()
+        ->where('id', '!=', auth()->user()->id)
+        ->with(['posts', 'following', 'followers'])
+        ->latest()
+        ->paginate(getPaginate());
         return view($this->activeTemplate.'user.suggested_user',compact('pageTitle','users'));
     }
 

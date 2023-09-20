@@ -19,8 +19,8 @@
                         </div>
                         <div class="followers d-flex mb-0">
                             <p>{{__($user->posts->count())}} @lang('Post') </p>
-                            <p>10 Following</p>
-                            <p>6.5M Followers</p>
+                            <p>{{__($user->following_count)}} @lang('Following')</p>
+                            <p>{{__($user->followers_count)}} @lang('Followers')</p>
                         </div>
                         <div class="bottom">
                             <div class="total-followers">
@@ -36,9 +36,15 @@
                     </div>
                 </div>
                 <div class="follow-wrapper">
-                    <button class="btn btn--base btn--sm pill btn--rev">
-                        Follow
-                    </button>
+                    @if (auth()->user()->isFollowing($user))
+                        <button class="btn btn--base btn--sm pill btn--rev">
+                            @lang('Unfollow')
+                        </button>
+                    @else
+                        <button class="btn btn--base btn--sm pill btn--rev">
+                            @lang('Follow')
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

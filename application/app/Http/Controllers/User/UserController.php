@@ -6,6 +6,7 @@ use App\Models\Form;
 use App\Models\Plan;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Hashtag;
 use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -19,18 +20,22 @@ class UserController extends Controller
         $pageTitle = 'Dashboard';
         $user = auth()->user();
         $posts = Post::with(['user', 'postFile'])
-            ->where('status', 1)
-            ->where('privacy', 'everyone')
-            ->whereIn('user_id', function ($query) {
-                $query->select('following_id')
-                    ->from('user_follows')
-                    ->where('follower_id', auth()->user()->id);
-            })
-            ->latest()
-            ->inRandomOrder()
-            ->paginate(getPaginate());
+        ->where(function ($query) {
+            $query->where('user_id', auth()->user()->id) 
+                  ->orWhereIn('user_id', function ($subQuery) {
+                      $subQuery->select('following_id')
+                          ->from('user_follows')
+                          ->where('follower_id', auth()->user()->id);
+                  });
+        })
+        ->where('status', 1)
+        ->where('privacy', 'everyone')
+        ->latest()
+        ->inRandomOrder()
+        ->paginate(getPaginate());
 
-    
+
+
         return view($this->activeTemplate . 'user.dashboard', compact('pageTitle','user','posts'));
     }
 
@@ -244,7 +249,14 @@ class UserController extends Controller
         ->with(['posts', 'following', 'followers'])
         ->latest()
         ->paginate(getPaginate());
+
         return view($this->activeTemplate.'user.suggested_user',compact('pageTitle','users'));
+    }
+
+    public function trending(){
+        $pageTitle = 'Trending';
+        $hashtags = Hashtag::latest()->paginate(getPaginate());
+        return view($this->activeTemplate.'user.trends',compact('pageTitle','hashtags'));
     }
 
 }

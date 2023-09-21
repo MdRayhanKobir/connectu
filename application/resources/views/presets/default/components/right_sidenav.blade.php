@@ -89,7 +89,7 @@
                     @endforeach
                 </div>
                 <div class="sidebar-inner-wrap__bottom">
-                    <h6><a href="hot-topics.html">@lang('Show More')</a></h6>
+                    <h6><a href="{{route('user.trending')}}">@lang('Show More')</a></h6>
                 </div>
             </div>
         </div>

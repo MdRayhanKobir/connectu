@@ -31,10 +31,10 @@ $user = auth()->user();
                     <span class="text">Notifications</span>
                 </a>
             </li>
-            <li class="left-sidebar-menu__item">
-                <a href="hot-topics.html" class="left-sidebar-menu__link">
-                    <span class="icon"><i class="fa-solid fa-fire-flame-simple icon"></i></span>
-                    <span class="text">Trending</span>
+            <li class="left-sidebar-menu__item {{ Route::is('user.trending') ? 'active' : '' }}">
+                <a href="{{route('user.trending')}}" class="left-sidebar-menu__link">
+                    <span class="icon"><i class="fas fa-fire"></i></span>
+                    <span class="text">@lang('Trending')</span>
                 </a>
             </li>
             <li class="left-sidebar-menu__item">

@@ -1,5 +1,6 @@
 @extends($activeTemplate . 'layouts.master')
 @section('content')
+
 <div class="timeline-mt-60">
     @foreach($users as $user)
     <div class="timeline-single-post-wrap">
@@ -21,17 +22,6 @@
                             <p>{{__($user->posts->count())}} @lang('Post') </p>
                             <p>{{__($user->following_count)}} @lang('Following')</p>
                             <p>{{__($user->followers_count)}} @lang('Followers')</p>
-                        </div>
-                        <div class="bottom">
-                            <div class="total-followers">
-                                <p>Has 5 followers you know</p>
-                                <div class="avatar-wrapper alluser-avatar">
-                                    <a href=""> <img src="assets/images/avatar/obaydul.png" alt=""></a>
-                                    <a href=""> <img src="assets/images/avatar/obaydul.png" alt=""></a>
-                                    <a href=""> <img src="assets/images/avatar/obaydul.png" alt=""></a>
-                                    <a href=""> <img src="assets/images/avatar/obaydul.png" alt=""></a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

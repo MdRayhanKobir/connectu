@@ -80,17 +80,16 @@ class PostController extends Controller
         $pageTitle = 'Search By #'.$hashtag->tag;
 
 
-        $posts = $hashtag->posts()
-        ->with(['user', 'postFile'])
+        $posts = Post::with(['user', 'postFile'])
         ->where('status', 1)
         ->where('privacy', 'everyone')
-        ->whereIn('user_id', function ($query) {
-            $query->select('following_id')
-                ->from('user_follows')
-                ->where('follower_id', auth()->user()->id);
+        ->whereHas('hashtags', function ($query) use ($hashtag) {
+            $query->where('tag', $hashtag->tag);
         })
         ->latest()
         ->paginate(getPaginate());
+
+
         return view($this->activeTemplate . 'user.dashboard', compact('pageTitle','user','posts'));
     }
 

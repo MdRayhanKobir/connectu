@@ -64,6 +64,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('unfollow/{userToUnfollow}','unfollow')->name('unfollow');
 
                 Route::get('suggested/','userSuggested')->name('suggested');
+                Route::get('trending/','trending')->name('trending');
 
 
             });
@@ -101,10 +102,8 @@ Route::middleware('auth')->name('user.')->group(function () {
              //Post
              Route::controller('PostController')->name('post.')->prefix('posts')->group(function () {
                 Route::post('store', 'store')->name('store');
-
                 // hashtag post fetch
-
-                Route::get('hashtag/{hashtag}', 'fetchHashTagPosts')->name('fetch.hashtag');
+                Route::get('/hashtag/{hashtag}', 'fetchHashTagPosts')->name('fetch.hashtag');
 
 
 

@@ -11,6 +11,7 @@ use App\Lib\FormProcessor;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Lib\GoogleAuthenticator;
+use App\Models\UserNotification;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -270,6 +271,16 @@ class UserController extends Controller
 
             $post->likes_count = 1;
             $post->save();
+
+            if ($post) {
+                $userNotification = new UserNotification();
+                $userNotification->user_id = $post->user_id;
+                $userNotification->from_user = $user->id;
+                $userNotification->title = 'Like to your post';
+                $userNotification->status = 0;
+                $userNotification->click_url = urlPath('user.home');
+                $userNotification->save();
+            }
 
             return response()->json(['success' => true, 'likeCount' => $post->likes_count]);
         } else {

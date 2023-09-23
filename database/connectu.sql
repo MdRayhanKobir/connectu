@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2023 at 04:11 PM
+-- Generation Time: Sep 23, 2023 at 04:49 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -461,9 +461,12 @@ CREATE TABLE `hashtags` (
 
 INSERT INTO `hashtags` (`id`, `post`, `tag`, `created_at`, `updated_at`) VALUES
 (4, 1, 'document', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
-(5, 2, 'commonly', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
-(6, 3, 'ipsum ', '2023-09-19 03:52:36', '2023-09-19 05:48:23'),
-(7, 1, 'momin', '2023-09-19 05:32:46', '2023-09-19 05:32:46');
+(5, 2, 'ipsum ', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
+(6, 3, 'Commonly', '2023-09-19 03:52:36', '2023-09-19 05:48:23'),
+(7, 1, 'momin', '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
+(8, 1, 'bangladesh', '2023-09-20 23:34:42', '2023-09-20 23:34:42'),
+(9, 1, 'wstacks', '2023-09-20 23:35:35', '2023-09-20 23:35:35'),
+(10, 1, 'india', '2023-09-23 01:51:07', '2023-09-23 01:51:07');
 
 -- --------------------------------------------------------
 
@@ -487,7 +490,10 @@ INSERT INTO `hashtag_post` (`id`, `post_id`, `hashtag_id`) VALUES
 (4, 14, 6),
 (5, 18, 6),
 (6, 19, 7),
-(7, 21, 6);
+(7, 21, 6),
+(8, 22, 8),
+(9, 23, 9),
+(10, 24, 10);
 
 -- --------------------------------------------------------
 
@@ -513,6 +519,26 @@ CREATE TABLE `languages` (
 INSERT INTO `languages` (`id`, `name`, `code`, `icon`, `text_align`, `is_default`, `created_at`, `updated_at`) VALUES
 (1, 'English', 'en', '5f15968db08911595250317.png', 0, 1, '2020-07-06 03:47:55', '2022-09-29 10:36:14'),
 (14, 'Spanish', 'es', NULL, 0, 0, '2023-02-15 11:06:57', '2023-02-15 11:06:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `like_user`
+--
+
+CREATE TABLE `like_user` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `like_user`
+--
+
+INSERT INTO `like_user` (`id`, `user_id`, `post_id`) VALUES
+(47, 33, 22),
+(48, 32, 23);
 
 -- --------------------------------------------------------
 
@@ -555,7 +581,8 @@ INSERT INTO `notification_logs` (`id`, `user_id`, `sender`, `sent_from`, `sent_t
 (15, 34, 'php', 'notify@wstacks.com', 'demouser1@gmail.com', 'Your Deposit is Approved', '<p>Hi @demouser1 (demouser1),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>is Approved .<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 35.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Received : 35.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Paid via :&nbsp; Manual</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : YH2TG2EFZXVM</div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\"><span style=\"font-weight: bolder;\"><br></span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">0.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div></p>', 'email', '2023-09-18 05:35:56', '2023-09-18 05:35:56'),
 (16, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Deposit Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div>Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>submitted successfully<span style=\"font-weight: bolder;\">&nbsp;.<br></span></div><div><span style=\"font-weight: bolder;\"><br></span></div><div><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div><br></div><div>Amount : 35.00 USD</div><div>Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div><br></div><div>Conversion Rate : 1 USD = 1.00 USD</div><div>Payable : 35.00 USD<br></div><div>Pay via :&nbsp; Manual</div><div><br></div><div>Transaction Number : W24XVMM8MZC9</div><div><br></div><div><br style=\"font-family: Montserrat, sans-serif;\"></div></p>', 'email', '2023-09-18 05:42:20', '2023-09-18 05:42:20'),
 (17, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Your Deposit is Approved', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your deposit request of&nbsp;<span style=\"font-weight: bolder;\">35.00 USD</span>&nbsp;is via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Manual&nbsp;</span>is Approved .<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your Deposit :<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 35.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Received : 35.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Paid via :&nbsp; Manual</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : W24XVMM8MZC9</div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\"><span style=\"font-weight: bolder;\"><br></span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">0.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div></p>', 'email', '2023-09-18 05:42:28', '2023-09-18 05:42:28'),
-(18, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Withdraw Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your withdraw request of&nbsp;<span style=\"font-weight: bolder;\">1.00 USD</span>&nbsp; via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Mobile Banking&nbsp;</span>has been submitted Successfully.<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your withdraw:<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">You will get: 1.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Via :&nbsp; Mobile Banking</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : 3YF268KY9K9F</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">1.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br><br><br></div></p>', 'email', '2023-09-18 06:49:27', '2023-09-18 06:49:27');
+(18, 33, 'php', 'notify@wstacks.com', 'demouser@gmail.com', 'Withdraw Request Submitted Successfully', '<p>Hi User User (demouser),&nbsp;</p><p><div style=\"font-family: Montserrat, sans-serif;\">Your withdraw request of&nbsp;<span style=\"font-weight: bolder;\">1.00 USD</span>&nbsp; via&nbsp;&nbsp;<span style=\"font-weight: bolder;\">Mobile Banking&nbsp;</span>has been submitted Successfully.<span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\"><br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><span style=\"font-weight: bolder;\">Details of your withdraw:<br></span></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Amount : 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">Charge:&nbsp;<font color=\"#FF0000\">0.00 USD</font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Conversion Rate : 1 USD = 1.00 USD</div><div style=\"font-family: Montserrat, sans-serif;\">You will get: 1.00 USD<br></div><div style=\"font-family: Montserrat, sans-serif;\">Via :&nbsp; Mobile Banking</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Transaction Number : 3YF268KY9K9F</div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><font size=\"5\">Your current Balance is&nbsp;<span style=\"font-weight: bolder;\">1.00 USD</span></font></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\"><br><br><br></div></p>', 'email', '2023-09-18 06:49:27', '2023-09-18 06:49:27'),
+(19, 31, 'php', 'notify@wstacks.com', 'user879@gmail.com', 'Please verify your email address', '<p>Hi John Havier (gusfring),&nbsp;</p><p><br><div><div style=\"font-family: Montserrat, sans-serif;\">Thanks For joining us.<br></div><div style=\"font-family: Montserrat, sans-serif;\">Please use the below code to verify your email address.<br></div><div style=\"font-family: Montserrat, sans-serif;\"><br></div><div style=\"font-family: Montserrat, sans-serif;\">Your email verification code is:<font size=\"6\"><span style=\"font-weight: bolder;\">&nbsp;370553</span></font></div></div></p>', 'email', '2023-09-20 23:35:03', '2023-09-20 23:35:03');
 
 -- --------------------------------------------------------
 
@@ -735,7 +762,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `status`, `privacy`, `edited`, `created_at`, `updated_at`) VALUES
-(13, 33, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a #document or a typeface without relying on meaningful content. Lorem #ipsum may be', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
+(13, 33, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a #document or a typeface without relying on meaningful content. Lorem #ipsum may be', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:19', '2023-09-23 00:06:06'),
 (14, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:36', '2023-09-19 03:52:36'),
 (15, 33, 'Bangladesh is small country', 0, 0, 1, 'everyone', NULL, '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
 (16, 33, 'Testing video', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:21:01', '2023-09-19 05:21:01'),
@@ -743,7 +770,10 @@ INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `st
 (18, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
 (19, 33, 'Hellow #momin', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
 (20, 33, 'hellow wstacks', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:40:23', '2023-09-19 05:40:23'),
-(21, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:48:23', '2023-09-19 05:48:23');
+(21, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:48:23', '2023-09-19 05:48:23'),
+(22, 32, 'Good Morning #bangladesh', 0, 1, 1, 'everyone', NULL, '2023-09-20 23:34:42', '2023-09-23 08:22:29'),
+(23, 34, 'Hey #wstacks', 0, 1, 1, 'everyone', NULL, '2023-09-20 23:35:35', '2023-09-23 08:27:14'),
+(24, 33, 'hey #india', 0, 0, 1, 'everyone', NULL, '2023-09-23 01:51:07', '2023-09-23 08:19:00');
 
 -- --------------------------------------------------------
 
@@ -1166,11 +1196,11 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `countr
 (27, 'Graciela A.', 'Romano\n', 'tes77788', 'testuser5588@gmail.com', 'AF', '59154685458', 0, '0.00000000', '$2y$10$bnERS5Za.TVGNxb89ttI2eIc10.kDEXK8hTkUS5Ob7sKpN7N8vRHa', NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Afghanistan\"}', 1, NULL, 0, 1, 1, 0, '994511', '2022-03-06 11:53:38', 1, 0, NULL, 0, 0, NULL, NULL, '2021-06-12 05:27:14', '2022-03-10 07:25:03'),
 (28, 'Ken', 'Morales', 'fajavidi', 'gasaf@amimail.com', 'DZ', '213Accusamus at et rati', 0, '0.00000000', '$2y$10$LYPdpUJDnCfG7MXUF0ydaOX5ESI6dLrjlrnh9QJ0YgaJdRSPMs9HS', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Algeria\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, '210333', '2022-03-17 09:09:59', 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-17 03:09:58', '2022-03-21 01:07:58'),
 (29, 'Anthony ', 'J.', 'michbarry', 'fyjify@amimail.com', 'KN', '18695946542145', 0, '200.00000000', '$2y$10$5iSye35hvir6jdd1nMx5/elcysmkvfrTFCfK0MLV5nb9QsA2Q7ury', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Saint Kitts and Nevis\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-21 02:41:54', '2022-09-20 10:01:31'),
-(30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-22 07:53:20', '2022-03-22 08:09:45'),
-(31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '285472', '2022-09-29 17:45:24', 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-22 11:22:57', '2023-01-05 09:32:49'),
-(32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', NULL, '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2023-03-22 04:09:55', '2023-03-22 04:10:43'),
-(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, NULL, 'JikJIGFJ56NdkJ1Ooiku79tUxtMKwcQRJeCOzlvDXKTiBzFJBoRSTfiSdyxx', '2023-09-16 23:24:11', '2023-09-18 06:49:25'),
-(34, NULL, NULL, 'demouser1', 'demouser1@gmail.com', NULL, NULL, 0, '0.00000000', '$2y$10$pdSA9PzlndnntMAd.994z.YDQFVGC441F9nimrdw4T5Wx/wo5HR02', NULL, NULL, 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 1, 0, NULL, NULL, '2023-09-18 05:34:10', '2023-09-20 01:19:22');
+(30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-22 07:53:20', '2023-09-20 23:43:42'),
+(31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '370553', '2023-09-21 05:35:01', 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-22 11:22:57', '2023-09-21 05:07:22'),
+(32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', NULL, '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 2, 0, NULL, NULL, '2023-03-22 04:09:55', '2023-09-21 05:18:58'),
+(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, NULL, 'JikJIGFJ56NdkJ1Ooiku79tUxtMKwcQRJeCOzlvDXKTiBzFJBoRSTfiSdyxx', '2023-09-16 23:24:11', '2023-09-20 23:43:23'),
+(34, NULL, NULL, 'demouser1', 'demouser1@gmail.com', NULL, NULL, 0, '0.00000000', '$2y$10$pdSA9PzlndnntMAd.994z.YDQFVGC441F9nimrdw4T5Wx/wo5HR02', NULL, NULL, 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 1, 0, NULL, NULL, '2023-09-18 05:34:10', '2023-09-23 08:27:08');
 
 -- --------------------------------------------------------
 
@@ -1189,7 +1219,9 @@ CREATE TABLE `user_follows` (
 --
 
 INSERT INTO `user_follows` (`id`, `follower_id`, `following_id`) VALUES
-(4, 33, 34);
+(13, 33, 32),
+(14, 34, 32),
+(15, 32, 34);
 
 -- --------------------------------------------------------
 
@@ -1232,7 +1264,40 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 (13, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-20 00:08:23', '2023-09-20 00:08:23'),
 (14, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-20 01:13:01', '2023-09-20 01:13:01'),
 (15, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-20 02:40:31', '2023-09-20 02:40:31'),
-(16, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-20 06:16:00', '2023-09-20 06:16:00');
+(16, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-20 06:16:00', '2023-09-20 06:16:00'),
+(17, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-20 23:22:37', '2023-09-20 23:22:37'),
+(18, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-20 23:35:47', '2023-09-20 23:35:47'),
+(19, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-21 04:33:18', '2023-09-21 04:33:18'),
+(20, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-21 04:44:13', '2023-09-21 04:44:13'),
+(21, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-21 05:19:07', '2023-09-21 05:19:07'),
+(22, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-22 22:37:00', '2023-09-22 22:37:00'),
+(23, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-23 01:50:17', '2023-09-23 01:50:17'),
+(24, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-23 08:13:16', '2023-09-23 08:13:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_notifications`
+--
+
+CREATE TABLE `user_notifications` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `from_user` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `click_url` text DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_notifications`
+--
+
+INSERT INTO `user_notifications` (`id`, `user_id`, `from_user`, `title`, `click_url`, `status`, `created_at`, `updated_at`) VALUES
+(1, 32, 33, 'Like to your post', '/user/dashboard', 0, '2023-09-23 08:22:29', '2023-09-23 08:22:29'),
+(2, 34, 32, 'Like to your post', '/user/dashboard', 0, '2023-09-23 08:27:14', '2023-09-23 08:27:14');
 
 -- --------------------------------------------------------
 
@@ -1395,6 +1460,12 @@ ALTER TABLE `languages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `like_user`
+--
+ALTER TABLE `like_user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notification_logs`
 --
 ALTER TABLE `notification_logs`
@@ -1494,6 +1565,12 @@ ALTER TABLE `user_logins`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_notifications`
+--
+ALTER TABLE `user_notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `withdrawals`
 --
 ALTER TABLE `withdrawals`
@@ -1585,13 +1662,13 @@ ALTER TABLE `general_settings`
 -- AUTO_INCREMENT for table `hashtags`
 --
 ALTER TABLE `hashtags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `hashtag_post`
 --
 ALTER TABLE `hashtag_post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -1600,10 +1677,16 @@ ALTER TABLE `languages`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `like_user`
+--
+ALTER TABLE `like_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
 -- AUTO_INCREMENT for table `notification_logs`
 --
 ALTER TABLE `notification_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `notification_templates`
@@ -1633,7 +1716,7 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `post_media`
@@ -1687,13 +1770,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_follows`
 --
 ALTER TABLE `user_follows`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `user_notifications`
+--
+ALTER TABLE `user_notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`

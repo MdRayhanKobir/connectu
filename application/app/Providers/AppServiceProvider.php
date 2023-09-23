@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\AdminNotification;
+use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Frontend;
 use App\Models\Language;
-use App\Models\SupportTicket;
-use App\Models\User;
 use App\Models\Withdrawal;
-use Illuminate\Support\ServiceProvider;
+use App\Models\SupportTicket;
+use App\Models\UserNotification;
+use App\Models\AdminNotification;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -82,6 +83,12 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'adminNotifications'=>AdminNotification::where('read_status',0)->with('user')->orderBy('id','desc')->take(10)->get(),
                 'adminNotificationCount'=>AdminNotification::where('read_status',0)->count(),
+            ]);
+        });
+
+        view()->composer(activeTemplate() .'components.left_sidenav', function ($view) {
+            $view->with([
+                'notificationsCount' => UserNotification::whereUserId(auth()->user()->id)->whereStatus(0)->count(),
             ]);
         });
 

@@ -26,9 +26,12 @@ $user = auth()->user();
             </li>
             <li class="left-sidebar-menu__item">
                 <a href="notifications.html" class="left-sidebar-menu__link">
-                    <span class="notification-animate">5</span>
-                    <span class="icon"><i class="fa-solid fa-bell"></i></span>
-                    <span class="text">Notifications</span>
+                    @if($notificationsCount > 0)
+                    <span class="notification-animate">{{ $notificationsCount }}</span>
+                    @endif
+
+                    <span class="icon"><i class="fas fa-bell"></i></span>
+                    <span class="text">@lang('Notifications')</span>
                 </a>
             </li>
             <li class="left-sidebar-menu__item {{ Route::is('user.trending') ? 'active' : '' }}">

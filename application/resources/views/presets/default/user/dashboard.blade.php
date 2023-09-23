@@ -197,8 +197,8 @@
                                 <div class="timeline-single-post__bottom-control">
                                     <div class="social-wrap">
                                         <button>
-                                            <span class="icon"><i class="far fa-thumbs-up"></i></span>
-                                            <span class="count like-count">0</span>
+                                            <span class="icon likePost {{ $item->likedByUsers->contains(auth()->user()) ? 'clicked' : '' }}" data-post_id = "{{$item->id}}" >  <i class="{{ $item->likedByUsers->contains(auth()->user()) ? 'fas' : 'far' }} fa-thumbs-up"></i></span>
+                                            <span class="count likecount">{{__($item->likes_count)}}</span>
                                         </button>
                                         <button data-bs-toggle="modal" data-bs-target="#commentModal">
                                             <span class="icon"><i class="far fa-comment"></i></span>
@@ -403,8 +403,40 @@
 
 @push('script')
     <script>
-        function setPrivacy(option) {
-            document.getElementById('privacy').value = option;
-        }
+           $(document).ready(function () {
+
+            function setPrivacy(option) {
+                document.getElementById('privacy').value = option;
+            }
+
+            $('.likePost').on('click', function () {
+                var postId = $(this).data('post_id');
+                var likeButton = $(this);
+                var likeCount = likeButton.closest('button').find('.likecount');
+
+            $.ajax({
+                type: 'get',
+                url: '{{ route("user.like.bye.post") }}',
+                data: {
+                    post_id:postId,
+                },
+                success: function (data) {
+                    if (data.success) {
+                    likeButton.find('span.icon').toggleClass('clicked');
+                    var icon = likeButton.find('i');
+                    icon.toggleClass('fas');
+                    icon.toggleClass('far');
+
+                    // Update the like count
+                    likeCount.text(data.likeCount);
+                    }
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+
+    });
     </script>
 @endpush

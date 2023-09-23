@@ -76,7 +76,11 @@ class User extends Authenticatable
         return $this->following->contains($user);
     }
 
-    
+    public function likedPosts() {
+        return $this->belongsToMany(Post::class, 'like_user', 'user_id', 'post_id');
+    }
+
+
 
 
 

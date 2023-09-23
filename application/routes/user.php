@@ -66,6 +66,11 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('suggested/','userSuggested')->name('suggested');
                 Route::get('trending/','trending')->name('trending');
 
+                // like by post
+                Route::get('like/post','likeByPost')->name('like.bye.post');
+
+
+
 
             });
 

@@ -80,7 +80,7 @@ class PostController extends Controller
         $pageTitle = 'Search By #'.$hashtag->tag;
 
 
-        $posts = Post::with(['user', 'postFile'])
+        $posts = Post::with(['user', 'postFile','likedByUsers'])
         ->where('status', 1)
         ->where('privacy', 'everyone')
         ->whereHas('hashtags', function ($query) use ($hashtag) {

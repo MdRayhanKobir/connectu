@@ -24,4 +24,8 @@ class Post extends Model
         return $this->hasMany(PostMedia::class);
     }
 
+    public function likedByUsers() {
+        return $this->belongsToMany(User::class, 'like_user', 'post_id', 'user_id');
+    }
+
 }

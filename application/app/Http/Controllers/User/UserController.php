@@ -19,9 +19,9 @@ class UserController extends Controller
     {
         $pageTitle = 'Dashboard';
         $user = auth()->user();
-        $posts = Post::with(['user', 'postFile'])
+        $posts = Post::with(['user', 'postFile','likedByUsers'])
         ->where(function ($query) {
-            $query->where('user_id', auth()->user()->id) 
+            $query->where('user_id', auth()->user()->id)
                   ->orWhereIn('user_id', function ($subQuery) {
                       $subQuery->select('following_id')
                           ->from('user_follows')
@@ -258,5 +258,29 @@ class UserController extends Controller
         $hashtags = Hashtag::latest()->paginate(getPaginate());
         return view($this->activeTemplate.'user.trends',compact('pageTitle','hashtags'));
     }
+
+    public function likeByPost(Request $request) {
+        $postId = $request->input('post_id');
+        $user = auth()->user();
+        $post = Post::findOrFail($postId);
+
+        // Check if the user has already liked the post
+        if (!$user->likedPosts->contains($postId)) {
+            $user->likedPosts()->attach($postId);
+
+            $post->likes_count = 1;
+            $post->save();
+
+            return response()->json(['success' => true, 'likeCount' => $post->likes_count]);
+        } else {
+            $user->likedPosts()->detach($postId);
+
+            $post->likes_count -= 1;
+            $post->save();
+
+            return response()->json(['success' => true, 'likeCount' => $post->likes_count]);
+        }
+    }
+
 
 }

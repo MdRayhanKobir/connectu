@@ -42,7 +42,7 @@
                     <!-- ======== Right Sidebar Hover Markup start ======== -->
                     <div class="sidebar-user-hover">
                         <div class="sidebar-user-hover__thumb-wrap">
-                            <img class="cover-photo" src="assets/images/avatar/cover.png" alt="">
+                            <img class="cover-photo" src="{{ getImage(getFilePath('userCoverImage') . '/' . @$user->cover_image, getFileSize('userCoverImage')) }}"  alt="@lang('Cover Image')">
                             <div class="sidebar-user-wrap__thumb">
                                 <img src="{{ getImage(getFilePath('userProfile') . '/' . @$user->image, getFileSize('userProfile')) }}"  alt="@lang('user profile')">
                             </div>
@@ -57,8 +57,8 @@
                                     </h5>
                                 </div>
                                 <div class="followers">
-                                    <a href="" >{{__($user->following_count)}} @lang('Following')</a>
-                                    <a href="">{{__($user->followers_count)}} @lang('followers')</a>
+                                    <a href="javascript:void(0)" >{{__($user->following_count)}} @lang('Following')</a>
+                                    <a href="javascript:void(0)">{{__($user->followers_count)}} @lang('followers')</a>
                                 </div>
                                 <div class="bottom">
                                     <a href="{{ route('user.follow', $user->id) }}" class="btn btn--base btn--sm pill w-100">@lang('Follow')</a>

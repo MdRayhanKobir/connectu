@@ -293,5 +293,35 @@ class UserController extends Controller
         }
     }
 
+    public function notification(){
+        $pageTitle = 'Notifications';
+        $notifications = UserNotification::where('user_id',auth()->user()->id)->latest()->with(['fromUser', 'post'])->paginate(getPaginate());
+        return view($this->activeTemplate . 'user.notifications', compact('pageTitle', 'notifications'));
+    }
+
+    public function notificationRead($id){
+        $userNotification = UserNotification::findOrFail($id);
+        $userNotification->status = 1;
+        $userNotification->save();
+        return redirect($userNotification->click_url);
+    }
+
+    public function myPage($username){
+        $user = User::where('username',$username)->first();
+        $pageTitle =  @$user->username;
+
+        $posts = Post::with(['user', 'postFile','likedByUsers'])
+        ->where(function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        })
+        ->where('status', 1)
+        ->where('privacy', 'everyone')
+        ->latest()
+        ->inRandomOrder()
+        ->paginate(getPaginate());
+
+        return view($this->activeTemplate.'user.mypage',compact('user','posts','pageTitle'));
+    }
+
 
 }

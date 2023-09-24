@@ -69,6 +69,15 @@ Route::middleware('auth')->name('user.')->group(function () {
                 // like by post
                 Route::get('like/post','likeByPost')->name('like.bye.post');
 
+                // notification
+                Route::get('notification','notification')->name('notification');
+                Route::get('notification/read/{id}','notificationRead')->name('notification.read');
+
+                // my single page
+                Route::get('profile/{username}','myPage')->name('mypage');
+
+
+
 
 
 
@@ -80,6 +89,10 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::post('profile/setting', 'submitProfile');
                 Route::get('change-password', 'changePassword')->name('change.password');
                 Route::post('change-password/submit', 'submitPassword')->name('change.password.submit');
+
+                Route::post('cover/image', 'coverImage')->name('cover.image');
+                Route::post('profile', 'imageUpdate')->name('profile.update');
+
 
             });
 

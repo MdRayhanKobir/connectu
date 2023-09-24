@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Rules\FileTypeValidate;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -89,5 +90,48 @@ class ProfileController extends Controller
             $notify[] = ['error', 'The password doesn\'t match!'];
             return back()->withNotify($notify);
         }
+    }
+
+
+    public function coverImage(Request $request)
+    {
+
+        $this->validate($request, [
+            'cover_image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png'])]
+        ]);
+        $user = auth()->user();
+        if ($request->hasFile('cover_image'))
+        {
+            $path = getFilePath('userCoverImage');
+            fileManager()->removeFile($path.'/'.$user->cover_image);
+            $directory = $user->username."/". $user->id;
+            $path = getFilePath('userCoverImage').'/'.$directory;
+            $filename = $directory.'/'.fileUploader($request->cover_image, $path, getFileSize('userCoverImage'));
+            $user->cover_image = $filename;
+        }
+        $user->save();
+        $notify[] = ['success', 'Cover image has been updated successfully'];
+        return to_route('user.mypage',$user->username)->withNotify($notify);
+    }
+
+    public function imageUpdate(Request $request)
+    {
+
+        $this->validate($request, [
+            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png'])]
+        ]);
+        $user = auth()->user();
+        if ($request->hasFile('image'))
+        {
+            $path = getFilePath('userProfile');
+            fileManager()->removeFile($path.'/'.$user->image);
+            $directory = $user->username."/". $user->id;
+            $path = getFilePath('userProfile').'/'.$directory;
+            $filename = $directory.'/'.fileUploader($request->image, $path, getFileSize('userProfile'));
+            $user->image = $filename;
+        }
+        $user->save();
+        $notify[] = ['success', 'Profile image has been updated successfully'];
+        return to_route('user.mypage',$user->username)->withNotify($notify);
     }
 }

@@ -29,6 +29,7 @@ class PostController extends Controller
         $post->text = $request->text;
         $post->privacy = $request->privacy;
         $post->status = 1;
+        $post->post_count += 1;
         $post->save();
 
         if(!$post->id){

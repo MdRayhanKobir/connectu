@@ -6,9 +6,9 @@ $user = auth()->user();
     <div class="left-sidebar-wrapper">
         <ul id="navbar" class="left-sidebar-menu">
             <li class="left-sidebar-menu__item profile">
-                <a href="single-user.html"
+                <a href="{{route('user.mypage',$user->username)}}"
                     class="left-sidebar-menu__link user  btn btn--base pill btn--rev">
-                    <span class="icon"><img src="assets/images/avatar/obaydul.png" alt=""></span>
+                    <span class="icon"><img src="{{ getImage(getFilePath('userProfile') . '/' . @$user->image, getFileSize('userProfile')) }}"  alt="@lang('user profile')"></span>
                     <span class="text">{{__(@$user->fullname)}}</span>
                 </a>
 
@@ -25,7 +25,7 @@ $user = auth()->user();
                 </a>
             </li>
             <li class="left-sidebar-menu__item">
-                <a href="notifications.html" class="left-sidebar-menu__link">
+                <a href="{{route('user.notification')}}" class="left-sidebar-menu__link">
                     @if($notificationsCount > 0)
                     <span class="notification-animate">{{ $notificationsCount }}</span>
                     @endif
@@ -40,22 +40,17 @@ $user = auth()->user();
                     <span class="text">@lang('Trending')</span>
                 </a>
             </li>
-            <li class="left-sidebar-menu__item">
-                <a href="explore-all.html" class="left-sidebar-menu__link">
-                    <span class="icon"><i class="fa-solid fa-hashtag"></i></span>
-                    <span class="text"> Explore</span>
-                </a>
-            </li>
+
             <li class="left-sidebar-menu__item">
                 <a href="messages.html" class="left-sidebar-menu__link">
-                    <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+                    <span class="icon"><i class="fas fa-envelope"></i></span>
                     <span class="text"> Messages</span>
                 </a>
             </li>
             <li class="left-sidebar-menu__item responsive-post-hidden" class="btn btn-primary"
                 data-bs-toggle="modal" data-bs-target="#newPostMidal">
                 <a href="javascript:void(0);" class="left-sidebar-menu__link btn btn--base pill">
-                    <i class="fa-solid fa-address-card me-2"></i> New Post
+                    <i class="fas fa-address-card me-2"></i> New Post
                 </a>
             </li>
 

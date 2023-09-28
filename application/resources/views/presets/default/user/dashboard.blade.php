@@ -116,12 +116,35 @@
                             <div class="timeline-single-post__content-top-wrapper">
                                 <div class="avatar-content">
                                     <div class="avatar-name">
-                                        <h5> <a href="single-user.html">{{ __(@$item->user->fullname) }}</a></h5>
+                                        <h5> <a href="{{route('user.mypage',$item->user->username)}}">{{ __(@$item->user->fullname) }}</a></h5>
                                     </div>
                                     <div class="single-item-menu">
                                         <button>
                                             <i class="fas fa-ellipsis-h"></i>
                                         </button>
+                                        <ul class="post-top-menu">
+                                            <li class="post-top-menu__item">
+                                                <a class="post-top-menu__link" href="{{route('user.mypage',$item->user->username)}}">
+                                                    <span class="icon"><i class="fas fa-user"></i></span>
+                                                    <span class="text">{{__($item->user->username)}}</span>
+                                                </a>
+                                            </li>
+                                            <li class="post-top-menu__item">
+                                                <a class="post-top-menu__link" href="javascript:void(0);">
+                                                    <span class="icon"><i class="fas fa-trash"></i></span>
+                                                    <span class="text">@lang('Edit Post')</span>
+                                                </a>
+                                            </li>
+                                            @if(auth()->user()->id == $item->user->id )
+                                            <li class="post-top-menu__item">
+                                                <a class="post-top-menu__link" href="{{route('user.post.move.archive',$item->id)}}">
+                                                    <span class="icon"><i class="fas fa-trash"></i></span>
+                                                    <span class="text">@lang('Move to achive')</span>
+                                                </a>
+                                            </li>
+                                            @endif
+
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="timeline-single-post__post-content">
@@ -200,10 +223,10 @@
                                             <span class="icon likePost {{ $item->likedByUsers->contains(auth()->user()) ? 'clicked' : '' }}" data-post_id = "{{$item->id}}" >  <i class="{{ $item->likedByUsers->contains(auth()->user()) ? 'fas' : 'far' }} fa-thumbs-up"></i></span>
                                             <span class="count likecount">{{__($item->likes_count)}}</span>
                                         </button>
-                                        <button data-bs-toggle="modal" data-bs-target="#commentModal">
+                                        <a href="{{route('user.post.details',$item->id)}}">
                                             <span class="icon"><i class="far fa-comment"></i></span>
-                                            <span class="count">0</span>
-                                        </button>
+                                            <span class="count">{{$item->replys_count}}</span>
+                                        </a>
                                         <button data-bs-toggle="modal" data-bs-target="#shareModal">
                                             <span class="icon"><i class="fas fa-share-alt"></i></span>
                                         </button>
@@ -220,80 +243,7 @@
             @endforeach
             <!--======================= Timeline Single Post End =======================-->
 
-            <!--============== Comment Modal Start ===============-->
-            <!-- Modal -->
-            <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="commentModalLabel">Post Replay</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="">
-                                <div class="timeline-top-post-wrap  modal-wrapper">
-                                    <div class="timeline-top-post-wrap__header-post">
-                                        <div class="timeline-top-post-wrap__thumb">
-                                            <img src="assets/images/avatar/obaydul.png" alt="">
-                                        </div>
-                                        <div class="timeline-top-post-wrap__textinput">
-                                            <!-- " -->
-                                            <textarea class="comment-modal-popup-textarea" placeholder="Enter Your Replay.."></textarea>
-                                        </div>
-                                    </div>
 
-                                    <div class="timeline-top-post-wrap__upload-icon-wrap">
-                                        <div class="upload-icon">
-                                            <div class="upload-item">
-                                                <span class="toltip">Media</span>
-                                                <div class="upload-wrap">
-                                                    <label for="file_upload"><i class="fa-regular fa-image"></i></label>
-                                                    <input id="file_upload" type="file" class="upload-input">
-                                                </div>
-                                            </div>
-                                            <div class="upload-item active">
-                                                <div class="upload-wrap">
-                                                    <span class="toltip">Video</span>
-                                                    <label for="file_upload"><i class="fa-solid fa-play"></i></label>
-                                                    <input id="file_upload" type="file" class="upload-input">
-                                                </div>
-                                            </div>
-                                            <div class="upload-item">
-                                                <span class="toltip">Music</span>
-                                                <div class="upload-wrap">
-                                                    <label for="file_upload"><i class="fa-solid fa-music"></i></label>
-                                                    <input id="file_upload" type="file" class="upload-input">
-                                                </div>
-                                            </div>
-                                            <div class="upload-item">
-                                                <span class="toltip">File</span>
-                                                <div class="upload-wrap">
-                                                    <label for="file_upload"><i class="fa-solid fa-file"></i></label>
-                                                    <input id="file_upload" type="file" class="upload-input">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="post-count">
-                                            <span class="start-count cmt-modal-count-start">0</span><span>/</span><span
-                                                class="total-count">200</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="timeline-top-post-wrap__button-wrap justify-content-end">
-                                        <div class="button-right">
-                                            <button class="btn btn--base btn--sm pill comment-modal-btn"
-                                                disabled="disabled">Publish</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--============== Comment Modal End ===============-->
 
             <!--============== Edit Post Modal Modal Start ===============-->
             <!-- Modal -->

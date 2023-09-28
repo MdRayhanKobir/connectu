@@ -16,9 +16,9 @@
                             <a href="{{ route('home') }}" class="normal-logo"> <img
                                 src="{{ getImage(getFilePath('logoIcon') . '/logo.png', '?' . time()) }}"
                                 alt="{{ config('app.name') }}"></a>
-                        <a href="{{ route('home') }}" class="dark-logo hidden"> <img
+                        {{-- <a href="{{ route('home') }}" class="dark-logo hidden"> <img
                                 src="{{ getImage(getFilePath('logoIcon') . '/logo_white.png', '?' . time()) }}"
-                                alt="{{ config('app.name') }}"></a>
+                                alt="{{ config('app.name') }}"></a> --}}
                         </div>
                     </div>
 

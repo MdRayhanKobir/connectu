@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2023 at 04:49 PM
+-- Generation Time: Sep 28, 2023 at 02:48 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -71,7 +71,7 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `read_status`, `cli
 (1, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-01-21 07:29:16', '2023-01-21 07:29:16'),
 (2, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-01-21 07:40:48', '2023-01-21 07:40:48'),
 (3, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-01-21 07:43:51', '2023-01-21 07:43:51'),
-(4, 32, 'New member registered', 0, '/admin/manage/users/detail/32', '2023-03-22 04:09:55', '2023-03-22 04:09:55'),
+(4, 32, 'New member registered', 1, '/admin/manage/users/detail/32', '2023-03-22 04:09:55', '2023-09-23 22:50:15'),
 (5, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-03-22 04:09:57', '2023-03-22 04:09:57'),
 (6, 32, 'Deposit request from testuser1', 0, '/admin/manage/deposits/details/64', '2023-05-27 02:51:35', '2023-05-27 02:51:35'),
 (7, 0, 'SMTP Error: Could not connect to SMTP host. Failed to connect to server', 0, '#', '2023-05-27 02:51:35', '2023-05-27 02:51:35'),
@@ -81,9 +81,9 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `read_status`, `cli
 (11, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/68', '2023-09-18 00:14:48', '2023-09-18 00:14:48'),
 (12, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/69', '2023-09-18 02:51:05', '2023-09-18 02:51:05'),
 (13, 34, 'New member registered', 0, '/admin/manage/users/detail/34', '2023-09-18 05:34:10', '2023-09-18 05:34:10'),
-(14, 34, 'Deposit request from demouser1', 0, '/admin/manage/deposits/details/70', '2023-09-18 05:35:11', '2023-09-18 05:35:11'),
-(15, 33, 'Deposit request from demouser', 0, '/admin/manage/deposits/details/71', '2023-09-18 05:42:18', '2023-09-18 05:42:18'),
-(16, 33, 'New withdraw request from demouser', 0, '/admin/manage/withdrawals/details/5', '2023-09-18 06:49:25', '2023-09-18 06:49:25');
+(14, 34, 'Deposit request from demouser1', 1, '/admin/manage/deposits/details/70', '2023-09-18 05:35:11', '2023-09-23 23:11:29'),
+(15, 33, 'Deposit request from demouser', 1, '/admin/manage/deposits/details/71', '2023-09-18 05:42:18', '2023-09-23 22:50:11'),
+(16, 33, 'New withdraw request from demouser', 1, '/admin/manage/withdrawals/details/5', '2023-09-18 06:49:25', '2023-09-23 22:50:07');
 
 -- --------------------------------------------------------
 
@@ -161,6 +161,29 @@ CREATE TABLE `ad_views` (
 INSERT INTO `ad_views` (`id`, `ad_id`, `user_id`, `view_date`, `amount`, `created_at`, `updated_at`) VALUES
 (118, 40, 33, '2023-09-18', '1.00000000', '2023-09-18 05:42:43', '2023-09-18 05:42:43'),
 (119, 42, 33, '2023-09-18', '1.00000000', '2023-09-18 06:11:56', '2023-09-18 06:11:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `reply` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `parent_id`, `user_id`, `post_id`, `reply`, `created_at`, `updated_at`) VALUES
+(96, 0, 33, 23, 'serfwetferwg', '2023-09-28 02:45:04', '2023-09-28 02:45:04');
 
 -- --------------------------------------------------------
 
@@ -243,7 +266,7 @@ CREATE TABLE `extensions` (
 --
 
 INSERT INTO `extensions` (`id`, `act`, `name`, `description`, `image`, `script`, `shortcode`, `support`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'tawk-chat', 'Live Chat(Tawk.to)', 'Key location is shown bellow', 'chat-png.png', '<script>\n                        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n                        (function(){\n                        var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n                        s1.async=true;\n                        s1.src=\"https://embed.tawk.to/{{app_key}}\";\n                        s1.charset=\"UTF-8\";\n                        s1.setAttribute(\"crossorigin\",\"*\");\n                        s0.parentNode.insertBefore(s1,s0);\n                        })();\n                    </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"55\"}}', 'twak.png', 1, NULL, '2019-10-18 23:16:05', '2023-09-19 05:31:25'),
+(1, 'tawk-chat', 'Live Chat(Tawk.to)', 'Key location is shown bellow', 'chat-png.png', '<script>\n                        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\n                        (function(){\n                        var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\n                        s1.async=true;\n                        s1.src=\"https://embed.tawk.to/{{app_key}}\";\n                        s1.charset=\"UTF-8\";\n                        s1.setAttribute(\"crossorigin\",\"*\");\n                        s0.parentNode.insertBefore(s1,s0);\n                        })();\n                    </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"55\"}}', 'twak.png', 0, NULL, '2019-10-18 23:16:05', '2023-09-19 05:31:25'),
 (2, 'google-recaptcha2', 'Google Recaptcha 2', 'Key location is shown bellow', 'recaptcha2.png', '\n<script src=\"https://www.google.com/recaptcha/api.js\"></script>\n<div class=\"g-recaptcha\" data-sitekey=\"{{site_key}}\" data-callback=\"verifyCaptcha\"></div>\n<div id=\"g-recaptcha-error\"></div>', '{\"site_key\":{\"title\":\"Site Key\",\"value\":\"6LdPC88fAAAAADQlUf_DV6Hrvgm-pZuLJFSLDOWV\"},\"secret_key\":{\"title\":\"Secret Key\",\"value\":\"6LdPC88fAAAAAG5SVaRYDnV2NpCrptLg2XLYKRKB\"}}', 'recaptcha.png', 0, NULL, '2019-10-18 23:16:05', '2023-09-18 22:09:41'),
 (7, 'google-analytics', 'Google Analytics', 'Key location is shown bellow', 'google_analytics.png', '<script async src=\"https://www.googletagmanager.com/gtag/js?id={{app_key}}\"></script>\r\n                <script>\r\n                  window.dataLayer = window.dataLayer || [];\r\n                  function gtag(){dataLayer.push(arguments);}\r\n                  gtag(\"js\", new Date());\r\n                \r\n                  gtag(\"config\", \"{{app_key}}\");\r\n                </script>', '{\"app_key\":{\"title\":\"App Key\",\"value\":\"----\"}}', 'ganalytics.png', 0, NULL, '2019-10-18 23:16:05', '2023-09-14 05:24:33');
 
@@ -538,7 +561,9 @@ CREATE TABLE `like_user` (
 
 INSERT INTO `like_user` (`id`, `user_id`, `post_id`) VALUES
 (47, 33, 22),
-(48, 32, 23);
+(48, 32, 23),
+(51, 32, 22),
+(52, 34, 14);
 
 -- --------------------------------------------------------
 
@@ -753,6 +778,7 @@ CREATE TABLE `posts` (
   `status` int(11) NOT NULL DEFAULT 1,
   `privacy` varchar(40) NOT NULL COMMENT 'everyone,only_my_follwer',
   `edited` int(11) DEFAULT NULL COMMENT 'post edit count',
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -761,19 +787,19 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `status`, `privacy`, `edited`, `created_at`, `updated_at`) VALUES
-(13, 33, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a #document or a typeface without relying on meaningful content. Lorem #ipsum may be', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:19', '2023-09-23 00:06:06'),
-(14, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:36', '2023-09-19 03:52:36'),
-(15, 33, 'Bangladesh is small country', 0, 0, 1, 'everyone', NULL, '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
-(16, 33, 'Testing video', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:21:01', '2023-09-19 05:21:01'),
-(17, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:28:43', '2023-09-19 05:28:43'),
-(18, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
-(19, 33, 'Hellow #momin', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
-(20, 33, 'hellow wstacks', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:40:23', '2023-09-19 05:40:23'),
-(21, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:48:23', '2023-09-19 05:48:23'),
-(22, 32, 'Good Morning #bangladesh', 0, 1, 1, 'everyone', NULL, '2023-09-20 23:34:42', '2023-09-23 08:22:29'),
-(23, 34, 'Hey #wstacks', 0, 1, 1, 'everyone', NULL, '2023-09-20 23:35:35', '2023-09-23 08:27:14'),
-(24, 33, 'hey #india', 0, 0, 1, 'everyone', NULL, '2023-09-23 01:51:07', '2023-09-23 08:19:00');
+INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `status`, `privacy`, `edited`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(13, 33, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a #document or a typeface without relying on meaningful content. Lorem #ipsum may be', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 03:52:19', '2023-09-23 00:06:06'),
+(14, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 1, 1, 'everyone', NULL, NULL, '2023-09-19 03:52:36', '2023-09-24 00:48:09'),
+(15, 33, 'Bangladesh is small country', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
+(16, 33, 'Testing video', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:21:01', '2023-09-19 05:21:01'),
+(17, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:28:43', '2023-09-19 05:28:43'),
+(18, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
+(19, 33, 'Hellow #momin', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
+(20, 33, 'hellow wstacks', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:40:23', '2023-09-19 05:40:23'),
+(21, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:48:23', '2023-09-28 01:03:46'),
+(22, 32, 'Good Morning #bangladesh', 0, 1, 1, 'everyone', NULL, NULL, '2023-09-20 23:34:42', '2023-09-24 00:31:56'),
+(23, 34, 'Hey #wstacks', 1, 1, 1, 'everyone', NULL, NULL, '2023-09-20 23:35:35', '2023-09-28 06:23:18'),
+(24, 33, 'hey #india', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-23 01:51:07', '2023-09-28 06:46:13');
 
 -- --------------------------------------------------------
 
@@ -1155,6 +1181,7 @@ CREATE TABLE `users` (
   `balance` decimal(28,8) NOT NULL DEFAULT 0.00000000,
   `password` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `cover_image` varchar(255) DEFAULT NULL,
   `address` text DEFAULT NULL COMMENT 'contains full address',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0: banned, 1: active',
   `kyc_data` text DEFAULT NULL,
@@ -1169,6 +1196,7 @@ CREATE TABLE `users` (
   `tsc` varchar(255) DEFAULT NULL,
   `followers_count` int(11) DEFAULT 0,
   `following_count` int(11) DEFAULT 0,
+  `post_count` int(11) DEFAULT 0,
   `ban_reason` varchar(255) DEFAULT NULL,
   `remember_token` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1179,28 +1207,28 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `country_code`, `mobile`, `ref_by`, `balance`, `password`, `image`, `address`, `status`, `kyc_data`, `kv`, `ev`, `sv`, `reg_step`, `ver_code`, `ver_code_send_at`, `ts`, `tv`, `tsc`, `followers_count`, `following_count`, `ban_reason`, `remember_token`, `created_at`, `updated_at`) VALUES
-(8, 'User', 'Hingle May', 'hinglemay', 'user@site.com', 'BD', '88000000000', 0, '14717.55755565', '$2y$10$5NWQqhzM650gX5BCTJ.ZbOZPuALekunwNvGexi7/mTGVaOW/LzlF6', '60ab4559872cb1621837145.png', '{\"country\":\"Bangladesh\",\"address\":\"London\",\"state\":\"London\",\"zip\":\"5874\",\"city\":\"London\"}', 1, NULL, 1, 1, 1, 1, '119199', '2022-04-03 10:49:17', 0, 1, NULL, 0, 0, NULL, 'AS1GDZhRGmj7tEy89L0PrWY039CAYXZ2Rq9gtSKServ5xBjXNBKhq2Tz3e0S', '2020-07-25 00:40:06', '2022-04-11 08:01:50'),
-(9, 'User', 'Fring J', 'username2', 'user2@site.com', 'PK', '8805646546987', 0, '0.00000000', '$2y$10$kvu.xRlHv32YheJWV3NWneQR0vPIA5Eev01jUjQeieHQDJSE1XXs.', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Antigua and Barbuda\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, '217802', '2020-11-19 10:18:39', 0, 1, NULL, 0, 0, NULL, NULL, '2020-11-19 04:18:38', '2020-11-19 04:19:44'),
-(11, 'user44', 'Poyos Harmanos', 'username3', 'user457@site.com', 'US', '65659854857', 0, '0.00000000', '$2y$10$UD7lj91bK2SK0CEqtIi/s.XZKh8Wm.ajz1DimEuoDBLiNAE29zY7a', NULL, '{\"address\":\"Address\",\"city\":\"FFF\",\"state\":\"7878\",\"zip\":\"5874\",\"country\":\"Algeria\"}', 1, NULL, 0, 1, 1, 0, '112922', '2020-11-23 12:45:44', 0, 1, NULL, 0, 0, NULL, NULL, '2020-11-23 06:45:43', '2021-01-04 00:03:31'),
-(13, 'KB', 'Saul', 'testuser123', 'testuser123@gmail.com', 'LT', '1268654254541', 0, '1180.00000000', '$2y$10$0TizysQNL9Yw6DYOji5Eh.mrstho4NhuVam7ssaCYS0Y9JegnopZG', '1615803362_testuser123.jpg', '{\"address\":\"Dhaka\",\"city\":\"Dhaka\",\"state\":\"Dhaka\",\"zip\":\"1230\",\"country\":\"Lithuania\"}', 1, NULL, 0, 1, 1, 0, '950194', '2021-03-15 09:35:45', 0, 1, NULL, 0, 0, NULL, NULL, '2021-03-15 03:35:45', '2021-05-05 09:33:22'),
-(17, 'Test', 'Jimmy Miguel', 'testuser55', 'user990@site.com', 'BD', '93654545453', 0, '0.00000000', '$2y$10$bV6Mi/8uv/MirSHWtn8qz.txLfzvSaovndD.GPCoCaHD8UK/bdJOi', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Afghanistan\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, '439780', '2021-04-17 07:17:26', 0, 1, NULL, 0, 0, NULL, NULL, '2021-04-17 01:17:26', '2021-05-02 05:37:53'),
-(18, 'User', 'Kim Wexlar', 'username33', 'user99@site.com', 'AZ', '99496565654', 0, '0.00000000', '$2y$10$jbMEuGQ/U.gTPihO4jfBD.wnnWgZNyhj3n2VUkp0V2LOaGau6HbF6', NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Bangladesh\"}', 1, NULL, 0, 0, 1, 0, '404482', '2021-04-28 06:41:42', 0, 1, NULL, 0, 0, NULL, NULL, '2021-04-28 00:41:42', '2021-05-04 13:53:22'),
-(19, 'Hamlin', 'Hamlin', 'username5', 'user5@site.com', 'AF', '9365465456454', 0, '0.00000000', '$2y$10$.tD1XpK.E4ubM4Pg3yEuYO3tzMasHqd2pzsRjm8nGYKhIwxTmNI/2', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Afghanistan\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2021-05-10 06:24:07', '2021-05-10 06:24:14'),
-(20, 'tesos', 'tesos', 'username6', 'user6@site.com', 'AD', '936546334', 8, '10010.00000000', '$2y$10$0BuEBEfe82oTukY9BFrODeFP9d4sS7KJdoHBPk1oziRkKAC/D8VOi', NULL, '{\"country\":\"Andorra\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 0, 1, 1, 1, NULL, NULL, 1, 1, 'FSLM3BZVLNPY7JYI', 0, 0, NULL, NULL, '2021-05-10 06:27:04', '2023-03-21 07:34:56'),
-(22, 'John', 'Doe', 'testuser', 'test@mail.com', 'AU', '6165463548554', 0, '0.00000000', '$2y$10$OhSvy7ncR6dBuhTnUvmiXuJRjpLfjWtZdE2uYKx/P46lJoZ00omfC', NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Australia\"}', 1, NULL, 0, 0, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2021-05-19 05:47:02', '2022-04-04 05:16:38'),
-(23, 'C.', 'Varga', 'testuser33', 'myname5587@myname5587.myname5587', 'AI', '1264123456789', 0, '0.00000000', '$2y$10$19byGz10jEXEQDxsoLTrMug4qYnuzT9O3S4.o0w8YN72mruuGh.8m', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Anguilla\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, '467842', '2021-06-09 12:15:34', 0, 1, NULL, 0, 0, NULL, NULL, '2021-06-09 06:15:33', '2021-06-09 06:15:34'),
-(24, 'DCM', 'Wexlar', 'jcole5950', 'mosta@gmail.com', 'BD', '88001628071671', 0, '0.00000000', '$2y$10$hv5l/n1.Y2WcQGPM13NR5uuditJgwr89jHnZabxyz738pf5MFxc5i', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Bangladesh\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2021-06-10 05:31:54', '2021-06-10 12:39:55'),
-(25, 'Chloe', 'Hoxel', 'moscingle', 'mostas@gmail.com', 'BD', '88001628071672', 0, '0.00000000', '$2y$10$6VyFIftVzo9o4Mx.pHRCQOTUgOdWMMbLUHYhNfjRdVHHmTHrjHn9a', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Bangladesh\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2021-06-10 05:35:17', '2021-06-10 05:35:17'),
-(26, 'Ken', 'Wallace', 'moscingle3', 'mosta3@gmail.com', 'BD', '88001628071673', 0, '0.00000000', '$2y$10$zP92objty3B6R/k9A4FIs.vT4SUXQGDgFIIwCK//3dpnp0s6Xr/aW', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Bangladesh\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2021-06-10 08:38:28', '2021-06-10 08:38:28'),
-(27, 'Graciela A.', 'Romano\n', 'tes77788', 'testuser5588@gmail.com', 'AF', '59154685458', 0, '0.00000000', '$2y$10$bnERS5Za.TVGNxb89ttI2eIc10.kDEXK8hTkUS5Ob7sKpN7N8vRHa', NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Afghanistan\"}', 1, NULL, 0, 1, 1, 0, '994511', '2022-03-06 11:53:38', 1, 0, NULL, 0, 0, NULL, NULL, '2021-06-12 05:27:14', '2022-03-10 07:25:03'),
-(28, 'Ken', 'Morales', 'fajavidi', 'gasaf@amimail.com', 'DZ', '213Accusamus at et rati', 0, '0.00000000', '$2y$10$LYPdpUJDnCfG7MXUF0ydaOX5ESI6dLrjlrnh9QJ0YgaJdRSPMs9HS', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Algeria\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, '210333', '2022-03-17 09:09:59', 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-17 03:09:58', '2022-03-21 01:07:58'),
-(29, 'Anthony ', 'J.', 'michbarry', 'fyjify@amimail.com', 'KN', '18695946542145', 0, '200.00000000', '$2y$10$5iSye35hvir6jdd1nMx5/elcysmkvfrTFCfK0MLV5nb9QsA2Q7ury', NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Saint Kitts and Nevis\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-21 02:41:54', '2022-09-20 10:01:31'),
-(30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-22 07:53:20', '2023-09-20 23:43:42'),
-(31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '370553', '2023-09-21 05:35:01', 0, 1, NULL, 0, 0, NULL, NULL, '2022-03-22 11:22:57', '2023-09-21 05:07:22'),
-(32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', NULL, '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 2, 0, NULL, NULL, '2023-03-22 04:09:55', '2023-09-21 05:18:58'),
-(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, NULL, 'JikJIGFJ56NdkJ1Ooiku79tUxtMKwcQRJeCOzlvDXKTiBzFJBoRSTfiSdyxx', '2023-09-16 23:24:11', '2023-09-20 23:43:23'),
-(34, NULL, NULL, 'demouser1', 'demouser1@gmail.com', NULL, NULL, 0, '0.00000000', '$2y$10$pdSA9PzlndnntMAd.994z.YDQFVGC441F9nimrdw4T5Wx/wo5HR02', NULL, NULL, 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 1, 0, NULL, NULL, '2023-09-18 05:34:10', '2023-09-23 08:27:08');
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `country_code`, `mobile`, `ref_by`, `balance`, `password`, `image`, `cover_image`, `address`, `status`, `kyc_data`, `kv`, `ev`, `sv`, `reg_step`, `ver_code`, `ver_code_send_at`, `ts`, `tv`, `tsc`, `followers_count`, `following_count`, `post_count`, `ban_reason`, `remember_token`, `created_at`, `updated_at`) VALUES
+(8, 'User', 'Hingle May', 'hinglemay', 'user@site.com', 'BD', '88000000000', 0, '14717.55755565', '$2y$10$5NWQqhzM650gX5BCTJ.ZbOZPuALekunwNvGexi7/mTGVaOW/LzlF6', '60ab4559872cb1621837145.png', NULL, '{\"country\":\"Bangladesh\",\"address\":\"London\",\"state\":\"London\",\"zip\":\"5874\",\"city\":\"London\"}', 1, NULL, 1, 1, 1, 1, '119199', '2022-04-03 10:49:17', 0, 1, NULL, 0, 0, 0, NULL, 'AS1GDZhRGmj7tEy89L0PrWY039CAYXZ2Rq9gtSKServ5xBjXNBKhq2Tz3e0S', '2020-07-25 00:40:06', '2022-04-11 08:01:50'),
+(9, 'User', 'Fring J', 'username2', 'user2@site.com', 'PK', '8805646546987', 0, '0.00000000', '$2y$10$kvu.xRlHv32YheJWV3NWneQR0vPIA5Eev01jUjQeieHQDJSE1XXs.', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Antigua and Barbuda\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, '217802', '2020-11-19 10:18:39', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2020-11-19 04:18:38', '2020-11-19 04:19:44'),
+(11, 'user44', 'Poyos Harmanos', 'username3', 'user457@site.com', 'US', '65659854857', 0, '0.00000000', '$2y$10$UD7lj91bK2SK0CEqtIi/s.XZKh8Wm.ajz1DimEuoDBLiNAE29zY7a', NULL, NULL, '{\"address\":\"Address\",\"city\":\"FFF\",\"state\":\"7878\",\"zip\":\"5874\",\"country\":\"Algeria\"}', 1, NULL, 0, 1, 1, 0, '112922', '2020-11-23 12:45:44', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2020-11-23 06:45:43', '2021-01-04 00:03:31'),
+(13, 'KB', 'Saul', 'testuser123', 'testuser123@gmail.com', 'LT', '1268654254541', 0, '1180.00000000', '$2y$10$0TizysQNL9Yw6DYOji5Eh.mrstho4NhuVam7ssaCYS0Y9JegnopZG', '1615803362_testuser123.jpg', NULL, '{\"address\":\"Dhaka\",\"city\":\"Dhaka\",\"state\":\"Dhaka\",\"zip\":\"1230\",\"country\":\"Lithuania\"}', 1, NULL, 0, 1, 1, 0, '950194', '2021-03-15 09:35:45', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-03-15 03:35:45', '2021-05-05 09:33:22'),
+(17, 'Test', 'Jimmy Miguel', 'testuser55', 'user990@site.com', 'BD', '93654545453', 0, '0.00000000', '$2y$10$bV6Mi/8uv/MirSHWtn8qz.txLfzvSaovndD.GPCoCaHD8UK/bdJOi', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Afghanistan\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, '439780', '2021-04-17 07:17:26', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-04-17 01:17:26', '2021-05-02 05:37:53'),
+(18, 'User', 'Kim Wexlar', 'username33', 'user99@site.com', 'AZ', '99496565654', 0, '0.00000000', '$2y$10$jbMEuGQ/U.gTPihO4jfBD.wnnWgZNyhj3n2VUkp0V2LOaGau6HbF6', NULL, NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Bangladesh\"}', 1, NULL, 0, 0, 1, 0, '404482', '2021-04-28 06:41:42', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-04-28 00:41:42', '2021-05-04 13:53:22'),
+(19, 'Hamlin', 'Hamlin', 'username5', 'user5@site.com', 'AF', '9365465456454', 0, '0.00000000', '$2y$10$.tD1XpK.E4ubM4Pg3yEuYO3tzMasHqd2pzsRjm8nGYKhIwxTmNI/2', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Afghanistan\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-05-10 06:24:07', '2021-05-10 06:24:14'),
+(20, 'tesos', 'tesos', 'username6', 'user6@site.com', 'AD', '936546334', 8, '10010.00000000', '$2y$10$0BuEBEfe82oTukY9BFrODeFP9d4sS7KJdoHBPk1oziRkKAC/D8VOi', NULL, NULL, '{\"country\":\"Andorra\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 0, 1, 1, 1, NULL, NULL, 1, 1, 'FSLM3BZVLNPY7JYI', 0, 0, 0, NULL, NULL, '2021-05-10 06:27:04', '2023-03-21 07:34:56'),
+(22, 'John', 'Doe', 'testuser', 'test@mail.com', 'AU', '6165463548554', 0, '0.00000000', '$2y$10$OhSvy7ncR6dBuhTnUvmiXuJRjpLfjWtZdE2uYKx/P46lJoZ00omfC', NULL, NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Australia\"}', 1, NULL, 0, 0, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-05-19 05:47:02', '2022-04-04 05:16:38'),
+(23, 'C.', 'Varga', 'testuser33', 'myname5587@myname5587.myname5587', 'AI', '1264123456789', 0, '0.00000000', '$2y$10$19byGz10jEXEQDxsoLTrMug4qYnuzT9O3S4.o0w8YN72mruuGh.8m', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Anguilla\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, '467842', '2021-06-09 12:15:34', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-06-09 06:15:33', '2021-06-09 06:15:34'),
+(24, 'DCM', 'Wexlar', 'jcole5950', 'mosta@gmail.com', 'BD', '88001628071671', 0, '0.00000000', '$2y$10$hv5l/n1.Y2WcQGPM13NR5uuditJgwr89jHnZabxyz738pf5MFxc5i', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Bangladesh\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-06-10 05:31:54', '2021-06-10 12:39:55'),
+(25, 'Chloe', 'Hoxel', 'moscingle', 'mostas@gmail.com', 'BD', '88001628071672', 0, '0.00000000', '$2y$10$6VyFIftVzo9o4Mx.pHRCQOTUgOdWMMbLUHYhNfjRdVHHmTHrjHn9a', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Bangladesh\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-06-10 05:35:17', '2021-06-10 05:35:17'),
+(26, 'Ken', 'Wallace', 'moscingle3', 'mosta3@gmail.com', 'BD', '88001628071673', 0, '0.00000000', '$2y$10$zP92objty3B6R/k9A4FIs.vT4SUXQGDgFIIwCK//3dpnp0s6Xr/aW', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Bangladesh\",\"city\":\"\"}', 1, NULL, 0, 0, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2021-06-10 08:38:28', '2021-06-10 08:38:28'),
+(27, 'Graciela A.', 'Romano\n', 'tes77788', 'testuser5588@gmail.com', 'AF', '59154685458', 0, '0.00000000', '$2y$10$bnERS5Za.TVGNxb89ttI2eIc10.kDEXK8hTkUS5Ob7sKpN7N8vRHa', NULL, NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Afghanistan\"}', 1, NULL, 0, 1, 1, 0, '994511', '2022-03-06 11:53:38', 1, 0, NULL, 0, 0, 0, NULL, NULL, '2021-06-12 05:27:14', '2022-03-10 07:25:03'),
+(28, 'Ken', 'Morales', 'fajavidi', 'gasaf@amimail.com', 'DZ', '213Accusamus at et rati', 0, '0.00000000', '$2y$10$LYPdpUJDnCfG7MXUF0ydaOX5ESI6dLrjlrnh9QJ0YgaJdRSPMs9HS', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Algeria\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, '210333', '2022-03-17 09:09:59', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2022-03-17 03:09:58', '2022-03-21 01:07:58'),
+(29, 'Anthony ', 'J.', 'michbarry', 'fyjify@amimail.com', 'KN', '18695946542145', 0, '200.00000000', '$2y$10$5iSye35hvir6jdd1nMx5/elcysmkvfrTFCfK0MLV5nb9QsA2Q7ury', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Saint Kitts and Nevis\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2022-03-21 02:41:54', '2022-09-20 10:01:31'),
+(30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2022-03-22 07:53:20', '2023-09-20 23:43:42'),
+(31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '370553', '2023-09-21 05:35:01', 0, 1, NULL, 1, 0, 0, NULL, NULL, '2022-03-22 11:22:57', '2023-09-27 22:44:17'),
+(32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', 'testuser1/32/650fd3ee2501c1695536110.jpg', 'testuser1/32/650fd204ad4981695535620.jpg', '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 2, 0, 0, NULL, NULL, '2023-03-22 04:09:55', '2023-09-27 22:44:41'),
+(33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, 'demouser/33/650fdb1e18e721695537950.jpg', '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 3, 0, 0, NULL, 'JikJIGFJ56NdkJ1Ooiku79tUxtMKwcQRJeCOzlvDXKTiBzFJBoRSTfiSdyxx', '2023-09-16 23:24:11', '2023-09-28 06:32:26'),
+(34, NULL, NULL, 'demouser1', 'demouser1@gmail.com', NULL, NULL, 0, '0.00000000', '$2y$10$pdSA9PzlndnntMAd.994z.YDQFVGC441F9nimrdw4T5Wx/wo5HR02', NULL, NULL, NULL, 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 2, 0, 0, NULL, NULL, '2023-09-18 05:34:10', '2023-09-27 22:44:13');
 
 -- --------------------------------------------------------
 
@@ -1219,9 +1247,14 @@ CREATE TABLE `user_follows` (
 --
 
 INSERT INTO `user_follows` (`id`, `follower_id`, `following_id`) VALUES
-(13, 33, 32),
-(14, 34, 32),
-(15, 32, 34);
+(16, 32, 34),
+(18, 34, 32),
+(19, 34, 33),
+(20, 33, 34),
+(21, 33, 31),
+(22, 33, 32),
+(23, 33, 33),
+(24, 33, 33);
 
 -- --------------------------------------------------------
 
@@ -1272,7 +1305,12 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 (21, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-21 05:19:07', '2023-09-21 05:19:07'),
 (22, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-22 22:37:00', '2023-09-22 22:37:00'),
 (23, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-23 01:50:17', '2023-09-23 01:50:17'),
-(24, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-23 08:13:16', '2023-09-23 08:13:16');
+(24, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-23 08:13:16', '2023-09-23 08:13:16'),
+(25, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-23 22:43:13', '2023-09-23 22:43:13'),
+(26, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 00:40:43', '2023-09-24 00:40:43'),
+(27, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 03:06:45', '2023-09-24 03:06:45'),
+(28, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 22:29:09', '2023-09-24 22:29:09'),
+(29, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-27 22:42:07', '2023-09-27 22:42:07');
 
 -- --------------------------------------------------------
 
@@ -1296,8 +1334,35 @@ CREATE TABLE `user_notifications` (
 --
 
 INSERT INTO `user_notifications` (`id`, `user_id`, `from_user`, `title`, `click_url`, `status`, `created_at`, `updated_at`) VALUES
-(1, 32, 33, 'Like to your post', '/user/dashboard', 0, '2023-09-23 08:22:29', '2023-09-23 08:22:29'),
-(2, 34, 32, 'Like to your post', '/user/dashboard', 0, '2023-09-23 08:27:14', '2023-09-23 08:27:14');
+(1, 32, 33, 'Like to your post', '/user/dashboard', 1, '2023-09-23 08:22:29', '2023-09-23 23:19:39'),
+(2, 34, 32, 'Like to your post', '/user/dashboard', 0, '2023-09-23 08:27:14', '2023-09-23 08:27:14'),
+(3, 32, 32, 'Like to your post', '/user/dashboard', 0, '2023-09-24 00:30:45', '2023-09-24 00:30:45'),
+(4, 32, 32, 'Like to your post', '/user/dashboard', 1, '2023-09-24 00:30:51', '2023-09-24 00:33:54'),
+(5, 32, 32, 'Like to your post', '/user/dashboard', 0, '2023-09-24 00:31:56', '2023-09-24 00:31:56'),
+(6, 33, 34, 'Like to your post', '/user/dashboard', 1, '2023-09-24 00:48:09', '2023-09-24 00:48:24'),
+(7, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-27 23:02:50', '2023-09-27 23:02:50'),
+(8, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-27 23:14:11', '2023-09-27 23:14:11'),
+(9, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-27 23:25:15', '2023-09-27 23:25:15'),
+(10, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-27 23:43:25', '2023-09-27 23:43:25'),
+(11, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 00:19:32', '2023-09-28 00:19:32'),
+(12, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 00:49:43', '2023-09-28 00:49:43'),
+(13, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 00:51:40', '2023-09-28 00:51:40'),
+(14, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 00:51:50', '2023-09-28 00:51:50'),
+(15, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 00:51:59', '2023-09-28 00:51:59'),
+(16, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 00:55:19', '2023-09-28 00:55:19'),
+(17, 33, 33, 'Like to your post', '/user/dashboard', 1, '2023-09-28 01:03:44', '2023-09-28 02:45:44'),
+(18, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 01:19:36', '2023-09-28 01:19:36'),
+(19, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:22:28', '2023-09-28 02:22:28'),
+(20, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:37:54', '2023-09-28 02:37:54'),
+(21, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:38:16', '2023-09-28 02:38:16'),
+(22, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:38:38', '2023-09-28 02:38:38'),
+(23, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:41:31', '2023-09-28 02:41:31'),
+(24, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:44:21', '2023-09-28 02:44:21'),
+(25, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:44:58', '2023-09-28 02:44:58'),
+(26, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:45:04', '2023-09-28 02:45:04'),
+(27, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 02:45:07', '2023-09-28 02:45:07'),
+(28, 34, 33, 'Comments on your post', '/user/posts/details/23', 0, '2023-09-28 06:23:08', '2023-09-28 06:23:08'),
+(29, 33, 33, 'Like to your post', '/user/dashboard', 1, '2023-09-28 06:45:53', '2023-09-28 06:46:03');
 
 -- --------------------------------------------------------
 
@@ -1397,6 +1462,12 @@ ALTER TABLE `ads`
 -- Indexes for table `ad_views`
 --
 ALTER TABLE `ad_views`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1617,6 +1688,12 @@ ALTER TABLE `ad_views`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+
+--
 -- AUTO_INCREMENT for table `deposits`
 --
 ALTER TABLE `deposits`
@@ -1680,7 +1757,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `like_user`
 --
 ALTER TABLE `like_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `notification_logs`
@@ -1770,19 +1847,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_follows`
 --
 ALTER TABLE `user_follows`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `user_notifications`
 --
 ALTER TABLE `user_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`

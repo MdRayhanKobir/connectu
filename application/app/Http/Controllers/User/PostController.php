@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\Hashtag;
 use App\Models\PostMedia;
 use Illuminate\Http\Request;
 use App\Rules\FileTypeValidate;
+use App\Models\UserNotification;
 use App\Http\Controllers\Controller;
 
 class PostController extends Controller
@@ -92,6 +94,104 @@ class PostController extends Controller
 
 
         return view($this->activeTemplate . 'user.dashboard', compact('pageTitle','user','posts'));
+    }
+
+
+    public function details($id){
+        $pageTitle='Details';
+        $user = auth()->user();
+        $post = Post::with(['user', 'postFile','likedByUsers'])
+        ->where(function ($query) {
+            $query->where('user_id', auth()->user()->id)
+                  ->orWhereIn('user_id', function ($subQuery) {
+                      $subQuery->select('following_id')
+                          ->from('user_follows')
+                          ->where('follower_id', auth()->user()->id);
+                  });
+        })
+        ->where('status', 1)
+        ->where('id',$id)
+        ->where('privacy', 'everyone')->first();
+        return view($this->activeTemplate.'user.post_details',compact('pageTitle','post'));
+    }
+
+
+
+    public function reply(Request $request, $parent_id = 0) {
+        $request->validate([
+            'reply' => 'required|string|max:255',
+            'post_id' => 'required',
+        ]);
+
+        $comment = new Comment();
+        $comment->user_id = auth()->user()->id;
+        $comment->post_id = $request->post_id;
+        $comment->reply = $request->reply;
+        if ($request->parent_id) {
+            $comment->parent_id = $request->parent_id;
+        } else {
+            $comment->parent_id = $parent_id;
+        }
+        $comment->save();
+
+        $post = Post::find($request->post_id);
+        $post->replys_count += 1;
+        $post->save();
+
+        if($comment->user_id != $post->user_id){
+
+            $notification = new UserNotification();
+            $notification->user_id = $post->user_id;
+            $notification->from_user = $comment->user_id;
+            $notification->title = 'Comments on your post';
+            $notification->status = 0;
+            $notification->click_url = urlPath('user.post.details',$post->id);
+            $notification->save();
+        }
+
+        $notify[] = ['success', 'Replied Successfully'];
+        return back()->withNotify($notify);
+
+    }
+
+    public function deleteReply(Request $request, $id) {
+        $comment = Comment::find($id);
+        if(auth()->user()->id == $comment->user_id){
+            $childs = Comment::whereParentId($comment->id)->get();
+            foreach($childs as $item){
+                $item->delete();
+            }
+            $comment->delete();
+            $post = Post::find($comment->post_id);
+            if($post->replys_count > 0){
+                $post->replys_count -= $childs->count() + 1;
+                $post->save();
+            }
+            $notify[] = ['success', 'Deleted!'];
+            return back()->withNotify($notify);
+        }else{
+            $notify[] = ['error', 'Failed!'];
+            return back()->withNotify($notify);
+        }
+
+    }
+
+    public function updateReply(Request $request){
+        $comment = Comment::findOrFail($request->id);
+        $comment->reply = $request->reply;
+        $comment->save();
+        $notify[] = ['success', 'Updated!'];
+        return back()->withNotify($notify);
+
+    }
+
+    public function moveArchive($id){
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        $notify[] = ['success','The post has been moved to the archive'];
+        return redirect()->back()->withNotify($notify);
+
     }
 
 }

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Lib\GoogleAuthenticator;
 use App\Models\UserNotification;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -306,22 +307,46 @@ class UserController extends Controller
         return redirect($userNotification->click_url);
     }
 
-    public function myPage($username){
-        $user = User::where('username',$username)->first();
-        $pageTitle =  @$user->username;
+    public function myPage($username)
+    {
+        $user = User::where('username', $username)->first();
 
-        $posts = Post::with(['user', 'postFile','likedByUsers'])
-        ->where(function ($query) {
-            $query->where('user_id', auth()->user()->id);
-        })
-        ->where('status', 1)
-        ->where('privacy', 'everyone')
-        ->latest()
-        ->inRandomOrder()
-        ->paginate(getPaginate());
+        if ($user) {
+            $pageTitle = $user->username;
 
-        return view($this->activeTemplate.'user.mypage',compact('user','posts','pageTitle'));
+            $posts = Post::with(['user', 'postFile', 'likedByUsers'])
+                ->where(function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->where('status', 1)
+                ->where('privacy', 'everyone')
+                ->latest()
+                ->inRandomOrder()
+                ->paginate(getPaginate());
+
+            return view($this->activeTemplate . 'user.mypage', compact('user', 'posts', 'pageTitle'));
+        }else{
+            $notify[] = ['warning','can not found this user'];
+            return redirect()->back()->withNotify($notify);
+        }
     }
+
+
+    public function getArchivePost(){
+        $pageTitle = 'Archives Posts';
+        $user = auth()->user();
+        $archiveposts = Post::where('user_id',$user->id)->onlyTrashed()->paginate(getPaginate());
+        return view($this->activeTemplate.'user.archive_post',compact('pageTitle','archiveposts'));
+    }
+
+    public function restorePost($id){
+        $post = Post::withTrashed()->find($id);
+        $post->restore();
+
+        $notify[] = ['success','restore this post'];
+        return redirect()->back()->withNotify($notify);
+    }
+
 
 
 }

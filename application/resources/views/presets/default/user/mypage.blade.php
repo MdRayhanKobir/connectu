@@ -36,27 +36,25 @@
                         </button>
                         <ul class="post-top-menu">
                             <li class="post-top-menu__item">
-                                <a class="post-top-menu__link" href="javascript:void(0);">
-                                    <span class="icon"><i class="fas fa-copy"></i></span>
-                                    <span class="text">Profile Link Copy</span>
-                                </a>
-                            </li>
-                            <li class="post-top-menu__item">
-                                <a class="post-top-menu__link" href="javascript:void(0);">
-                                    <span class="icon"><i class="fas fa-trash-can"></i></span>
-                                    <span class="text">Delete This Account</span>
-                                </a>
-                            </li>
-                            <li class="post-top-menu__item">
-                                <a class="post-top-menu__link" href="javascript:void(0);">
-                                    <span class="icon"><i class="fas fa-regular fa-flag"></i></span>
-                                    <span class="text">Report Abuse</span>
-                                </a>
-                            </li>
-                            <li class="post-top-menu__item">
                                 <a class="post-top-menu__link" href="javascript:void(0)">
-                                    <span class="icon"><i class="fa-solid fa-user-xmark"></i></span>
-                                    <span class="text">Block This User</span>
+                                    <span class="icon"><i class="fas fa-copy"></i></span>
+                                    <span class="text">@lang('Profile Link Copy')</span>
+                                    <input type="text" value="{{route('user.mypage',$user->id)}}">
+                                </a>
+                            </li>
+
+                            <li class="post-top-menu__item">
+                                <a class="post-top-menu__link" href="{{route('user.suggested')}}">
+                                    <span class="icon"><i class="fas fa-user"></i></span>
+                                    <span class="text">@lang('Find Users')</span>
+                                </a>
+                            </li>
+
+
+                            <li class="post-top-menu__item">
+                                <a class="post-top-menu__link" href="{{route('user.get.archive.post')}}">
+                                    <span class="icon"><i class="fas fa-trash"></i></span>
+                                    <span class="text">@lang('All archive post')</span>
                                 </a>
                             </li>
                         </ul>
@@ -78,9 +76,9 @@
             @endif
         </div>
         <div class="top">
-            <h5> <a href="">
-                Md. Obaydulla<i class="fas fa-circle-check"></i></a>
-                <span>@obaydul17</span>
+            <h5>
+                {{__($user->fullname)}}
+                <span class="mt-1"> @ {{__($user->username)}}</span>
             </h5>
         </div>
         <div class="followers">

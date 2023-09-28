@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Hashtag;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     public function hashtags()
     {
@@ -26,6 +30,12 @@ class Post extends Model
 
     public function likedByUsers() {
         return $this->belongsToMany(User::class, 'like_user', 'post_id', 'user_id');
+    }
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
 }

@@ -184,39 +184,7 @@ $('.single-item-menu').on('click', function() {
     $('.body-overlay').removeClass('everyone-btn-hide');
   });
 
-$('.single-item-menu').on('click', function() {
-    var postTopMenu = $(this).find('.post-top-menu');
-  
-    if (postTopMenu.length === 0) {
-      $(this).append('<ul class="post-top-menu show">' +
-                        '<li class="post-top-menu__item">' +
-                            '<a class="post-top-menu__link" href="javascript:void(0);">' +
-                            '<span class="icon"><i class="fa-solid fa-user-tie"></i></span>' +
-                            '<span class="text">Obaydul Vai</span>' +
-                            '</a>' +
-                        '</li>' +
-                        '<li class="post-top-menu__item">' +
-                            '<a class="post-top-menu__link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editPostModal">' +
-                            '<span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>' +
-                            '<span class="text">Edit Post</span>' +
-                            '</a>' +
-                        '</li>' +
-                        '<li class="post-top-menu__item">' +
-                            '<a class="post-top-menu__link" href="javascript:void(0);">' +
-                            '<span class="icon"><i class="fa-solid fa-trash-can"></i></span>' +
-                            '<span class="text">Delete Post</span>' +
-                            '</a>' +
-                        '</li>' +
-                        '<li class="post-top-menu__item">' +
-                            '<a class="post-top-menu__link" href="javascript:void(0);">' +
-                            '<span class="icon"><i class="fa-regular fa-copy"></i></span>' +
-                            '<span class="text">Copy Link</span>' +
-                            '</a>' +
-                        '</li>' +
-                    '</ul>');
-    }
-  });
-  
+
 
 // Comment modal popup textarea
 $('.comment-modal-popup-textarea').on('input', function() {

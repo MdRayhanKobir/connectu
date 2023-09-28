@@ -74,12 +74,11 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('notification/read/{id}','notificationRead')->name('notification.read');
 
                 // my single page
-                Route::get('profile/{username}','myPage')->name('mypage');
+                Route::get('profile-page/{username}','myPage')->name('mypage');
 
-
-
-
-
+               // Retrieve only soft-deleted records
+               Route::get('all/archive-post','getArchivePost')->name('get.archive.post');
+               Route::get('restore-post/{id}','restorePost')->name('get.restore.post');
 
             });
 
@@ -120,9 +119,18 @@ Route::middleware('auth')->name('user.')->group(function () {
              //Post
              Route::controller('PostController')->name('post.')->prefix('posts')->group(function () {
                 Route::post('store', 'store')->name('store');
+                Route::get('details/{id}', 'details')->name('details');
                 // hashtag post fetch
                 Route::get('/hashtag/{hashtag}', 'fetchHashTagPosts')->name('fetch.hashtag');
 
+
+                // comment
+                Route::post('post/reply','reply')->name('reply');
+                Route::get('delete/reply/{id}', 'deleteReply')->name('delete.reply');
+                Route::post('update/reply/', 'updateReply')->name('update.reply');
+
+                // softdelete
+                Route::get('move/archive/{id}', 'moveArchive')->name('move.archive');
 
 
             });

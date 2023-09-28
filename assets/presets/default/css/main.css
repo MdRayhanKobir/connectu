@@ -6392,8 +6392,8 @@ li.login-registration-list__item .social-list__item .social-list__link i {
 }
 
 .comment-list__thumb {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -6468,7 +6468,8 @@ li.login-registration-list__item .social-list__item .social-list__link i {
 .comment-list__reply-text {
     color: hsl(var(--base));
     font-weight: 400;
-}
+    cursor: pointer;
+  }
 
 .comment-list__reply:hover .comment-list__reply-icon {
     color: hsl(var(--base));

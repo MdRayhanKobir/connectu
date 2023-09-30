@@ -26,29 +26,29 @@
                             <div class="upload-item">
                                 <span class="toltip">@lang('Image')</span>
                                 <div class="upload-wrap">
-                                    <label for="file_upload"><i class="fas fa-image"></i></label>
-                                    <input type="file" id="file_upload" name="image" class="upload-input">
+                                    <label for="image"><i class="fas fa-image"></i></label>
+                                    <input type="file" name="image" class="upload-input">
                                 </div>
                             </div>
                             <div class="upload-item active">
                                 <div class="upload-wrap">
                                     <span class="toltip">@lang('Video')</span>
-                                    <label for="file_upload"><i class="fas fa-play"></i></label>
-                                    <input type="file" id="file_upload" name="video" class="upload-input">
+                                    <label for="video"><i class="fas fa-play"></i></label>
+                                    <input type="file" name="video" class="upload-input">
                                 </div>
                             </div>
                             <div class="upload-item">
                                 <span class="toltip">@lang('Music')</span>
                                 <div class="upload-wrap">
-                                    <label for="file_upload"><i class="fas fa-music"></i></label>
-                                    <input type="file" id="file_upload" name="audio" class="upload-input">
+                                    <label for="audio"><i class="fas fa-music"></i></label>
+                                    <input type="file" name="audio" class="upload-input">
                                 </div>
                             </div>
                             <div class="upload-item">
                                 <span class="toltip">@lang('File')</span>
                                 <div class="upload-wrap">
-                                    <label for="file_upload"><i class="fas fa-file"></i></label>
-                                    <input type="file" id="file_upload" name="file" class="upload-input">
+                                    <label for="file"><i class="fas fa-file"></i></label>
+                                    <input type="file" name="file" class="upload-input">
                                 </div>
                             </div>
                         </div>
@@ -129,13 +129,15 @@
                                                     <span class="text">{{__($item->user->username)}}</span>
                                                 </a>
                                             </li>
-                                            <li class="post-top-menu__item">
-                                                <a class="post-top-menu__link" href="javascript:void(0);">
-                                                    <span class="icon"><i class="fas fa-trash"></i></span>
-                                                    <span class="text">@lang('Edit Post')</span>
-                                                </a>
-                                            </li>
                                             @if(auth()->user()->id == $item->user->id )
+                                            <li class="post-top-menu__item">
+                                                <button class="post-top-menu__link editpostBtn" data-id={{$item->id}} data-text="{{$item->text}}">
+                                                    <span class="icon"><i class="fas fa-edit"></i></span>
+                                                    <span class="text">@lang('Edit Post')</span>
+                                                </button>
+                                            </li>
+
+
                                             <li class="post-top-menu__item">
                                                 <a class="post-top-menu__link" href="{{route('user.post.move.archive',$item->id)}}">
                                                     <span class="icon"><i class="fas fa-trash"></i></span>
@@ -227,7 +229,7 @@
                                             <span class="icon"><i class="far fa-comment"></i></span>
                                             <span class="count">{{$item->replys_count}}</span>
                                         </a>
-                                        <button data-bs-toggle="modal" data-bs-target="#shareModal">
+                                        <button class="shareBtn" data-id ="{{$item->id}}">
                                             <span class="icon"><i class="fas fa-share-alt"></i></span>
                                         </button>
                                     </div>
@@ -252,39 +254,41 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editPostModalLabel">Edit Post</h5>
+                            <h5 class="modal-title" id="editPostModalLabel">@lang('Edit Post')</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="timeline-top-post-wrap modal-wrapper">
-                                <div class="timeline-top-post-wrap__header-post">
-                                    <div class="timeline-top-post-wrap__thumb">
-                                        <img src="assets/images/avatar/obaydul.png" alt="">
+
+                        <form action="{{route('user.post.update')}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="id">
+                            <div class="modal-body">
+                                <div class="timeline-top-post-wrap modal-wrapper">
+                                    <div class="timeline-top-post-wrap__header-post">
+
+                                        <div class="timeline-top-post-wrap__textinput">
+                                            <!-- " -->
+                                            <textarea class="editpost-modal-popup-textarea" name="text" placeholder="@lang('Enter Your post')"></textarea>
+                                        </div>
                                     </div>
-                                    <div class="timeline-top-post-wrap__textinput">
-                                        <!-- " -->
-                                        <textarea class="editpost-modal-popup-textarea" placeholder="Enter Your Replay..">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo omnis non nam reiciendis temporibus consectetur neque corporis mollitia totam libero.</textarea>
+
+                                    <div class="timeline-top-post-wrap__upload-icon-wrap justify-content-end">
+
+                                        <div class="post-count">
+                                            <span class="start-count editpost-modal-count-start">@lang('0')</span><span>/</span><span
+                                                class="total-count">@lang('200')</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-top-post-wrap__button-wrap justify-content-end">
+                                        <div class="button-right">
+                                            <button type="submit" class="btn btn--base btn--sm pill">@lang('Save Changes')</button>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="timeline-top-post-wrap__upload-icon-wrap justify-content-end">
-
-                                    <div class="post-count">
-                                        <span class="start-count editpost-modal-count-start">0</span><span>/</span><span
-                                            class="total-count">200</span>
-                                    </div>
-                                </div>
-
-                                <div class="timeline-top-post-wrap__button-wrap justify-content-end">
-                                    <div class="button-right">
-                                        <button class="btn btn--base btn--sm pill">Save Changes</button>
-                                    </div>
-                                </div>
-
-
                             </div>
-                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -297,50 +301,37 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="sharetModalLabel">Share Post</h5>
+                            <h5 class="modal-title" id="sharetModalLabel">@lang('Share Post')</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="">
-                                <div class="timeline-top-post-wrap modal-wrapper">
-                                    <div class="timeline-top-post-wrap__header-post mb-3">
-                                        <ul class="social-list">
-                                            <li class="social-list__item"><a href="https://www.facebook.com"
-                                                    class="social-list__link"><i class="fab fa-facebook-f"></i></a>
-                                            </li>
-                                            <li class="social-list__item"><a href="https://www.twitter.com"
-                                                    class="social-list__link"> <i class="fab fa-twitter"></i></a></li>
-                                            <li class="social-list__item"><a href="https://www.linkedin.com"
-                                                    class="social-list__link"> <i class="fab fa-linkedin-in"></i></a>
-                                            </li>
-                                            <li class="social-list__item"><a href="https://www.whatsapp.com"
-                                                    class="social-list__link"> <i class="fa-brands fa-whatsapp"></i></a>
-                                            </li>
-                                            <li class="social-list__item"><a href="https://www.pinterest.com"
-                                                    class="social-list__link"> <i class="fab fa-instagram"></i></a>
-                                            </li>
-                                            <li class="social-list__item"><a href="https://www.reddit.com"
-                                                    class="social-list__link"> <i
-                                                        class="fa-brands fa-reddit-alien"></i></a></li>
-                                            <li class="social-list__item"><a href="https://telegram.org"
-                                                    class="social-list__link"> <i class="fa-brands fa-telegram"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                            <div class="timeline-top-post-wrap modal-wrapper">
+                                <div class="timeline-top-post-wrap__header-post mb-3">
+                                    <ul class="social-list">
+                                        <li class="social-list__item">
+                                            <a href="#" class="social-list__link share-link" data-social="facebook"><i class="fab fa-facebook-f"></i></a>
+                                        </li>
+                                        <li class="social-list__item">
+                                            <a href="#" class="social-list__link share-link" data-social="twitter"><i class="fab fa-twitter"></i></a>
+                                        </li>
+                                        <li class="social-list__item">
+                                            <a href="#" class="social-list__link share-link" data-social="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                                        </li>
 
-                                    <div class="timeline-top-post-wrap__upload-icon-wrap justify-content-end">
-                                        <input class="form--control" type="text"
-                                            value='https://www.colibrism.ru/thread/39183'>
-                                    </div>
+                                    </ul>
+                                </div>
 
-                                    <div class="timeline-top-post-wrap__button-wrap justify-content-end">
-                                        <div class="button-right">
-                                            <button class="btn btn--base btn--sm pill">Copy Link</button>
-                                        </div>
+                                <div class="timeline-top-post-wrap__upload-icon-wrap justify-content-end">
+                                    <input class="form--control shareLinkCopy" type="text" name="share_link" value="{{route('home')}}/user/posts/details/" readonly>
+                                </div>
+
+                                <div class="timeline-top-post-wrap__button-wrap justify-content-end">
+                                    <div class="button-right">
+                                        <button class="btn btn--base btn--sm pill" id="copyPostShareLink" onclick="copyPostShareLink()">@lang('Copy Link')</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -352,41 +343,78 @@
 @endsection
 
 @push('script')
-    <script>
-           $(document).ready(function () {
+<script>
 
-            function setPrivacy(option) {
-                document.getElementById('privacy').value = option;
-            }
-
-            $('.likePost').on('click', function () {
-                var postId = $(this).data('post_id');
-                var likeButton = $(this);
-                var likeCount = likeButton.closest('button').find('.likecount');
-
-            $.ajax({
-                type: 'get',
-                url: '{{ route("user.like.bye.post") }}',
-                data: {
-                    post_id:postId,
-                },
-                success: function (data) {
-                    if (data.success) {
-                    likeButton.find('span.icon').toggleClass('clicked');
-                    var icon = likeButton.find('i');
-                    icon.toggleClass('fas');
-                    icon.toggleClass('far');
-
-                    // Update the like count
-                    likeCount.text(data.likeCount);
-                    }
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
+    function copyPostShareLink() {
+        var tempInput = $('.shareLinkCopy');
+        tempInput.select();
+        document.execCommand("copy");
+        Toast.fire({
+            icon: 'success',
+            title: 'Post share link copied to clipboard'
         });
+    }
 
+
+$(document).ready(function () {
+
+    function setPrivacy(option) {
+        document.getElementById('privacy').value = option;
+    }
+
+    $('.likePost').on('click', function () {
+            var postId = $(this).data('post_id');
+            var likeButton = $(this);
+            var likeCount = likeButton.closest('button').find('.likecount');
+
+        $.ajax({
+            type: 'get',
+            url: '{{ route("user.like.bye.post") }}',
+            data: {
+                post_id:postId,
+            },
+            success: function (data) {
+                if (data.success) {
+                likeButton.find('span.icon').toggleClass('clicked');
+                var icon = likeButton.find('i');
+                icon.toggleClass('fas');
+                icon.toggleClass('far');
+
+                // Update the like count
+                likeCount.text(data.likeCount);
+                }
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
     });
-    </script>
+
+
+    $('.shareBtn').on('click', function() {
+        var modal = $('#shareModal');
+        var postId = $(this).data('id');
+        var shareLink = "{{ route('home') }}/user/posts/details/" + postId;
+        modal.find('input[name=share_link]').val(shareLink);
+
+        // Update the href attribute of the share links
+        $('.share-link[data-social="facebook"]').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + shareLink);
+        $('.share-link[data-social="twitter"]').attr('href', 'https://twitter.com/intent/tweet?url=' + shareLink);
+        $('.share-link[data-social="linkedin"]').attr('href', 'https://www.linkedin.com/shareArticle?url=' + shareLink);
+
+        modal.modal('show');
+    });
+
+
+    $('.editpostBtn').on('click', function() {
+        var modal = $('#editPostModal');
+        var postId = $(this).data('id');
+        var text = $(this).data('text');
+        modal.find('input[name=id]').val(postId);
+        modal.find('textarea[name=text]').val(text);
+        modal.modal('show');
+    });
+
+});
+</script>
 @endpush

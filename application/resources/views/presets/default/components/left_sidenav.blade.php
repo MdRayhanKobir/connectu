@@ -42,15 +42,9 @@ $user = auth()->user();
             </li>
 
             <li class="left-sidebar-menu__item">
-                <a href="messages.html" class="left-sidebar-menu__link">
+                <a href="{{route('user.message.fetch.user')}}" class="left-sidebar-menu__link">
                     <span class="icon"><i class="fas fa-envelope"></i></span>
-                    <span class="text"> Messages</span>
-                </a>
-            </li>
-            <li class="left-sidebar-menu__item responsive-post-hidden" class="btn btn-primary"
-                data-bs-toggle="modal" data-bs-target="#newPostMidal">
-                <a href="javascript:void(0);" class="left-sidebar-menu__link btn btn--base pill">
-                    <i class="fas fa-address-card me-2"></i> New Post
+                    <span class="text">@lang('Messages')</span>
                 </a>
             </li>
 

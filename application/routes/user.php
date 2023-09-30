@@ -119,10 +119,11 @@ Route::middleware('auth')->name('user.')->group(function () {
              //Post
              Route::controller('PostController')->name('post.')->prefix('posts')->group(function () {
                 Route::post('store', 'store')->name('store');
+                Route::post('update', 'update')->name('update');
                 Route::get('details/{id}', 'details')->name('details');
+
                 // hashtag post fetch
                 Route::get('/hashtag/{hashtag}', 'fetchHashTagPosts')->name('fetch.hashtag');
-
 
                 // comment
                 Route::post('post/reply','reply')->name('reply');
@@ -131,9 +132,15 @@ Route::middleware('auth')->name('user.')->group(function () {
 
                 // softdelete
                 Route::get('move/archive/{id}', 'moveArchive')->name('move.archive');
+            });
 
+
+            //Post
+            Route::controller('MessageController')->name('message.')->prefix('message')->group(function () {
+                Route::get('/', 'fetchUser')->name('fetch.user');
 
             });
+
 
 
 

@@ -8,6 +8,7 @@ use App\Models\GeneralSetting;
 use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 use Image;
+use Laravel\Ui\Presets\React;
 
 class GeneralSettingController extends Controller
 {
@@ -134,6 +135,36 @@ class GeneralSettingController extends Controller
         }
         file_put_contents($file, $request->css);
         $notify[] = ['success', 'CSS updated successfully'];
+        return back()->withNotify($notify);
+    }
+
+    public function pusherCredentials()
+    {
+        $pageTitle = 'Pusher Credentials';
+        return view('admin.setting.pusher_credential', compact('pageTitle'));
+    }
+
+    public function updatePusherCredential(Request $request)
+    {
+
+        $general = gs();
+        $credentials = $general->pusher_credential;
+
+
+        try {
+            $credentials->app_id = $request->app_id;
+            $credentials->app_key = $request->app_key;
+            $credentials->app_secret = $request->app_secret;
+            $credentials->app_cluster = $request->app_cluster;
+            $credentials->useTLS = $request->useTLS;
+        } catch (\Throwable $th) {
+            abort(404);
+        }
+
+        $general->pusher_credential = $credentials;
+        $general->save();
+
+        $notify[] = ['success', 'Pusher credentials updated successfully'];
         return back()->withNotify($notify);
     }
 }

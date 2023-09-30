@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GeneralSetting extends Model
 {
-    protected $casts = ['mail_config' => 'object','sms_config' => 'object','global_shortcodes' => 'object'];
+    protected $casts = ['mail_config' => 'object','sms_config' => 'object','global_shortcodes' => 'object','pusher_credential' => 'object',];
 
     public function scopeSiteName($query, $pageTitle)
     {
@@ -21,4 +21,5 @@ class GeneralSetting extends Model
             \Cache::forget('GeneralSetting');
         });
     }
+
 }

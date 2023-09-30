@@ -31,7 +31,7 @@ class PostController extends Controller
         $post->text = $request->text;
         $post->privacy = $request->privacy;
         $post->status = 1;
-        $post->post_count += 1;
+        // $post->post_count += 1;
         $post->save();
 
         if(!$post->id){
@@ -67,6 +67,37 @@ class PostController extends Controller
 
         $notify[] = ['success', 'Post has been created successfully'];
         return back()->withNotify($notify);
+    }
+
+    public function update(Request $request){
+
+        preg_match_all('/#(\w+)/', $request->text, $matches);
+        $hashtags = $matches[1];
+
+
+        $post = Post::findOrFail($request->id);
+
+        if(auth()->user()->id != $post->user_id){
+            $notify[] = ['warning', 'Cannot access this update'];
+            return back()->withNotify($notify);
+        }
+
+        $post->user_id = auth()->user()->id;
+        $post->text = $request->text;
+        $post->save();
+
+        if($hashtags){
+            foreach ($hashtags as $tag) {
+                $tag = str_replace('#', '', $tag);
+                $hashtag = Hashtag::firstOrCreate(['tag' => $tag]);
+                $post->hashtags()->attach($hashtag->id);
+                $hashtag->increment('post');
+            }
+        }
+
+        $notify[] = ['success', 'Post has been udpated successfully'];
+        return back()->withNotify($notify);
+
     }
 
 

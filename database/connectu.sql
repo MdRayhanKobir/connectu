@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2023 at 02:48 PM
+-- Generation Time: Sep 30, 2023 at 04:37 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -452,6 +452,7 @@ CREATE TABLE `general_settings` (
   `agree` tinyint(1) NOT NULL DEFAULT 0,
   `registration` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: Off	, 1: On',
   `active_template` varchar(40) DEFAULT NULL,
+  `pusher_credential` text DEFAULT NULL,
   `system_info` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -461,8 +462,8 @@ CREATE TABLE `general_settings` (
 -- Dumping data for table `general_settings`
 --
 
-INSERT INTO `general_settings` (`id`, `site_name`, `cur_text`, `cur_sym`, `email_from`, `email_template`, `sms_body`, `sms_from`, `base_color`, `secondary_color`, `mail_config`, `sms_config`, `global_shortcodes`, `kv`, `ev`, `en`, `sv`, `sn`, `force_ssl`, `maintenance_mode`, `secure_password`, `agree`, `registration`, `active_template`, `system_info`, `created_at`, `updated_at`) VALUES
-(1, 'MinStack', 'USD', '$', 'notify@wstacks.com', '<p>Hi {{fullname}} ({{username}}),&nbsp;</p><p>{{message}}</p>', 'Hi {{fullname}} ({{username}}), \r\n{{message}}', 'Minstack', '7d5fff', '060662', '{\"name\":\"php\"}', '{\"name\":\"messageBird\",\"clickatell\":{\"api_key\":\"----------------\"},\"infobip\":{\"username\":\"------------8888888\",\"password\":\"-----------------\"},\"message_bird\":{\"api_key\":\"-------------------\"},\"nexmo\":{\"api_key\":\"----------------------\",\"api_secret\":\"----------------------\"},\"sms_broadcast\":{\"username\":\"----------------------\",\"password\":\"-----------------------------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"---------------------------\",\"from\":\"----------------------\"},\"text_magic\":{\"username\":\"-----------------------\",\"apiv2_key\":\"-------------------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\"],\"value\":[\"test_api 555\"]},\"body\":{\"name\":[\"from_number\"],\"value\":[\"5657545757\"]}}}', '{\n    \"site_name\":\"Name of your site\",\n    \"site_currency\":\"Currency of your site\",\n    \"currency_symbol\":\"Symbol of currency\"\n}', 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 'default', '[]', NULL, '2023-09-07 01:00:29');
+INSERT INTO `general_settings` (`id`, `site_name`, `cur_text`, `cur_sym`, `email_from`, `email_template`, `sms_body`, `sms_from`, `base_color`, `secondary_color`, `mail_config`, `sms_config`, `global_shortcodes`, `kv`, `ev`, `en`, `sv`, `sn`, `force_ssl`, `maintenance_mode`, `secure_password`, `agree`, `registration`, `active_template`, `pusher_credential`, `system_info`, `created_at`, `updated_at`) VALUES
+(1, 'MinStack', 'USD', '$', 'notify@wstacks.com', '<p>Hi {{fullname}} ({{username}}),&nbsp;</p><p>{{message}}</p>', 'Hi {{fullname}} ({{username}}), \r\n{{message}}', 'Minstack', '7d5fff', '060662', '{\"name\":\"php\"}', '{\"name\":\"messageBird\",\"clickatell\":{\"api_key\":\"----------------\"},\"infobip\":{\"username\":\"------------8888888\",\"password\":\"-----------------\"},\"message_bird\":{\"api_key\":\"-------------------\"},\"nexmo\":{\"api_key\":\"----------------------\",\"api_secret\":\"----------------------\"},\"sms_broadcast\":{\"username\":\"----------------------\",\"password\":\"-----------------------------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"---------------------------\",\"from\":\"----------------------\"},\"text_magic\":{\"username\":\"-----------------------\",\"apiv2_key\":\"-------------------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\"],\"value\":[\"test_api 555\"]},\"body\":{\"name\":[\"from_number\"],\"value\":[\"5657545757\"]}}}', '{\n    \"site_name\":\"Name of your site\",\n    \"site_currency\":\"Currency of your site\",\n    \"currency_symbol\":\"Symbol of currency\"\n}', 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 'default', '{\"app_id\":\"1675892\",\"app_key\":\"f8c68dfe4617aea3398e\",\"app_secret\":\"538ee146577768419b16\",\"app_cluster\":\"ap2\",\"useTLS\":\"true\"}', '[]', NULL, '2023-09-30 08:35:03');
 
 -- --------------------------------------------------------
 
@@ -485,7 +486,7 @@ CREATE TABLE `hashtags` (
 INSERT INTO `hashtags` (`id`, `post`, `tag`, `created_at`, `updated_at`) VALUES
 (4, 1, 'document', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
 (5, 2, 'ipsum ', '2023-09-19 03:52:19', '2023-09-19 03:52:19'),
-(6, 3, 'Commonly', '2023-09-19 03:52:36', '2023-09-19 05:48:23'),
+(6, 4, 'Commonly', '2023-09-19 03:52:36', '2023-09-30 02:26:52'),
 (7, 1, 'momin', '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
 (8, 1, 'bangladesh', '2023-09-20 23:34:42', '2023-09-20 23:34:42'),
 (9, 1, 'wstacks', '2023-09-20 23:35:35', '2023-09-20 23:35:35'),
@@ -516,7 +517,8 @@ INSERT INTO `hashtag_post` (`id`, `post_id`, `hashtag_id`) VALUES
 (7, 21, 6),
 (8, 22, 8),
 (9, 23, 9),
-(10, 24, 10);
+(10, 24, 10),
+(11, 21, 6);
 
 -- --------------------------------------------------------
 
@@ -777,7 +779,6 @@ CREATE TABLE `posts` (
   `likes_count` int(11) NOT NULL DEFAULT 0,
   `status` int(11) NOT NULL DEFAULT 1,
   `privacy` varchar(40) NOT NULL COMMENT 'everyone,only_my_follwer',
-  `edited` int(11) DEFAULT NULL COMMENT 'post edit count',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -787,19 +788,20 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `status`, `privacy`, `edited`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(13, 33, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a #document or a typeface without relying on meaningful content. Lorem #ipsum may be', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 03:52:19', '2023-09-23 00:06:06'),
-(14, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 1, 1, 'everyone', NULL, NULL, '2023-09-19 03:52:36', '2023-09-24 00:48:09'),
-(15, 33, 'Bangladesh is small country', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
-(16, 33, 'Testing video', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:21:01', '2023-09-19 05:21:01'),
-(17, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:28:43', '2023-09-19 05:28:43'),
-(18, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
-(19, 33, 'Hellow #momin', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
-(20, 33, 'hellow wstacks', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:40:23', '2023-09-19 05:40:23'),
-(21, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-19 05:48:23', '2023-09-28 01:03:46'),
-(22, 32, 'Good Morning #bangladesh', 0, 1, 1, 'everyone', NULL, NULL, '2023-09-20 23:34:42', '2023-09-24 00:31:56'),
-(23, 34, 'Hey #wstacks', 1, 1, 1, 'everyone', NULL, NULL, '2023-09-20 23:35:35', '2023-09-28 06:23:18'),
-(24, 33, 'hey #india', 0, 0, 1, 'everyone', NULL, NULL, '2023-09-23 01:51:07', '2023-09-28 06:46:13');
+INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `status`, `privacy`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(13, 33, 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a #document or a typeface without relying on meaningful content. Lorem #ipsum may be', 0, 0, 1, 'everyone', NULL, '2023-09-19 03:52:19', '2023-09-23 00:06:06'),
+(14, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 1, 1, 'everyone', NULL, '2023-09-19 03:52:36', '2023-09-24 00:48:09'),
+(15, 33, 'Bangladesh is small country', 0, 0, 1, 'everyone', NULL, '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
+(16, 33, 'Testing video', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:21:01', '2023-09-19 05:21:01'),
+(17, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:28:43', '2023-09-19 05:28:43'),
+(18, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be u', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
+(19, 33, 'Hellow #momin', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:32:46', '2023-09-19 05:32:46'),
+(20, 33, 'hellow wstacks11', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:40:23', '2023-09-30 01:53:40'),
+(21, 33, 'design, Lorem ipsum is a placeholder text #commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be', 0, 0, 1, 'everyone', NULL, '2023-09-19 05:48:23', '2023-09-30 02:26:52'),
+(22, 32, 'Good Morning #bangladesh', 0, 1, 1, 'everyone', NULL, '2023-09-20 23:34:42', '2023-09-24 00:31:56'),
+(23, 34, 'Hey #wstacks', 1, 1, 1, 'everyone', NULL, '2023-09-20 23:35:35', '2023-09-28 06:23:18'),
+(24, 33, 'hey #indiae', 0, 0, 1, 'everyone', NULL, '2023-09-23 01:51:07', '2023-09-30 01:48:14'),
+(25, 33, 'nice', 0, 0, 1, 'everyone', NULL, '2023-09-30 02:30:32', '2023-09-30 02:30:32');
 
 -- --------------------------------------------------------
 
@@ -825,7 +827,8 @@ INSERT INTO `post_media` (`id`, `post_id`, `type`, `file`, `created_at`, `update
 (3, 15, 'file', '65097bd1ec3db1695120337.zip', '2023-09-19 04:45:37', '2023-09-19 04:45:37'),
 (4, 17, 'video', '650985eb382ba1695122923.mp4', '2023-09-19 05:28:43', '2023-09-19 05:28:43'),
 (5, 18, 'video', '650985ff19ac81695122943.mp4', '2023-09-19 05:29:03', '2023-09-19 05:29:03'),
-(6, 21, 'image', '65098a877dc7d1695124103.jpg', '2023-09-19 05:48:23', '2023-09-19 05:48:23');
+(6, 21, 'image', '65098a877dc7d1695124103.jpg', '2023-09-19 05:48:23', '2023-09-19 05:48:23'),
+(7, 25, 'image', '6517dca8668461696062632.jpg', '2023-09-30 02:30:32', '2023-09-30 02:30:32');
 
 -- --------------------------------------------------------
 
@@ -1310,7 +1313,8 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 (26, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 00:40:43', '2023-09-24 00:40:43'),
 (27, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 03:06:45', '2023-09-24 03:06:45'),
 (28, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 22:29:09', '2023-09-24 22:29:09'),
-(29, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-27 22:42:07', '2023-09-27 22:42:07');
+(29, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-27 22:42:07', '2023-09-27 22:42:07'),
+(30, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-29 23:18:40', '2023-09-29 23:18:40');
 
 -- --------------------------------------------------------
 
@@ -1745,7 +1749,7 @@ ALTER TABLE `hashtags`
 -- AUTO_INCREMENT for table `hashtag_post`
 --
 ALTER TABLE `hashtag_post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -1793,13 +1797,13 @@ ALTER TABLE `plans`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `post_media`
 --
 ALTER TABLE `post_media`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
@@ -1853,7 +1857,7 @@ ALTER TABLE `user_follows`
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `user_notifications`

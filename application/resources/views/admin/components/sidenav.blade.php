@@ -39,7 +39,14 @@
                         <span class="menu-title">@lang('Plans') </span>
                     </a>
                 </li>
-                
+
+                <li class="sidebar-menu-item {{ menuActive('admin.setting.pusher.credentials') }}">
+                    <a href="{{ route('admin.setting.pusher.credentials') }}" class="nav-link">
+                        <i class="menu-icon las la-users-cog"></i>
+                        <span class="menu-title">@lang('Pusher Credentials')</span>
+                    </a>
+                </li>
+
                 <li class="sidebar__menu-header">@lang('Transactions')</li>
                 <li class="sidebar-menu-item {{menuActive('admin.deposit.*')}}">
                     <a href="{{route('admin.deposit.pending')}}" class="nav-link ">

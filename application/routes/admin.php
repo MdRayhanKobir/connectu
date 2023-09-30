@@ -216,6 +216,12 @@ Route::middleware('admin')->group(function () {
          Route::get('custom-css', 'customCss')->name('setting.custom.css');
          Route::post('custom-css', 'customCssSubmit');
 
+         //pusher credentials
+         Route::get('setting/pusher/credentials', 'pusherCredentials')->name('setting.pusher.credentials');
+         Route::post('setting/pusher/credentials/update/', 'updatePusherCredential')->name('setting.pusher.credentials.update');
+
+
+
     });
 
     //Notification Setting

@@ -36,10 +36,9 @@
                         </button>
                         <ul class="post-top-menu">
                             <li class="post-top-menu__item">
-                                <a class="post-top-menu__link" href="javascript:void(0)">
+                                <a class="post-top-menu__link" href="javascript:void(0)" onclick="copyProfileLink()">
                                     <span class="icon"><i class="fas fa-copy"></i></span>
                                     <span class="text">@lang('Profile Link Copy')</span>
-                                    <input type="text" value="{{route('user.mypage',$user->id)}}">
                                 </a>
                             </li>
 
@@ -208,37 +207,53 @@
 @endsection
 @push('script')
     <script>
-           $(document).ready(function () {
 
-            $('.likePost').on('click', function () {
+        function copyProfileLink() {
+
+            var tempInput = document.createElement("input");
+            tempInput.value = "{{ route('home') }}/user/profile-page/{{ $user->username }}";
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            Toast.fire({
+                icon: 'success',
+                title: 'Profile link copied to clipboard'
+            });
+        }
+
+
+        $(document).ready(function () {
+
+                $('.likePost').on('click', function () {
                 var postId = $(this).data('post_id');
                 var likeButton = $(this);
                 var likeCount = likeButton.closest('button').find('.likecount');
 
-            $.ajax({
-                type: 'get',
-                url: '{{ route("user.like.bye.post") }}',
-                data: {
-                    post_id:postId,
-                },
-                success: function (data) {
-                    if (data.success) {
-                    likeButton.find('span.icon').toggleClass('clicked');
-                    var icon = likeButton.find('i');
-                    icon.toggleClass('fas');
-                    icon.toggleClass('far');
+                $.ajax({
+                    type: 'get',
+                    url: '{{ route("user.like.bye.post") }}',
+                    data: {
+                        post_id:postId,
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                        likeButton.find('span.icon').toggleClass('clicked');
+                        var icon = likeButton.find('i');
+                        icon.toggleClass('fas');
+                        icon.toggleClass('far');
 
-                    // Update the like count
-                    likeCount.text(data.likeCount);
+                        // Update the like count
+                        likeCount.text(data.likeCount);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
                     }
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
+                });
             });
-        });
 
-    });
+        });
     </script>
 @endpush
 

@@ -138,6 +138,8 @@ Route::middleware('auth')->name('user.')->group(function () {
             //Post
             Route::controller('MessageController')->name('message.')->prefix('message')->group(function () {
                 Route::get('/', 'fetchUser')->name('fetch.user');
+                Route::get('/chatbox/{id}', 'getChatbox')->name('get.chatbox');
+                Route::post('/message/send', 'sendMessage')->name('send');
 
             });
 

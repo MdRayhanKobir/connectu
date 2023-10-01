@@ -20,7 +20,7 @@
    @foreach ($users as $user)
         <div class="timeline-single-post-wrap position-relative">
             <div class="timeline-single-post">
-                <a href="chat-message.html" class="position-absolute w-100 h-100 top-0">
+                <a href="{{route('user.message.get.chatbox',$user->id)}}" class="position-absolute w-100 h-100 top-0">
                     <div class="timeline-single-post__avatar-wrap">
                         <div class="avatar">
                             <a href="javascript:void(0)"><img src="{{ getImage(getFilePath('userProfile') . '/' . @$user->image, getFileSize('userProfile')) }}" alt="@lang('user profile')"></a>
@@ -31,7 +31,7 @@
                             <div class="single-user-profile__content p-0">
                                 <div class="top single-user">
                                     <h5 class="mb-0 d-flex">
-                                        <a href="javascript:void(0)" class="d-flex align-items-center">
+                                        <a href="{{route('user.message.get.chatbox',$user->id)}}" class="d-flex align-items-center">
                                             {{__($user->fullname)}}<i class="fa-solid fa-circle-check"></i>
                                             <p class="ms-1">@ {{__($user->username)}}</p>
                                         </a>

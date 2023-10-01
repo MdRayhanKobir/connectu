@@ -19,7 +19,7 @@ class Chat  implements ShouldBroadcast
      */
 
      public $message;
-     public $file;
+     public $attachment;
      public $receiverId;
      public $senderId;
      public $createdAt;
@@ -27,7 +27,7 @@ class Chat  implements ShouldBroadcast
     public function __construct($data)
     {
         $this->message = $data->message;
-        $this->file = $data->file;
+        $this->attachment = $data->attachment;
         $this->receiverId = $data->receiverId;
         $this->senderId = $data->senderId;
         $this->createdAt = $data->createdAt;

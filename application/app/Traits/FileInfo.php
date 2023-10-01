@@ -69,6 +69,9 @@ trait FileInfo
         $data['PostMedia'] = [
             'path'      =>'assets/images/PostMedia',
         ];
+        $data['chatFiles'] = [
+            'path'      =>'assets/images/chatFiles',
+        ];
         return $data;
 	}
 

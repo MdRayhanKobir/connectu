@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2023 at 04:37 PM
+-- Generation Time: Oct 01, 2023 at 04:37 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -570,6 +570,80 @@ INSERT INTO `like_user` (`id`, `user_id`, `post_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `receiver_id` int(11) NOT NULL,
+  `message` text DEFAULT NULL,
+  `attachment` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `message`, `attachment`, `created_at`, `updated_at`) VALUES
+(12, 33, 32, 'hey tuser', NULL, '2023-10-01 04:46:09', '2023-10-01 04:46:09'),
+(13, 32, 34, 'hlw', NULL, '2023-10-01 04:48:19', '2023-10-01 04:48:19'),
+(14, 32, 34, 'gfh', NULL, '2023-10-01 05:05:24', '2023-10-01 05:05:24'),
+(15, 32, 33, 'hey', NULL, '2023-10-01 05:44:37', '2023-10-01 05:44:37'),
+(16, 32, 34, 'hy', NULL, '2023-10-01 05:51:02', '2023-10-01 05:51:02'),
+(17, 32, 33, 'gfdg', NULL, '2023-10-01 06:07:40', '2023-10-01 06:07:40'),
+(18, 32, 33, 'gfdg', NULL, '2023-10-01 06:07:46', '2023-10-01 06:07:46'),
+(19, 32, 33, 'dd', NULL, '2023-10-01 06:19:18', '2023-10-01 06:19:18'),
+(20, 32, 33, 'dd', NULL, '2023-10-01 06:19:23', '2023-10-01 06:19:23'),
+(21, 32, 33, 'tyut', NULL, '2023-10-01 06:19:49', '2023-10-01 06:19:49'),
+(22, 32, 33, 'ggg', NULL, '2023-10-01 06:24:19', '2023-10-01 06:24:19'),
+(23, 32, 33, 'ttt', NULL, '2023-10-01 06:27:18', '2023-10-01 06:27:18'),
+(24, 32, 33, 'tteee', NULL, '2023-10-01 06:29:27', '2023-10-01 06:29:27'),
+(25, 32, 33, '555', NULL, '2023-10-01 06:32:38', '2023-10-01 06:32:38'),
+(26, 32, 31, 'hi', NULL, '2023-10-01 06:33:38', '2023-10-01 06:33:38'),
+(27, 32, 31, 'hi', NULL, '2023-10-01 06:34:58', '2023-10-01 06:34:58'),
+(28, 32, 31, NULL, NULL, '2023-10-01 06:35:12', '2023-10-01 06:35:12'),
+(29, 32, 31, NULL, NULL, '2023-10-01 06:38:20', '2023-10-01 06:38:20'),
+(30, 32, 31, 'fgsdfg', NULL, '2023-10-01 06:45:44', '2023-10-01 06:45:44'),
+(31, 32, 31, NULL, '65196aefca08c1696164591.png', '2023-10-01 06:49:51', '2023-10-01 06:49:51'),
+(32, 32, 34, NULL, '65196b01781041696164609.png', '2023-10-01 06:50:09', '2023-10-01 06:50:09'),
+(33, 33, 31, NULL, '65196d192ea991696165145.png', '2023-10-01 06:59:05', '2023-10-01 06:59:05'),
+(34, 33, 31, NULL, '65196e0677e041696165382.png', '2023-10-01 07:03:02', '2023-10-01 07:03:02'),
+(35, 34, 33, NULL, '65196ec8ae6e01696165576.png', '2023-10-01 07:06:16', '2023-10-01 07:06:16'),
+(36, 34, 33, NULL, '65196f71c363a1696165745.jpg', '2023-10-01 07:09:05', '2023-10-01 07:09:05'),
+(37, 34, 33, NULL, '6519708c8bbaa1696166028.png', '2023-10-01 07:13:48', '2023-10-01 07:13:48'),
+(38, 34, 33, 'retyerwghrgh', '651970ac706091696166060.png', '2023-10-01 07:14:20', '2023-10-01 07:14:20'),
+(39, 33, 34, 'hey broo', NULL, '2023-10-01 07:15:41', '2023-10-01 07:15:41'),
+(40, 33, 34, 'dfsdf', NULL, '2023-10-01 07:15:50', '2023-10-01 07:15:50'),
+(41, 33, 34, 'xdfg', NULL, '2023-10-01 07:17:27', '2023-10-01 07:17:27'),
+(42, 33, 34, 'sdfg', NULL, '2023-10-01 07:18:17', '2023-10-01 07:18:17'),
+(43, 33, 34, 'vhg', NULL, '2023-10-01 07:18:44', '2023-10-01 07:18:44'),
+(44, 33, 34, 'asderfwe4', NULL, '2023-10-01 07:21:09', '2023-10-01 07:21:09'),
+(45, 33, 29, 'he bro', NULL, '2023-10-01 07:22:49', '2023-10-01 07:22:49'),
+(46, 33, 29, 'sef', NULL, '2023-10-01 07:23:04', '2023-10-01 07:23:04'),
+(47, 33, 29, 'sef', '651972c33779c1696166595.jpg', '2023-10-01 07:23:15', '2023-10-01 07:23:15'),
+(48, 33, 29, 'zxdfgdsrgf', NULL, '2023-10-01 07:25:17', '2023-10-01 07:25:17'),
+(49, 33, 29, 'vgdgdg', '65197355c23721696166741.jpg', '2023-10-01 07:25:41', '2023-10-01 07:25:41'),
+(50, 33, 29, 'gdg', NULL, '2023-10-01 07:26:46', '2023-10-01 07:26:46'),
+(51, 33, 29, 'dfgfdgh', NULL, '2023-10-01 07:28:44', '2023-10-01 07:28:44'),
+(52, 33, 29, 'dstgfgt', NULL, '2023-10-01 07:31:08', '2023-10-01 07:31:08'),
+(53, 33, 29, 'dtgyu', NULL, '2023-10-01 07:31:18', '2023-10-01 07:31:18'),
+(54, 33, 29, 'dfgrtfg', NULL, '2023-10-01 07:32:39', '2023-10-01 07:32:39'),
+(55, 33, 29, 'jyhtrgfedws', NULL, '2023-10-01 07:32:46', '2023-10-01 07:32:46'),
+(56, 33, 29, 'dfgdfgdfgh', NULL, '2023-10-01 07:33:01', '2023-10-01 07:33:01'),
+(57, 33, 29, 'asdrfgerg', NULL, '2023-10-01 07:33:30', '2023-10-01 07:33:30'),
+(58, 33, 29, 'gjgjh', NULL, '2023-10-01 07:39:03', '2023-10-01 07:39:03'),
+(59, 34, 33, 'retyerwghrgh', '6519802fd3c561696170031.png', '2023-10-01 08:20:31', '2023-10-01 08:20:31'),
+(60, 34, 33, 'retyerwghrgh', '65198039f342c1696170041.png', '2023-10-01 08:20:42', '2023-10-01 08:20:42'),
+(61, 34, 33, 'hei', NULL, '2023-10-01 08:20:54', '2023-10-01 08:20:54'),
+(62, 33, 29, NULL, '651980871eb3d1696170119.jpg', '2023-10-01 08:21:59', '2023-10-01 08:21:59'),
+(63, 33, 34, NULL, '651980b3b9b271696170163.jpg', '2023-10-01 08:22:43', '2023-10-01 08:22:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `notification_logs`
 --
 
@@ -801,7 +875,7 @@ INSERT INTO `posts` (`id`, `user_id`, `text`, `replys_count`, `likes_count`, `st
 (22, 32, 'Good Morning #bangladesh', 0, 1, 1, 'everyone', NULL, '2023-09-20 23:34:42', '2023-09-24 00:31:56'),
 (23, 34, 'Hey #wstacks', 1, 1, 1, 'everyone', NULL, '2023-09-20 23:35:35', '2023-09-28 06:23:18'),
 (24, 33, 'hey #indiae', 0, 0, 1, 'everyone', NULL, '2023-09-23 01:51:07', '2023-09-30 01:48:14'),
-(25, 33, 'nice', 0, 0, 1, 'everyone', NULL, '2023-09-30 02:30:32', '2023-09-30 02:30:32');
+(25, 33, 'nice', 0, 0, 1, 'everyone', NULL, '2023-09-30 02:30:32', '2023-10-01 06:54:12');
 
 -- --------------------------------------------------------
 
@@ -1227,7 +1301,7 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `countr
 (27, 'Graciela A.', 'Romano\n', 'tes77788', 'testuser5588@gmail.com', 'AF', '59154685458', 0, '0.00000000', '$2y$10$bnERS5Za.TVGNxb89ttI2eIc10.kDEXK8hTkUS5Ob7sKpN7N8vRHa', NULL, NULL, '{\"address\":null,\"city\":null,\"state\":null,\"zip\":null,\"country\":\"Afghanistan\"}', 1, NULL, 0, 1, 1, 0, '994511', '2022-03-06 11:53:38', 1, 0, NULL, 0, 0, 0, NULL, NULL, '2021-06-12 05:27:14', '2022-03-10 07:25:03'),
 (28, 'Ken', 'Morales', 'fajavidi', 'gasaf@amimail.com', 'DZ', '213Accusamus at et rati', 0, '0.00000000', '$2y$10$LYPdpUJDnCfG7MXUF0ydaOX5ESI6dLrjlrnh9QJ0YgaJdRSPMs9HS', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Algeria\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, '210333', '2022-03-17 09:09:59', 0, 1, NULL, 0, 0, 0, NULL, NULL, '2022-03-17 03:09:58', '2022-03-21 01:07:58'),
 (29, 'Anthony ', 'J.', 'michbarry', 'fyjify@amimail.com', 'KN', '18695946542145', 0, '200.00000000', '$2y$10$5iSye35hvir6jdd1nMx5/elcysmkvfrTFCfK0MLV5nb9QsA2Q7ury', NULL, NULL, '{\"address\":\"\",\"state\":\"\",\"zip\":\"\",\"country\":\"Saint Kitts and Nevis\",\"city\":\"\"}', 1, NULL, 0, 1, 1, 0, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2022-03-21 02:41:54', '2022-09-20 10:01:31'),
-(30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 0, 0, 0, NULL, NULL, '2022-03-22 07:53:20', '2023-09-20 23:43:42'),
+(30, 'Pearl', 'Garrish', 'lalosalamanca', 'fevu@amimail.com', 'CO', '5736564684', 0, '0.00000000', '$2y$10$tw6Ppdztjt6WbFA61GYHAuvnUl4zI3j2jMcMGp8UVMzHF32ACWCjG', NULL, NULL, '{\"country\":\"Colombia\",\"address\":\"Vitae labore iure es\",\"state\":\"Sunt nisi et enim vo\",\"zip\":\"82702\",\"city\":\"In vel aspernatur si\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 1, 0, 0, NULL, NULL, '2022-03-22 07:53:20', '2023-10-01 06:55:08'),
 (31, 'John', 'Havier', 'gusfring', 'user879@gmail.com', 'AM', '37458745455754', 0, '0.00000000', '$2y$10$M.ZMRFlWUCWXh3cb2htccuNxAG48bU6Q9PAqeHgXG4esiS82rWvM2', NULL, NULL, '{\"address\":null,\"city\":\"Dhaka\",\"state\":null,\"zip\":null,\"country\":\"Armenia\"}', 1, NULL, 1, 0, 1, 0, '370553', '2023-09-21 05:35:01', 0, 1, NULL, 1, 0, 0, NULL, NULL, '2022-03-22 11:22:57', '2023-09-27 22:44:17'),
 (32, 'tesos', 'tesos', 'testuser1', 'testuser1@gmail.com', 'AF', '934567898452', 0, '0.00000000', '$2y$10$PGHz5AGcAXPf2rSS1hD.su7SHL2.0ZP18ICA43OUhbceHm/s/reTK', 'testuser1/32/650fd3ee2501c1695536110.jpg', 'testuser1/32/650fd204ad4981695535620.jpg', '{\"country\":\"Afghanistan\",\"address\":\"Lakewood, CA 90805, Locker, TX 76801\",\"state\":\"California\",\"zip\":\"90805\",\"city\":\"Lakewood\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 2, 0, 0, NULL, NULL, '2023-03-22 04:09:55', '2023-09-27 22:44:41'),
 (33, 'User', 'User', 'demouser', 'demouser@gmail.com', 'AF', NULL, 0, '1.00000000', '$2y$10$JqSM3d9y5pyCwLgfjHDRg.TWTNiwosqCaUMdDPhR3ygk6TupKG6bu', NULL, 'demouser/33/650fdb1e18e721695537950.jpg', '{\"address\":\"UK\",\"state\":\"UK\",\"zip\":\"1200\",\"country\":\"Afghanistan\",\"city\":\"Dhaka\"}', 1, NULL, 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, 3, 0, 0, NULL, 'JikJIGFJ56NdkJ1Ooiku79tUxtMKwcQRJeCOzlvDXKTiBzFJBoRSTfiSdyxx', '2023-09-16 23:24:11', '2023-09-28 06:32:26'),
@@ -1257,7 +1331,8 @@ INSERT INTO `user_follows` (`id`, `follower_id`, `following_id`) VALUES
 (21, 33, 31),
 (22, 33, 32),
 (23, 33, 33),
-(24, 33, 33);
+(24, 33, 33),
+(25, 33, 30);
 
 -- --------------------------------------------------------
 
@@ -1314,7 +1389,10 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 (27, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 03:06:45', '2023-09-24 03:06:45'),
 (28, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-24 22:29:09', '2023-09-24 22:29:09'),
 (29, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-27 22:42:07', '2023-09-27 22:42:07'),
-(30, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-29 23:18:40', '2023-09-29 23:18:40');
+(30, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-29 23:18:40', '2023-09-29 23:18:40'),
+(31, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-09-30 22:30:42', '2023-09-30 22:30:42'),
+(32, 33, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-10-01 04:22:52', '2023-10-01 04:22:52'),
+(33, 33, '127.0.0.1', '', '', '', '', '', 'Handheld Browser', 'Android', '2023-10-01 06:53:45', '2023-10-01 06:53:45');
 
 -- --------------------------------------------------------
 
@@ -1541,6 +1619,12 @@ ALTER TABLE `like_user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `notification_logs`
 --
 ALTER TABLE `notification_logs`
@@ -1764,6 +1848,12 @@ ALTER TABLE `like_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+
+--
 -- AUTO_INCREMENT for table `notification_logs`
 --
 ALTER TABLE `notification_logs`
@@ -1851,13 +1941,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_follows`
 --
 ALTER TABLE `user_follows`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `user_notifications`

@@ -154,11 +154,12 @@
 
 
                                     <div class="post-thumbnail">
-                                        <a class="image-popup" href="assets/images/blog/2.jpg">
                                             @foreach ($item->postFile as $media)
                                                 @if ($media->type == 'image')
+                                                <a href="{{ getImage(getFilePath('PostMedia') . '/' . $media->file) }}">
                                                     <img src="{{ getImage(getFilePath('PostMedia') . '/' . $media->file) }}"
                                                         alt="@lang('post image')">
+                                                </a>
                                                 @elseif($media->type == 'video')
                                                     <video width="640" height="360" controls>
                                                         <source
@@ -167,8 +168,7 @@
                                                     </video>
                                                 @elseif($media->type == 'audio')
                                                     <audio controls>
-                                                        <source
-                                                            src="{{ getImage(getFilePath('PostMedia') . '/' . $media->file) }}"
+                                                        <source src="{{ getImage(getFilePath('PostMedia') . '/' . $media->file) }}"
                                                             type="audio/mpeg">
                                                     </audio>
                                                 @else
@@ -211,11 +211,13 @@
                                                                 $iconClass = 'fas fa-file';
                                                         }
                                                     @endphp
-                                                    <p><i class="{{ $iconClass }}"></i></p>
+                                                    <a href="">
+                                                        <p><i class="{{ $iconClass }}"></i></p>
+                                                    </a>
                                                 </div>
                                                 @endif
+                                        
                                             @endforeach
-                                        </a>
                                     </div>
                                 </div>
 

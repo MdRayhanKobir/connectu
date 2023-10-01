@@ -108,6 +108,31 @@
                         <button>
                             <i class="fas fa-ellipsis-h"></i>
                         </button>
+                        <ul class="post-top-menu">
+                            <li class="post-top-menu__item">
+                                <a class="post-top-menu__link" href="{{route('user.mypage',$item->user->username)}}">
+                                    <span class="icon"><i class="fas fa-user"></i></span>
+                                    <span class="text">{{__($item->user->username)}}</span>
+                                </a>
+                            </li>
+                            @if(auth()->user()->id == $item->user->id )
+                            <li class="post-top-menu__item">
+                                <button class="post-top-menu__link editpostBtn" data-id={{$item->id}} data-text="{{$item->text}}">
+                                    <span class="icon"><i class="fas fa-edit"></i></span>
+                                    <span class="text">@lang('Edit Post')</span>
+                                </button>
+                            </li>
+
+
+                            <li class="post-top-menu__item">
+                                <a class="post-top-menu__link" href="{{route('user.post.move.archive',$item->id)}}">
+                                    <span class="icon"><i class="fas fa-trash"></i></span>
+                                    <span class="text">@lang('Move to achive')</span>
+                                </a>
+                            </li>
+                            @endif
+
+                        </ul>
                     </div>
                 </div>
                 <div class="timeline-single-post__post-content">
@@ -186,11 +211,11 @@
                             <span class="icon likePost {{ $item->likedByUsers->contains(auth()->user()) ? 'clicked' : '' }}" data-post_id = "{{$item->id}}" >  <i class="{{ $item->likedByUsers->contains(auth()->user()) ? 'fas' : 'far' }} fa-thumbs-up"></i></span>
                             <span class="count likecount">{{__($item->likes_count)}}</span>
                         </button>
-                        <button data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <a href="{{route('user.post.details',$item->id)}}">
                             <span class="icon"><i class="far fa-comment"></i></span>
-                            <span class="count">0</span>
-                        </button>
-                        <button data-bs-toggle="modal" data-bs-target="#shareModal">
+                            <span class="count">{{$item->replys_count}}</span>
+                        </a>
+                        <button class="shareBtn" data-id ="{{$item->id}}">
                             <span class="icon"><i class="fas fa-share-alt"></i></span>
                         </button>
                     </div>
@@ -204,12 +229,55 @@
     </div>
 </div>
 @endforeach
+
+ <!--==============Share Modal Modal Start ===============-->
+            <!-- Modal -->
+            <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="sharetModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="sharetModalLabel">@lang('Share Post')</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="timeline-top-post-wrap modal-wrapper">
+                                <div class="timeline-top-post-wrap__header-post mb-3">
+                                    <ul class="social-list">
+                                        <li class="social-list__item">
+                                            <a href="#" class="social-list__link share-link" data-social="facebook"><i class="fab fa-facebook-f"></i></a>
+                                        </li>
+                                        <li class="social-list__item">
+                                            <a href="#" class="social-list__link share-link" data-social="twitter"><i class="fab fa-twitter"></i></a>
+                                        </li>
+                                        <li class="social-list__item">
+                                            <a href="#" class="social-list__link share-link" data-social="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="timeline-top-post-wrap__upload-icon-wrap justify-content-end">
+                                    <input class="form--control shareLinkCopy" type="text" name="share_link" value="{{route('home')}}/user/posts/details/" readonly>
+                                </div>
+
+                                <div class="timeline-top-post-wrap__button-wrap justify-content-end">
+                                    <div class="button-right">
+                                        <button class="btn btn--base btn--sm pill" id="copyPostShareLink" onclick="copyPostShareLink()">@lang('Copy Link')</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--==============Share Modal Modal End ===============-->
 @endsection
 @push('script')
     <script>
 
         function copyProfileLink() {
-
             var tempInput = document.createElement("input");
             tempInput.value = "{{ route('home') }}/user/profile-page/{{ $user->username }}";
             document.body.appendChild(tempInput);
@@ -252,6 +320,22 @@
                     }
                 });
             });
+
+
+            $('.shareBtn').on('click', function() {
+                var modal = $('#shareModal');
+                var postId = $(this).data('id');
+                var shareLink = "{{ route('home') }}/user/posts/details/" + postId;
+                modal.find('input[name=share_link]').val(shareLink);
+
+                // Update the href attribute of the share links
+                $('.share-link[data-social="facebook"]').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + shareLink);
+                $('.share-link[data-social="twitter"]').attr('href', 'https://twitter.com/intent/tweet?url=' + shareLink);
+                $('.share-link[data-social="linkedin"]').attr('href', 'https://www.linkedin.com/shareArticle?url=' + shareLink);
+
+                modal.modal('show');
+            });
+
 
         });
     </script>

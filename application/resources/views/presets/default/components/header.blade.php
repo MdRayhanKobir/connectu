@@ -7,7 +7,7 @@
 
                     <div class="menu-wrapper">
                         <ul class="main-menu">
-                            <li><a class='active' href="index.html">{{__($pageTitle)}}</a></li>
+                            <li><a class='active' href="javascript:void(0)">{{__($pageTitle)}}</a></li>
                         </ul>
                     </div>
 
@@ -18,7 +18,8 @@
                                 alt="{{ config('app.name') }}"></a>
                         {{-- <a href="{{ route('home') }}" class="dark-logo hidden"> <img
                                 src="{{ getImage(getFilePath('logoIcon') . '/logo_white.png', '?' . time()) }}"
-                                alt="{{ config('app.name') }}"></a> --}}
+                                alt="{{ config('app.name') }}">
+                            </a> --}}
                         </div>
                     </div>
 

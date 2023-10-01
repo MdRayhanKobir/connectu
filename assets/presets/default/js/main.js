@@ -326,17 +326,7 @@ $(".toggle-password-change").click(function() {
       $('#coupon-checkout').slideToggle(400);
     });
 
-    /*============** Mgnific Popup **============*/
-    $(".image-popup").magnificPopup({
-      type: "image",
-      gallery: {
-          enabled: true,
-      },
-    });
     
-    $('.popup_video').magnificPopup({
-        type: 'iframe',
-    });
 
 
 
